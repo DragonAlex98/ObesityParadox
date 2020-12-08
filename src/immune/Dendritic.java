@@ -2,9 +2,9 @@ package immune;
 
 import repast.simphony.space.grid.Grid;
 
-public class Dentritic extends Immune {
+public class Dendritic extends Immune {
 
-	public Dentritic(int lifespan, Grid<Object> grid) {
+	public Dendritic(int lifespan, Grid<Object> grid) {
 		super(lifespan, grid);
 	}
 	
