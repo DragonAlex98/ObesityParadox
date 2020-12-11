@@ -1,25 +1,20 @@
-package immune;
+package cell.immune;
 
+import cell.Cell;
 import repast.simphony.space.grid.Grid;
 
 public class Dendritic extends Immune {
 
-	public Dendritic(int lifespan, Grid<Object> grid) {
+	public Dendritic(int lifespan, Grid<Cell> grid) {
 		super(lifespan, grid);
 	}
 	
-	public void go_to_lymph_node() {
+	public void goToLymphNode() {
 		
 	}
 
 	@Override
-	public void move_to() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void check_neighbor() {
+	public void moveTo() {
 		// TODO Auto-generated method stub
 
 	}

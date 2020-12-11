@@ -1,22 +1,16 @@
-package immune;
+package cell.immune;
 
+import cell.Cell;
 import repast.simphony.space.grid.Grid;
 
 public class Treg extends TCell {
 
-	public Treg(int lifespan, Grid<Object> grid) {
+	public Treg(int lifespan, Grid<Cell> grid) {
 		super(lifespan, grid);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void move_to() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void check_neighbor() {
+	public void moveTo() {
 		// TODO Auto-generated method stub
 
 	}
