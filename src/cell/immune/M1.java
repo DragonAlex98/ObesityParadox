@@ -1,12 +1,16 @@
-package immune;
+package cell.immune;
 
 import cell.Cell;
 import repast.simphony.space.grid.Grid;
 
-public class Neutrophil extends Immune {
+public class M1 extends Immune {
 
-	public Neutrophil(int lifespan, Grid<Cell> grid) {
+	public M1(int lifespan, Grid<Cell> grid) {
 		super(lifespan, grid);
+	}
+	
+	public void ingestCell() {
+		
 	}
 
 	@Override

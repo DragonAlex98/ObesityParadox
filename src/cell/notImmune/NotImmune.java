@@ -1,4 +1,4 @@
-package notImmune;
+package cell.notImmune;
 
 import cell.Cell;
 import repast.simphony.space.grid.Grid;

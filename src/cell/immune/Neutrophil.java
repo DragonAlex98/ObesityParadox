@@ -1,11 +1,11 @@
-package immune;
+package cell.immune;
 
 import cell.Cell;
 import repast.simphony.space.grid.Grid;
 
-public class Treg extends TCell {
+public class Neutrophil extends Immune {
 
-	public Treg(int lifespan, Grid<Cell> grid) {
+	public Neutrophil(int lifespan, Grid<Cell> grid) {
 		super(lifespan, grid);
 	}
 

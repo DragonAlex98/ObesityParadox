@@ -1,4 +1,4 @@
-package immune;
+package cell.immune;
 
 import cell.Cell;
 import repast.simphony.space.grid.Grid;

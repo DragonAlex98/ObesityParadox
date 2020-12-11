@@ -1,9 +1,9 @@
-package notImmune;
+package cell.notImmune;
 
 import java.util.List;
 
 import cell.Cell;
-import immune.MastCell;
+import cell.immune.MastCell;
 import repast.simphony.space.grid.Grid;
 import utils.CellUtils;
 
