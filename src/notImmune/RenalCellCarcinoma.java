@@ -27,17 +27,17 @@ public class RenalCellCarcinoma extends NotImmune {
 	public void grow() {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
 		if (this.getAge() % reproTime == 0) {
-			check_reproduction(neighbors);
+			checkReproduction(neighbors);
 		} else {
 			List<MastCell> mastList = CellUtils.filterNeighbors(neighbors, MastCell.class);
 			if (!mastList.isEmpty()) {
-				check_reproduction(neighbors);
+				checkReproduction(neighbors);
 			}
 		}
 	}
 
 	// creates new RenalCellCarcinoma
-	private void check_reproduction(Iterable<Cell> neighbors) {
+	private void checkReproduction(Iterable<Cell> neighbors) {
 		List<Adipocyte> list =  CellUtils.filterNeighbors(neighbors, Adipocyte.class);
 		// if there is at least one adipocyte in my neighbors I grow up
 		if (!list.isEmpty()) {
