@@ -19,7 +19,7 @@ public class CellUtils {
 		return neighbors;
 	}
 
-	// list neighbors of a certain Class
+	// from neighbors to list of cells of a certain Class
 	public static <T extends Cell> List<T> filterNeighbors(Iterable<Cell> neighbors, Class<T> cls) {
 		List<T> list = new ArrayList<T>();
 		for (Cell c : neighbors) {
@@ -29,8 +29,8 @@ public class CellUtils {
 		}
 		return list;
 	}
-	
-	// method to replace a cell with another
+
+	// method to replace a cell with another (dead, spawn..)
 	public static <T extends Cell, S extends Cell> void replaceCell(Grid<Cell> grid, T cellToReplace, S cellToCreate) {
 		GridPoint gpt = grid.getLocation(cellToReplace);
 		Context<Object> context = ContextUtils.getContext(cellToReplace);

@@ -9,6 +9,7 @@ public abstract class Immune extends Cell {
 		super(lifespan, grid);
 	}
 	
+	//TODO this method must have a default implementation, random movement
 	// move to a neighbor position
 	public abstract void moveTo();
 	

@@ -20,10 +20,10 @@ public class RenalCellCarcinoma extends NotImmune {
 		this.reproTime = reproTime;
 		this.reproFactor = reproFactor;
 	}
-	
-	//TODO  Can RCC dead? How can it reproduce?
 
-	// check if the time to expand has arrived or if there is a Mast Cell in its neighborhood
+	// TODO Can RCC dead? How can it reproduce?
+
+	// check the time to reproduce or the presence of a Mast Cell
 	public void grow() {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
 		if (this.getAge() % reproTime == 0) {
@@ -36,17 +36,19 @@ public class RenalCellCarcinoma extends NotImmune {
 		}
 	}
 
-	// creates new RenalCellCarcinoma
+	// creates new RenalCellCarcinoma if it is possible
 	private void checkReproduction(Iterable<Cell> neighbors) {
-		List<Adipocyte> list =  CellUtils.filterNeighbors(neighbors, Adipocyte.class);
+		List<Adipocyte> list = CellUtils.filterNeighbors(neighbors, Adipocyte.class);
 		// if there is at least one adipocyte in my neighbors I grow up
 		if (!list.isEmpty()) {
+			// check how many times I can actually reproduce
 			int count = this.reproFactor < list.size() ? this.reproFactor : list.size();
 			for (int i = 0; i < count; i++) {
-				RenalCellCarcinoma rcc = new RenalCellCarcinoma(this.getLifespan(), this.getGrid(), this.reproTime, this.reproFactor);
+				RenalCellCarcinoma rcc = new RenalCellCarcinoma(this.getLifespan(), this.getGrid(), this.reproTime,
+						this.reproFactor);
 				CellUtils.replaceCell(this.getGrid(), list.get(i), rcc);
 			}
-		}		
+		}
 	}
 
 	public int getReproTime() {
