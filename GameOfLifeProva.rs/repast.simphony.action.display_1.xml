@@ -2,23 +2,31 @@
   <name>2D display</name>
   <type>2D</type>
   <styles>
+  	<entry>
+  	  <string>cell.immune.CD8</string>
+  	  <string>styles.CD8Style</string>
+  	</entry>
     <entry>
-      <string>GameOfLifeProva.Living</string>
+      <string>cell.immune.MastCell</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>GameOfLifeProva.Dead</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
+  	  <string>cell.notImmune.Adipocyte</string>
+  	  <string>styles.AdipocyteStyle</string>
+  	</entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>GameOfLifeProva.Living</string>
-      <string>GameOfLifeProva.Living.style_0.xml</string>
+      <string>cell.immune.CD8</string>
+      <null/>
     </entry>
     <entry>
-      <string>GameOfLifeProva.Dead</string>
+      <string>cell.immune.MastCell</string>
       <string>GameOfLifeProva.Dead.style_0.xml</string>
+    </entry>
+    <entry>
+      <string>cell.notImmune.Adipocyte</string>
+      <null/>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -36,13 +44,17 @@
   <layoutProjection>grid</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
-    <entry>
-      <string>GameOfLifeProva.Living</string>
+  	<entry>
+      <string>cell.immune.CD8</string>
       <int>0</int>
     </entry>
     <entry>
-      <string>GameOfLifeProva.Dead</string>
+      <string>cell.immune.MastCell</string>
       <int>1</int>
+    </entry>
+    <entry>
+      <string>cell.notImmune.Adipocyte</string>
+      <int>2</int>
     </entry>
   </layerOrder>
   <projections>
@@ -53,7 +65,7 @@
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
-    <unitSize>15.0</unitSize>
+    <unitSize>16.0</unitSize>
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
@@ -66,7 +78,7 @@
             <map>
               <entry>
                 <string>UNIT_SIZE</string>
-                <float>15.0</float>
+                <float>16.0</float>
               </entry>
               <entry>
                 <string>SHOW</string>
