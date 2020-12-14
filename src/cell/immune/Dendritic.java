@@ -14,12 +14,6 @@ public class Dendritic extends Immune {
 	}
 
 	@Override
-	public void moveTo() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void act() {
 		// TODO Auto-generated method stub
 

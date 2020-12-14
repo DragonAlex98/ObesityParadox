@@ -5,20 +5,30 @@
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
-				<parameter name="percentage" displayName="Percentage of Live Cells" type="float" 
-						defaultValue="0.3" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
-											/>
 				<parameter name="width" displayName="Grid Width" type="int" 
-						defaultValue="25" 
+						defaultValue="5" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
 				<parameter name="height" displayName="Grid Height" type="int" 
-						defaultValue="100" 
+						defaultValue="5" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+											/>
+				<parameter name="cd8Percentage" displayName="Percentage of CD8 Cells" type="float" 
+						defaultValue="0.3" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="mastPercentage" displayName="Percentage of Mast Cells" type="float" 
+						defaultValue="0.3" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="adipocytePercentage" displayName="Percentage of Mast Cells" type="float" 
+						defaultValue="0.3" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
 		</parameters>
 
