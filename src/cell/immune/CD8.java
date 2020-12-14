@@ -1,11 +1,17 @@
 package cell.immune;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Stream;
 
 import cell.Cell;
 import cell.DeadCell;
+import cell.EmptyCell;
 import cell.notImmune.RenalCellCarcinoma;
+import net.sf.jasperreports.engine.export.oasis.CellStyle;
+import repast.simphony.context.Context;
 import repast.simphony.space.grid.Grid;
+import repast.simphony.util.ContextUtils;
 import utils.CellUtils;
 
 /**
@@ -26,16 +32,45 @@ public class CD8 extends TCell {
 		this.killProb = kill_prob;
 	}
 	
+	/**
+	 * Default behaviour if it is not active (Naive).
+	 * Otherwise it moves towards the nearest RCC cell.
+	 */
+	@Override
+	public void moveTo() {
+		if (!this.isActive()) {
+			super.moveTo();
+			return;
+		}
+	
+		Stream<Cell> rccInGrid = CellUtils.getSpecificCells(this.grid, this, RenalCellCarcinoma.class);
+		
+		AtomicReference<RenalCellCarcinoma> nearestRcc = new AtomicReference<>();
+		AtomicReference<Double> distanceToNearest = new AtomicReference<Double>(Double.POSITIVE_INFINITY);
+		
+		rccInGrid.forEach(elem -> {
+			double distance = this.grid.getDistance(this.grid.getLocation(this), this.grid.getLocation(elem));
+			
+			if (distance < distanceToNearest.get()) {
+				distanceToNearest.set(distance);
+				nearestRcc.set((RenalCellCarcinoma) elem);
+			}
+		});
+		
+		if (nearestRcc.get() != null)
+			CellUtils.moveTowards(this.grid, this, nearestRcc.get());
+	}
+	
+	/**
+	 * Kills a RCC near to this cell.
+	 */
+	@Override
 	public void act() {
-		// TODO Auto-generated method stub
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.grid, this);
 		
 		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
 		
-		if (rccList.isEmpty()) {
-			// se non ho rcc vicine mi muovo verso la rcc più vicina
-		} else {
-			// se ho rcc vicine, ne killo una
+		if (!rccList.isEmpty()) {
 			CellUtils.replaceCell(this.grid, rccList.get(0), new DeadCell(this.grid));
 		}
 		
