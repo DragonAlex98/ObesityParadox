@@ -16,7 +16,7 @@ public abstract class Cell {
 	private boolean foreign = false;
 
 	// the grid where the cell lives
-	private Grid<Cell> grid = null;
+	protected Grid<Cell> grid = null;
 
 	public Cell(int lifespan, Grid<Cell> grid) {
 		this.lifeSpan = lifespan;
