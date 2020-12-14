@@ -5,9 +5,7 @@ import java.util.List;
 import cell.Cell;
 import cell.notImmune.RenalCellCarcinoma;
 import repast.simphony.space.grid.Grid;
-import utils.CellSpawner;
 import utils.CellUtils;
-import utils.DetectedRCCList;
 
 public class Dendritic extends Immune {
 
@@ -22,7 +20,7 @@ public class Dendritic extends Immune {
 	public void moveTo() {
 		if (this.mature) {
 			if (isOnEdge()) {
-				CellSpawner.tCellSpawner();
+				//CellSpawner.tCellSpawner();
 				this.mature = false;
 			} else {
 				// TODO altrimenti vai a dx, swap
@@ -50,7 +48,7 @@ public class Dendritic extends Immune {
 			if (!rccList.isEmpty()) {
 				this.mature = true;
 				for (RenalCellCarcinoma rcc : rccList) {
-					DetectedRCCList.getInstance().add(rcc);
+					//DetectedRCCList.getInstance().add(rcc);
 				}
 			}
 		}

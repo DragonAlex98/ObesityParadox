@@ -1,8 +1,9 @@
-package GameOfLifeProva;
+package context;
 
 import java.util.Random;
 
 import cell.Cell;
+import cell.EmptyCell;
 import cell.immune.CD8;
 import cell.immune.MastCell;
 import cell.notImmune.Adipocyte;
@@ -42,60 +43,76 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		int mastCellsToCreate = (int)(size * mastPercentage);
 		System.out.println("Numero cellule Mast da creare: " + mastCellsToCreate);
 		
-		int left = size - cd8CellsToCreate - mastCellsToCreate;
+		float adipocytePercentage = params.getFloat("adipocytePercentage");
+		System.out.println("Percentuale cellule Adipocyte: " + adipocytePercentage*100 + "%");
+		int adipocyteCellsToCreate = (int)(size * adipocytePercentage);
+		System.out.println("Numero cellule Adipocyte da creare: " + adipocyteCellsToCreate);
+		
+		int left = size - cd8CellsToCreate - mastCellsToCreate - adipocyteCellsToCreate;
 		
 		if (left < 0) {
 			System.out.println("Numero di cellule da creare maggiore del numero di celle della griglia!");
 			return null;
 		}
 		
-		System.out.println("Numero cellule Adipocyte da creare: " + left);
+		System.out.println("Numero cellule Empty da creare: " + left);
 		
 		int seed = params.getInteger("randomSeed");
+		Random random = new Random(seed);
 		
 		for (int i = 0; i < cd8CellsToCreate; i++) {
 			CD8 cd8 = new CD8(10, grid, 1.0);
 			context.add(cd8);
-			Random r = new Random(seed);
-			int row;
-			int column;
+			int x;
+			int y;
 			do {
-				row = r.nextInt(grid.getDimensions().getHeight());
-				column = r.nextInt(grid.getDimensions().getWidth());
-			} while (!grid.moveTo(cd8, column, row));
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(cd8, x, y));
 			context.add(cd8);
 		}
 		
 		for (int i = 0; i < mastCellsToCreate; i++) {
 			MastCell mast = new MastCell(10, grid);
 			context.add(mast);
-			Random r = new Random(seed);
-			int row;
-			int column;
+			int x;
+			int y;
 			do {
-				row = r.nextInt(grid.getDimensions().getHeight());
-				column = r.nextInt(grid.getDimensions().getWidth());
-			} while (!grid.moveTo(mast, column, row));
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(mast, x, y));
 			context.add(mast);
 		}
 		
-		int adipocyteCellsToCreate = 0;
+		for (int i = 0; i < adipocyteCellsToCreate; i++) {
+			Adipocyte adipocyte = new Adipocyte(10, grid);
+			context.add(adipocyte);
+			int x;
+			int y;
+			do {
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(adipocyte, x, y));
+			context.add(adipocyte);
+		}
+		
+		int emptyCellsToCreate = 0;
 		if (left > 0) {
-			for (int r = 0; r < grid.getDimensions().getHeight(); r++) {
-				for (int c = 0; c < grid.getDimensions().getWidth(); c++) {
-					Adipocyte adipocyte = new Adipocyte(10, grid);
-					context.add(adipocyte);
-					if (grid.moveTo(adipocyte, c, r)) {
-						context.add(adipocyte);
-						adipocyteCellsToCreate++;
+			for (int y = 0; y < grid.getDimensions().getHeight(); y++) {
+				for (int x = 0; x < grid.getDimensions().getWidth(); x++) {
+					EmptyCell empty = new EmptyCell(grid);
+					context.add(empty);
+					if (grid.moveTo(empty, x, y)) {
+						context.add(empty);
+						emptyCellsToCreate++;
 					} else {
-						context.remove(adipocyte);
+						context.remove(empty);
 					}
 				}
 			}
-		}		
+		}
 		
-		System.out.println("Numero cellule Adipocyte create: " + adipocyteCellsToCreate);
+		System.out.println("Numero cellule Empty create: " + emptyCellsToCreate);
 
 		return context;
 	}
