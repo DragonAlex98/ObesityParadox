@@ -25,6 +25,11 @@
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
+				<parameter name="adipocytePercentage" displayName="Percentage of Mast Cells" type="float" 
+						defaultValue="0.3" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
 		</parameters>
 
 
