@@ -17,6 +17,9 @@ public abstract class Immune extends Cell {
 		super(lifespan, grid);
 	}
 
+	/**
+	 * Move to a near position
+	 */
 	@ScheduledMethod(start = 1, interval = 1)
 	public void moveTo() {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
@@ -32,7 +35,9 @@ public abstract class Immune extends Cell {
 		}
 	}
 	
-	// inhibit or excite another immune cell
+	/**
+	 * Triggers the effect of the cell.
+	 */
 	public abstract void act();	
 
 }
