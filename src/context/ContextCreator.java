@@ -33,6 +33,17 @@ public class ContextCreator implements ContextBuilder<Cell> {
 
 		System.out.println("Altezza: " + grid.getDimensions().getHeight() + ", Larghezza: " + grid.getDimensions().getWidth());
 		
+		Orientation bloodVesselOrientation = Orientation.valueOf(params.getString("bloodVesselOrientation"));
+		System.out.println("Orientamento vaso sanguigno: " + bloodVesselOrientation);
+		
+		Orientation lymphNodeOrientation = Orientation.valueOf(params.getString("lymphNodeOrientation"));
+		System.out.println("Orientamento linfonodo: " + lymphNodeOrientation);
+		
+		if (bloodVesselOrientation == lymphNodeOrientation) {
+			System.out.println("Il vaso sanguigno non si può trovare nella stessa direzione del linfonodo!");
+			return null;
+		}
+		
 		float cd8Percentage = params.getFloat("cd8Percentage");
 		System.out.println("Percentuale cellule CD8: " + cd8Percentage*100 + "%");
 		int cd8CellsToCreate = (int)(size * cd8Percentage);
