@@ -76,9 +76,9 @@ public class CellUtils {
 	 * @see Stream
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T extends Cell, S extends Cell> Stream<Cell> getSpecificCells(Grid<Cell> grid, T caller, Class<S> cellTypeToFind) {
+	public static <T extends Cell, S extends Cell> Stream<S> getSpecificCells(Grid<Cell> grid, T caller, Class<S> cellTypeToFind) {
 		Context<Cell> context = ContextUtils.getContext(caller);
-		return context.getObjectsAsStream(cellTypeToFind.asSubclass(Cell.class));
+		return (Stream<S>) context.getObjectsAsStream(cellTypeToFind.asSubclass(Cell.class));
 	}
 	
 	/**
@@ -91,17 +91,30 @@ public class CellUtils {
 	 * @param target The target cell to move towards.
 	 */
 	public static <T extends Cell, S extends Cell> void moveTowards(Grid<Cell> grid, T caller, S target) {
+		moveTowards(grid, caller, grid.getLocation(target));
+	}
+	
+	/**
+	 * Move towards a target cell, moving to the empty cell nearest to the target cell.
+	 * 
+	 * @param <T> Type of the caller.
+	 * @param <S> Type of the cell to move towards.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param target The point of the grid to move towards.
+	 */
+	public static <T extends Cell, S extends Cell> void moveTowards(Grid<Cell> grid, T caller, GridPoint target) {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(grid, caller);
 
 		List<EmptyCell> emptyCellList = CellUtils.filterNeighbors(neighbors, EmptyCell.class);
-		
-		double distanceToTarget = grid.getDistance(grid.getLocation(caller), grid.getLocation(target));
+
+		double distanceToTarget = grid.getDistance(grid.getLocation(caller), target);
 		
 		AtomicReference<EmptyCell> bestEmptyCell = new AtomicReference<>();
 		AtomicReference<Double> newDistance = new AtomicReference<Double>(distanceToTarget);
 		
 		emptyCellList.forEach(cell -> {
-			double distance = grid.getDistance(grid.getLocation(cell), grid.getLocation(target));
+			double distance = grid.getDistance(grid.getLocation(cell), target);
 			
 			if (distance < newDistance.get()) {
 				newDistance.set(distance);

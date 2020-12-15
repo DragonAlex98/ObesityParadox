@@ -6,12 +6,8 @@ import java.util.stream.Stream;
 
 import cell.Cell;
 import cell.DeadCell;
-import cell.EmptyCell;
 import cell.notImmune.RenalCellCarcinoma;
-import net.sf.jasperreports.engine.export.oasis.CellStyle;
-import repast.simphony.context.Context;
 import repast.simphony.space.grid.Grid;
-import repast.simphony.util.ContextUtils;
 import utils.CellUtils;
 
 /**
@@ -43,7 +39,7 @@ public class CD8 extends TCell {
 			return;
 		}
 	
-		Stream<Cell> rccInGrid = CellUtils.getSpecificCells(this.grid, this, RenalCellCarcinoma.class);
+		Stream<RenalCellCarcinoma> rccInGrid = CellUtils.getSpecificCells(this.grid, this, RenalCellCarcinoma.class);
 		
 		AtomicReference<RenalCellCarcinoma> nearestRcc = new AtomicReference<>();
 		AtomicReference<Double> distanceToNearest = new AtomicReference<Double>(Double.POSITIVE_INFINITY);
@@ -53,7 +49,7 @@ public class CD8 extends TCell {
 			
 			if (distance < distanceToNearest.get()) {
 				distanceToNearest.set(distance);
-				nearestRcc.set((RenalCellCarcinoma) elem);
+				nearestRcc.set(elem);
 			}
 		});
 		
@@ -73,8 +69,6 @@ public class CD8 extends TCell {
 		if (!rccList.isEmpty()) {
 			CellUtils.replaceCell(this.grid, rccList.get(0), new DeadCell(this.grid));
 		}
-		
-		
 	}
 
 	public double getKillProb() {
