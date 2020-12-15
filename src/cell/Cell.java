@@ -27,7 +27,7 @@ public abstract class Cell {
 	@ScheduledMethod(start = 1, interval = 1)
 	public boolean checkAge() {
 		boolean dead = this.age == this.lifeSpan; // useful for debug??
-		if(dead) {
+		if (dead) {
 			this.die();
 		}
 		return dead;
