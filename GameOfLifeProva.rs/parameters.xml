@@ -5,30 +5,42 @@
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
-				<parameter name="width" displayName="Grid Width" type="int" 
-						defaultValue="5" 
+				<parameter name="adipocytePercentage" displayName="Percentage of Mast Cells" type="float" 
+						defaultValue="0.3" 
 						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
-				<parameter name="height" displayName="Grid Height" type="int" 
-						defaultValue="5" 
+				<parameter name="bloodVesselOrientation" displayName="Orientation of blood vessel" type="java.lang.String" 
+						defaultValue="SOUTH" 
 						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+												values="NORTH SOUTH WEST EAST "
+											/>
+				<parameter name="lymphNodeOrientation" displayName="Orientation of lymph node" type="java.lang.String" 
+						defaultValue="EAST" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+												values="NORTH SOUTH WEST EAST "
 											/>
 				<parameter name="cd8Percentage" displayName="Percentage of CD8 Cells" type="float" 
 						defaultValue="0.3" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
+				<parameter name="width" displayName="Grid Width" type="int" 
+						defaultValue="5" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+											/>
 				<parameter name="mastPercentage" displayName="Percentage of Mast Cells" type="float" 
 						defaultValue="0.3" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
-				<parameter name="adipocytePercentage" displayName="Percentage of Mast Cells" type="float" 
-						defaultValue="0.3" 
+				<parameter name="height" displayName="Grid Height" type="int" 
+						defaultValue="5" 
 						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
 		</parameters>
 
