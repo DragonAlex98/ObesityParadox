@@ -26,6 +26,14 @@
   	  <string>cell.notImmune.Adipocyte</string>
   	  <string>styles.AdipocyteStyle</string>
   	</entry>
+  	<entry>
+  	  <string>cell.BloodCell</string>
+  	  <string>styles.BloodStyle</string>
+  	</entry>
+  	<entry>
+  	  <string>cell.DeadCell</string>
+  	  <string>styles.DeadStyle</string>
+  	</entry>
   </styles>
   <editedStyles>
     <entry>
@@ -50,6 +58,14 @@
     </entry>
     <entry>
       <string>cell.notImmune.Adipocyte</string>
+      <null/>
+    </entry>
+    <entry>
+      <string>cell.BloodCell</string>
+      <null/>
+    </entry>
+    <entry>
+      <string>cell.DeadCell</string>
       <null/>
     </entry>
   </editedStyles>
@@ -91,6 +107,14 @@
     <entry>
       <string>cell.immune.CD4</string>
       <int>5</int>
+    </entry>
+    <entry>
+      <string>cell.BloodCell</string>
+      <int>6</int>
+    </entry>
+    <entry>
+      <string>cell.DeadCell</string>
+      <int>7</int>
     </entry>
   </layerOrder>
   <projections>

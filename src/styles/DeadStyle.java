@@ -7,7 +7,7 @@ import repast.simphony.visualizationOGL2D.DefaultStyleOGL2D;
 import saf.v3d.ShapeFactory2D;
 import saf.v3d.scene.VSpatial;
 
-public class AdipocyteStyle extends DefaultStyleOGL2D {
+public class DeadStyle extends DefaultStyleOGL2D {
 	
 	private ShapeFactory2D shapeFactory;
 
@@ -30,7 +30,7 @@ public class AdipocyteStyle extends DefaultStyleOGL2D {
 	public VSpatial getVSpatial(Object agent, VSpatial spatial) {
 		if (spatial == null) {
 			try {
-				spatial = this.shapeFactory.createImage("icons/adipocyte.png");
+				spatial = this.shapeFactory.createImage("icons/dead.png");
 			} catch (IOException e) {
 				System.out.println("Immagine adipocita non trovata!");
 				e.printStackTrace();

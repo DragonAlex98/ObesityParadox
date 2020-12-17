@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
-					<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
+					<parameter name="cd8Percentage" displayName="Percentage of CD8 Cells" type="float" 
+						defaultValue="0.05" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="tCellSpawnPercentage" displayName="Percentage of TCell to spawn" type="float" 
+						defaultValue="0.05" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="cd4Percentage" displayName="Percentage of CD4 Cells" type="float" 
+						defaultValue="0.05" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="cd4cd8Ratio" displayName="CD4 / CD8 Ratio" type="float" 
+						defaultValue="2.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="mastPercentage" displayName="Percentage of Mast Cells" type="float" 
+						defaultValue="0.1" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
 						defaultValue="__NULL__"
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
-				<parameter name="adipocytePercentage" displayName="Percentage of Mast Cells" type="float" 
+				<parameter name="rccPercentage" displayName="Percentage of RCC Cells" type="float" 
+						defaultValue="0.2" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="adipocytePercentage" displayName="Percentage of Adipocyte Cells" type="float" 
 						defaultValue="0.1" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
@@ -16,64 +46,34 @@
 						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
 												values="NORTH SOUTH WEST EAST "
 											/>
-				<parameter name="lymphNodeOrientation" displayName="Orientation of lymph node" type="java.lang.String" 
-						defaultValue="EAST" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
-												values="NORTH SOUTH WEST EAST "
-											/>
-				<parameter name="cd8Percentage" displayName="Percentage of CD8 Cells" type="float" 
-						defaultValue="0.1" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
-											/>
-				<parameter name="cd4Percentage" displayName="Percentage of CD4 Cells" type="float" 
-						defaultValue="0.1" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
-											/>
-				<parameter name="dendriticPercentage" displayName="Percentage of Dendritic Cells" type="float" 
-						defaultValue="0.1" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
-											/>
-				<parameter name="rccPercentage" displayName="Percentage of RCC Cells" type="float" 
-						defaultValue="0.3" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
-											/>
-				<parameter name="cd4cd8Ratio" displayName="CD4 / CD8 Ratio" type="float" 
-						defaultValue="2.0" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
-											/>
-				<parameter name="tCellSpawnPercentage" displayName="Percentage of TCell to spawn" type="float" 
-						defaultValue="0.1" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
-											/>
-				<parameter name="width" displayName="Grid Width" type="int" 
-						defaultValue="15" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
-											/>
-				<parameter name="mastPercentage" displayName="Percentage of Mast Cells" type="float" 
-						defaultValue="0.1" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
-											/>
-				<parameter name="height" displayName="Grid Height" type="int" 
-						defaultValue="15" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
-											/>
 				<parameter name="reproTime" displayName="Reproduction Time" type="int" 
 						defaultValue="5" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
+				<parameter name="lymphNodeOrientation" displayName="Orientation of lymph node" type="java.lang.String" 
+						defaultValue="NORTH" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+												values="NORTH SOUTH WEST EAST "
+											/>
+				<parameter name="dendriticPercentage" displayName="Percentage of Dendritic Cells" type="float" 
+						defaultValue="0.15" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="width" displayName="Grid Width" type="int" 
+						defaultValue="20" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+											/>
 				<parameter name="reproFactor" displayName="Reproduction Factor" type="int" 
 						defaultValue="1" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+											/>
+				<parameter name="height" displayName="Grid Height" type="int" 
+						defaultValue="20" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>

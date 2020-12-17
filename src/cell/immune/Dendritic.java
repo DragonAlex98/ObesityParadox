@@ -1,5 +1,6 @@
 package cell.immune;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -63,13 +64,13 @@ public class Dendritic extends Immune {
 	// to random spawn a number "tCellToSpawn" of Tcell
 	public void spawnTCell(List<EmptyCell> emptyCellsList, int tCellToSpawn) {
 		int numberOfCD8ToSpawn = (int) (tCellToSpawn / (1+cd4cd8ratio));
-		int numberOfCD4ToSpawn = tCellToSpawn - numberOfCD8ToSpawn;
+		Collections.shuffle(emptyCellsList);
 		for (int i = 0; i < numberOfCD8ToSpawn; i++) {
 			TCell newCD8 = new CD8(1000, this.grid, 3);
 			newCD8.setActive(true);
 			CellUtils.replaceCell(this.grid, emptyCellsList.get(i), newCD8);
 		}
-		for (int i = 0; i < numberOfCD4ToSpawn; i++) {
+		for (int i = numberOfCD8ToSpawn; i < tCellToSpawn; i++) {
 			TCell newCD4 = new CD4(1000, this.grid);
 			newCD4.setActive(true);
 			CellUtils.replaceCell(this.grid, emptyCellsList.get(i), newCD4);
@@ -103,6 +104,7 @@ public class Dendritic extends Immune {
 		
 		// remains active until it spawns tcells
 		if (isOnEdge()) { // on edge, spawn tcell
+			this.setActive(false);
 			List<EmptyCell> emptyCellsList = CellUtils.getSpecificCells(this.grid, this, EmptyCell.class)
 					.collect(Collectors.toList());
 			if (emptyCellsList.isEmpty()) {
@@ -112,13 +114,10 @@ public class Dendritic extends Immune {
 			if (numberOfTCellToSpawn <= 0) {
 				return;
 			}
-			System.out.println(numberOfTCellToSpawn);
 			int maxTCellToSpawn = random.nextInt(numberOfTCellToSpawn);
 			int tCellToSpawn = maxTCellToSpawn <= emptyCellsList.size() ? maxTCellToSpawn
 					: emptyCellsList.size();
 			spawnTCell(emptyCellsList, tCellToSpawn);
-
-			this.setActive(false);
 		}
 	}
 }

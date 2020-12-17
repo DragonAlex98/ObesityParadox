@@ -24,13 +24,12 @@ public abstract class Cell {
 	}
 
 	// check age and eventually die
-	@ScheduledMethod(start = 1, interval = 1)
+	@ScheduledMethod(start = 1, interval = 1, priority = 2)
 	public boolean checkAge() {
-		boolean dead = this.age == this.lifeSpan; // useful for debug??
-		if (dead) {
+		if (this.age == this.lifeSpan) {
 			this.die();
 		}
-		return dead;
+		return false;
 	}
 
 	// kill the cell
@@ -39,7 +38,7 @@ public abstract class Cell {
 		CellUtils.replaceCell(this.grid, this, deadCell);
 	}
 
-	@ScheduledMethod(start = 1, interval = 1)
+	@ScheduledMethod(start = 1, interval = 1, priority = 1)
 	public void increaseAge() {
 		if (this.isAlive()) {
 			this.age++;

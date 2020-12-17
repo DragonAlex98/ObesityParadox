@@ -1,12 +1,14 @@
 package cell.immune;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 import cell.Cell;
 import cell.DeadCell;
 import cell.notImmune.RenalCellCarcinoma;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.space.grid.Grid;
 import utils.CellUtils;
 
@@ -20,6 +22,8 @@ import utils.CellUtils;
  *
  */
 public class CD8 extends TCell {
+	
+	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 	
 	private double killProb;
 	
@@ -67,7 +71,7 @@ public class CD8 extends TCell {
 		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
 		
 		if (!rccList.isEmpty()) {
-			CellUtils.replaceCell(this.grid, rccList.get(0), new DeadCell(this.grid));
+			CellUtils.replaceCell(this.grid, rccList.get(random.nextInt(rccList.size())), new DeadCell(this.grid));
 		}
 	}
 

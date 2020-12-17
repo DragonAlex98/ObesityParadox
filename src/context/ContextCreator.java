@@ -2,6 +2,7 @@ package context;
 
 import java.util.Random;
 
+import cell.BloodCell;
 import cell.Cell;
 import cell.EmptyCell;
 import cell.immune.CD4;
@@ -38,6 +39,48 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		
 		Orientation bloodVesselOrientation = Orientation.valueOf(params.getString("bloodVesselOrientation"));
 		System.out.println("Orientamento vaso sanguigno: " + bloodVesselOrientation);
+		
+		int bloodCellsToCreate = 0;
+		switch (bloodVesselOrientation) {
+		case NORTH:
+			bloodCellsToCreate = grid.getDimensions().getWidth();
+			for (int i = 0; i < bloodCellsToCreate; i++) {
+				BloodCell bloodCell = new BloodCell(-1, grid);
+				context.add(bloodCell);
+				grid.moveTo(bloodCell, i, grid.getDimensions().getHeight()-1);
+				context.add(bloodCell);
+			}
+			break;
+		case SOUTH:
+			bloodCellsToCreate = grid.getDimensions().getWidth();
+			for (int i = 0; i < bloodCellsToCreate; i++) {
+				BloodCell bloodCell = new BloodCell(-1, grid);
+				context.add(bloodCell);
+				grid.moveTo(bloodCell, i, 0);
+				context.add(bloodCell);
+			}
+			break;
+		case WEST:
+			bloodCellsToCreate = grid.getDimensions().getHeight();
+			for (int i = 0; i < bloodCellsToCreate; i++) {
+				BloodCell bloodCell = new BloodCell(-1, grid);
+				context.add(bloodCell);
+				grid.moveTo(bloodCell, 0, i);
+				context.add(bloodCell);
+			}
+			break;
+		case EAST:
+			bloodCellsToCreate = grid.getDimensions().getHeight();
+			for (int i = 0; i < bloodCellsToCreate; i++) {
+				BloodCell bloodCell = new BloodCell(-1, grid);
+				context.add(bloodCell);
+				grid.moveTo(bloodCell, grid.getDimensions().getWidth()-1, i);
+				context.add(bloodCell);
+			}
+			break;
+		}
+		
+		System.out.println("Numero cellule Blood create: " + bloodCellsToCreate);
 		
 		Orientation lymphNodeOrientation = Orientation.valueOf(params.getString("lymphNodeOrientation"));
 		System.out.println("Orientamento linfonodo: " + lymphNodeOrientation);
@@ -83,7 +126,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		int dendriticCellsToCreate = (int)(size * dendriticPercentage);
 		System.out.println("Numero cellule Dendritic da creare: " + dendriticCellsToCreate);
 		
-		int left = size - cd8CellsToCreate - mastCellsToCreate - adipocyteCellsToCreate - rccCellsToCreate - cd4CellsToCreate - dendriticCellsToCreate;
+		int left = size - cd8CellsToCreate - mastCellsToCreate - adipocyteCellsToCreate - rccCellsToCreate - cd4CellsToCreate - dendriticCellsToCreate - bloodCellsToCreate;
 		
 		if (left < 0) {
 			System.out.println("Numero di cellule da creare maggiore del numero di celle della griglia!");
