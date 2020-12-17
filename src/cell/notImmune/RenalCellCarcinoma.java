@@ -4,6 +4,7 @@ import java.util.List;
 
 import cell.Cell;
 import cell.immune.MastCell;
+import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.grid.Grid;
 import utils.CellUtils;
 
@@ -24,6 +25,7 @@ public class RenalCellCarcinoma extends NotImmune {
 	// TODO Can RCC dead? How can it reproduce?
 
 	// check the time to reproduce or the presence of a Mast Cell
+	@ScheduledMethod(start = 1, interval = 1)
 	public void grow() {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
 		if (this.getAge() % reproTime == 0) {

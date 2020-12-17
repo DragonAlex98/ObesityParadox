@@ -4,9 +4,12 @@ import java.util.Random;
 
 import cell.Cell;
 import cell.EmptyCell;
+import cell.immune.CD4;
 import cell.immune.CD8;
+import cell.immune.Dendritic;
 import cell.immune.MastCell;
 import cell.notImmune.Adipocyte;
+import cell.notImmune.RenalCellCarcinoma;
 import repast.simphony.context.Context;
 import repast.simphony.context.space.grid.GridFactory;
 import repast.simphony.context.space.grid.GridFactoryFinder;
@@ -39,6 +42,12 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		Orientation lymphNodeOrientation = Orientation.valueOf(params.getString("lymphNodeOrientation"));
 		System.out.println("Orientamento linfonodo: " + lymphNodeOrientation);
 		
+		int reproTime = params.getInteger("reproTime");
+		System.out.println("Tempo riproduzione tumore: " + reproTime);
+		
+		int reproFactor = params.getInteger("reproFactor");
+		System.out.println("Fattore riproduzione tumore: " + reproFactor);
+		
 		if (bloodVesselOrientation == lymphNodeOrientation) {
 			System.out.println("Il vaso sanguigno non si può trovare nella stessa direzione del linfonodo!");
 			return null;
@@ -59,7 +68,22 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		int adipocyteCellsToCreate = (int)(size * adipocytePercentage);
 		System.out.println("Numero cellule Adipocyte da creare: " + adipocyteCellsToCreate);
 		
-		int left = size - cd8CellsToCreate - mastCellsToCreate - adipocyteCellsToCreate;
+		float rccPercentage = params.getFloat("rccPercentage");
+		System.out.println("Percentuale cellule RCC: " + rccPercentage*100 + "%");
+		int rccCellsToCreate = (int)(size * rccPercentage);
+		System.out.println("Numero cellule RCC da creare: " + rccCellsToCreate);
+
+		float cd4Percentage = params.getFloat("cd4Percentage");
+		System.out.println("Percentuale cellule CD4: " + cd4Percentage*100 + "%");
+		int cd4CellsToCreate = (int)(size * cd4Percentage);
+		System.out.println("Numero cellule CD4 da creare: " + cd4CellsToCreate);
+
+		float dendriticPercentage = params.getFloat("dendriticPercentage");
+		System.out.println("Percentuale cellule Dendritic: " + dendriticPercentage*100 + "%");
+		int dendriticCellsToCreate = (int)(size * dendriticPercentage);
+		System.out.println("Numero cellule Dendritic da creare: " + dendriticCellsToCreate);
+		
+		int left = size - cd8CellsToCreate - mastCellsToCreate - adipocyteCellsToCreate - rccCellsToCreate - cd4CellsToCreate - dendriticCellsToCreate;
 		
 		if (left < 0) {
 			System.out.println("Numero di cellule da creare maggiore del numero di celle della griglia!");
@@ -105,6 +129,42 @@ public class ContextCreator implements ContextBuilder<Cell> {
 				y = random.nextInt(grid.getDimensions().getHeight());
 			} while (!grid.moveTo(adipocyte, x, y));
 			context.add(adipocyte);
+		}
+		
+		for (int i = 0; i < rccCellsToCreate; i++) {
+			RenalCellCarcinoma rcc = new RenalCellCarcinoma(10, grid, reproTime, reproFactor);
+			context.add(rcc);
+			int x;
+			int y;
+			do {
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(rcc, x, y));
+			context.add(rcc);
+		}
+		
+		for (int i = 0; i < cd4CellsToCreate; i++) {
+			CD4 cd4 = new CD4(10, grid);
+			context.add(cd4);
+			int x;
+			int y;
+			do {
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(cd4, x, y));
+			context.add(cd4);
+		}
+		
+		for (int i = 0; i < dendriticCellsToCreate; i++) {
+			Dendritic dendritic = new Dendritic(10, grid);
+			context.add(dendritic);
+			int x;
+			int y;
+			do {
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(dendritic, x, y));
+			context.add(dendritic);
 		}
 		
 		int emptyCellsToCreate = 0;

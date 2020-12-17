@@ -33,9 +33,9 @@ public class CD8 extends TCell {
 	 * Otherwise it moves towards the nearest RCC cell.
 	 */
 	@Override
-	public void moveTo() {
+	public void move() {
 		if (!this.isActive()) {
-			super.moveTo();
+			super.move();
 			return;
 		}
 	
@@ -61,7 +61,7 @@ public class CD8 extends TCell {
 	 * Kills a RCC near to this cell.
 	 */
 	@Override
-	public void act() {
+	public void actIfActive() {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.grid, this);
 		
 		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
@@ -78,5 +78,4 @@ public class CD8 extends TCell {
 	public void setKillProb(double killProb) {
 		this.killProb = killProb;
 	}
-
 }

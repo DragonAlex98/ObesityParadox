@@ -6,6 +6,18 @@
   	  <string>cell.immune.CD8</string>
   	  <string>styles.CD8Style</string>
   	</entry>
+  	<entry>
+  	  <string>cell.immune.CD4</string>
+  	  <string>styles.CD4Style</string>
+  	</entry>
+  	<entry>
+  	  <string>cell.immune.Dendritic</string>
+  	  <string>styles.DendriticStyle</string>
+  	</entry>
+  	<entry>
+  	  <string>cell.notImmune.RenalCellCarcinoma</string>
+  	  <string>styles.RCCStyle</string>
+  	</entry>
     <entry>
       <string>cell.immune.MastCell</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
@@ -20,6 +32,18 @@
       <string>cell.immune.CD8</string>
       <null/>
     </entry>
+    <entry>
+      <string>cell.immune.CD4</string>
+      <null/>
+    </entry>
+    <entry>
+      <string>cell.immune.Dendritic</string>
+      <null/>
+    </entry>
+    <entry>
+  	  <string>cell.notImmune.RenalCellCarcinoma</string>
+  	  <null/>
+  	</entry>
     <entry>
       <string>cell.immune.MastCell</string>
       <string>GameOfLifeProva.Dead.style_0.xml</string>
@@ -55,6 +79,18 @@
     <entry>
       <string>cell.notImmune.Adipocyte</string>
       <int>2</int>
+    </entry>
+    <entry>
+      <string>cell.notImmune.RenalCellCarcinoma</string>
+      <int>3</int>
+    </entry>
+    <entry>
+      <string>cell.immune.Dendritic</string>
+      <int>4</int>
+    </entry>
+    <entry>
+      <string>cell.immune.CD4</string>
+      <int>5</int>
     </entry>
   </layerOrder>
   <projections>

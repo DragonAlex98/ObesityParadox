@@ -13,7 +13,7 @@ public class NKCell extends Immune{
 	}
 
 	@Override
-	public void act() {
+	public void actIfActive() {
 		// TODO Auto-generated method stub
 		
 	}

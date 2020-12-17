@@ -46,7 +46,7 @@ public class CellUtils {
 		grid.moveTo(emptyCell, oldPoint.getX(), oldPoint.getY());
 		context.add(emptyCell);
 		
-		System.out.println("Spostata cellula da: (" + oldPoint.getX() + ", " + oldPoint.getY() + ") a (" + newPoint.getX() + ", " + newPoint.getY() + ")");
+		//System.out.println("Spostata cellula da: (" + oldPoint.getX() + ", " + oldPoint.getY() + ") a (" + newPoint.getX() + ", " + newPoint.getY() + ")");
 	}
 
 	// method to replace a cell with another

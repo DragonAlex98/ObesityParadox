@@ -10,7 +10,7 @@ public class Th1 extends TCell {
 	}
 
 	@Override
-	public void act() {
+	public void actIfActive() {
 		// TODO Auto-generated method stub
 		
 	}
