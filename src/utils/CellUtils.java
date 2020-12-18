@@ -7,6 +7,9 @@ import java.util.stream.Stream;
 
 import cell.Cell;
 import cell.EmptyCell;
+import cell.immune.CD8;
+import cell.immune.Immune;
+import cell.immune.M1;
 import repast.simphony.context.Context;
 import repast.simphony.query.space.grid.MooreQuery;
 import repast.simphony.space.grid.Grid;
@@ -124,5 +127,52 @@ public class CellUtils {
 		
 		if (bestEmptyCell.get() != null)
 			moveCell(grid, caller, bestEmptyCell.get());
+	}
+	
+	/**
+	 * Simulate the release of a general substance within a specified distance and the activation of
+	 * an immune cell as a consequence of this release.
+	 * 
+	 * @param <T> Type of object calling this method.
+	 * @param <S> Type of cell to stimulate.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param cellTypeToStimulate The cell type to stimulate.
+	 * @param distance The distance within which the immune cells specified are activated.
+	 */
+	private static <T extends Cell, S extends Immune> void releaseSubstanceWithinDistance(Grid<Cell> grid, T caller, Class<S> cellTypeToStimulate, Double distance) {
+		// Questo metodo è privato perché per ora non ha utilità al di fuori di qui.
+		Stream<S> cellList = CellUtils.getSpecificCells(grid, caller, cellTypeToStimulate);
+		
+		if (cellList.count() != 0) {
+			cellList.filter(element -> grid.getDistance(grid.getLocation(caller), grid.getLocation(element)) <= distance);
+			if (cellList.count() != 0) {
+				cellList.forEach(element -> element.setActive(true));
+			}
+		}
+	}
+	
+	/**
+	 * Simulate the release of IFN-gamma, stimulating macrophages living within the specified distance.
+	 * 
+	 * @param <T> Type of object calling this method.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param distance The distance within which the macrophages cells are activated.
+	 */
+	public static <T extends Cell> void releaseIFNGamma(Grid<Cell> grid, T caller, Double distance) {
+		releaseSubstanceWithinDistance(grid, caller, M1.class, distance);
+	}
+	
+	/**
+	 * Simulate the release of TNF-beta, stimulating CD8+ T Cells living within the specified distance.
+	 * 
+	 * @param <T> Type of object calling this method.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param distance The distance within which the CD8+ T Cells are activated.
+	 */
+	public static <T extends Cell> void releaseTNFBeta(Grid<Cell> grid, T caller, Double distance) {
+		releaseSubstanceWithinDistance(grid, caller, CD8.class, distance);
 	}
 }
