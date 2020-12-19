@@ -14,34 +14,47 @@ import repast.simphony.space.grid.GridDimensions;
 import repast.simphony.space.grid.GridPoint;
 import utils.CellUtils;
 
+/**
+ * @author Marco
+ *
+ */
 public class Dendritic extends Immune {
-
+	
+	// ratio CD4/CD8
 	private static float cd4cd8ratio = RunEnvironment.getInstance().getParameters().getFloat("cd4cd8Ratio");
-
-	private static Orientation lymphNodeOrientation = Orientation.valueOf(RunEnvironment.getInstance().getParameters().getString("lymphNodeOrientation"));
+	
+	// the lymph node orientation
+	private static Orientation lymphNodeOrientation = Orientation
+			.valueOf(RunEnvironment.getInstance().getParameters().getString("lymphNodeOrientation"));
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
-
-	private static float tCellSpawnPercentage = RunEnvironment.getInstance().getParameters().getFloat("tCellSpawnPercentage");
+	
+	// max number of Tcell on the grid
+	private static float tCellSpawnPercentage = RunEnvironment.getInstance().getParameters()
+			.getFloat("tCellSpawnPercentage");
 
 	public Dendritic(int lifespan, Grid<Cell> grid) {
 		super(lifespan, grid);
 	}
 
+	/**
+	 * If I am active I move towards the lymph node
+	 */
 	@Override
 	public void move() {
 		if (this.isActive()) {
-			// only active, move to lymph node
 			GridPoint gpt = getTarget();
 			CellUtils.moveTowards(this.grid, this, gpt);
 			return;
 		}
-
-		// not active, random move to
 		super.move();
 	}
 
-	// to get the X Y of the lymph node
+	/**
+	 * To get the X Y of the lymph node, depend on lymphNodeOrientation
+	 * 
+	 * @return The GridPoinf of the lymph node
+	 */
 	private GridPoint getTarget() {
 		GridPoint gpt = null;
 		switch (lymphNodeOrientation) {
@@ -49,7 +62,7 @@ public class Dendritic extends Immune {
 			gpt = new GridPoint(this.grid.getLocation(this).getX(), this.grid.getDimensions().getHeight());
 			break;
 		case EAST:
-			gpt = new GridPoint(this.grid.getDimensions().getWidth(), this.grid.getLocation(this).getY() );
+			gpt = new GridPoint(this.grid.getDimensions().getWidth(), this.grid.getLocation(this).getY());
 			break;
 		case SOUTH:
 			gpt = new GridPoint(this.grid.getLocation(this).getX(), -1);
@@ -61,9 +74,15 @@ public class Dendritic extends Immune {
 		return gpt;
 	}
 
-	// to random spawn a number "tCellToSpawn" of Tcell
+	//
+	/**
+	 * To random spawn a number "tCellToSpawn" of CD8 and CD4
+	 * 
+	 * @param emptyCellsList The empty cell list
+	 * @param tCellToSpawn   Number of Tcell to spawn
+	 */
 	public void spawnTCell(List<EmptyCell> emptyCellsList, int tCellToSpawn) {
-		int numberOfCD8ToSpawn = (int) (tCellToSpawn / (1+cd4cd8ratio));
+		int numberOfCD8ToSpawn = (int) (tCellToSpawn / (1 + cd4cd8ratio));
 		Collections.shuffle(emptyCellsList);
 		for (int i = 0; i < numberOfCD8ToSpawn; i++) {
 			TCell newCD8 = new CD8(1000, this.grid, 3);
@@ -77,7 +96,12 @@ public class Dendritic extends Immune {
 		}
 	}
 
-	// to retrieve the max number of Tcell to spawn
+	/**
+	 * To retrieve the max number of Tcell to spawn, depends on the grid dimension
+	 * and current Tcell
+	 * 
+	 * @return The max number of Tcell to spawn
+	 */
 	private Long tCellToSpawn() {
 		long tCellNumber = CellUtils.getSpecificCells(this.grid, this, TCell.class).count();
 		GridDimensions dim = this.grid.getDimensions();
@@ -85,7 +109,11 @@ public class Dendritic extends Immune {
 		return tCellMaxNumber;
 	}
 
-	// check if I am on the edge
+	/**
+	 * Check if I am on the edge, depends on lymphNodeOrientation
+	 * 
+	 * @return True is I am on edge
+	 */
 	private boolean isOnEdge() {
 		return (lymphNodeOrientation == Orientation.NORTH && this.getGrid().getLocation(this).getY() == this.getGrid().getDimensions().getHeight() - 1)
 				|| (lymphNodeOrientation == Orientation.SOUTH && this.getGrid().getLocation(this).getY() == 0)
@@ -93,7 +121,11 @@ public class Dendritic extends Immune {
 				|| (lymphNodeOrientation == Orientation.EAST && this.getGrid().getLocation(this).getX() == this.getGrid().getDimensions().getWidth() - 1);
 	}
 
-	// check for RCC, if an RCC is detected I become mature
+	/**
+	 * If I am active dendritic I look for the nearest Tcell to set them as active.
+	 *
+	 * If I am on edge I become not active and spawn Tcell
+	 */
 	@Override
 	public void actIfActive() {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
@@ -101,10 +133,9 @@ public class Dendritic extends Immune {
 		if (!tCellList.isEmpty()) {
 			tCellList.forEach(t -> t.setActive(true));
 		}
-		
-		// remains active until it spawns tcells
-		if (isOnEdge()) { // on edge, spawn tcell
-			this.setActive(false);
+
+		if (isOnEdge()) {
+			this.setActive(false); // no empty cell no spawn
 			List<EmptyCell> emptyCellsList = CellUtils.getSpecificCells(this.grid, this, EmptyCell.class)
 					.collect(Collectors.toList());
 			if (emptyCellsList.isEmpty()) {
@@ -113,10 +144,9 @@ public class Dendritic extends Immune {
 			int numberOfTCellToSpawn = tCellToSpawn().intValue();
 			if (numberOfTCellToSpawn <= 0) {
 				return;
-			}
+			} // random value of Tcell to spwan, from 0 to "numberOfTCellToSpawn"
 			int maxTCellToSpawn = random.nextInt(numberOfTCellToSpawn);
-			int tCellToSpawn = maxTCellToSpawn <= emptyCellsList.size() ? maxTCellToSpawn
-					: emptyCellsList.size();
+			int tCellToSpawn = maxTCellToSpawn <= emptyCellsList.size() ? maxTCellToSpawn : emptyCellsList.size();
 			spawnTCell(emptyCellsList, tCellToSpawn);
 		}
 	}
