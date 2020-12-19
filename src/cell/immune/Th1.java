@@ -34,6 +34,8 @@ public class Th1 extends TCell {
 		
 		CellUtils.releaseIFNGamma(grid, this, 5.0);
 		CellUtils.releaseTNFBeta(grid, this, 5.0);
+		
+		this.setActive(false);
 	}
 
 }
