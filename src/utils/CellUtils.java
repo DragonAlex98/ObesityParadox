@@ -40,7 +40,6 @@ public class CellUtils {
 	@SuppressWarnings("unchecked")
 	public static <T extends Cell> void moveCell(Grid<Cell> grid, T cellToMove, EmptyCell emptyCellToMoveTo) {
 		GridPoint oldPoint = grid.getLocation(cellToMove);
-		GridPoint newPoint = grid.getLocation(emptyCellToMoveTo);
 		Context<Cell> context = ContextUtils.getContext(cellToMove);
 		replaceCell(grid, emptyCellToMoveTo, cellToMove);
 		
@@ -48,8 +47,6 @@ public class CellUtils {
 		context.add(emptyCell);
 		grid.moveTo(emptyCell, oldPoint.getX(), oldPoint.getY());
 		context.add(emptyCell);
-		
-		//System.out.println("Spostata cellula da: (" + oldPoint.getX() + ", " + oldPoint.getY() + ") a (" + newPoint.getX() + ", " + newPoint.getY() + ")");
 	}
 
 	// method to replace a cell with another
@@ -143,13 +140,7 @@ public class CellUtils {
 	private static <T extends Cell, S extends Immune> void releaseSubstanceWithinDistance(Grid<Cell> grid, T caller, Class<S> cellTypeToStimulate, Double distance) {
 		// Questo metodo è privato perché per ora non ha utilità al di fuori di qui.
 		Stream<S> cellList = CellUtils.getSpecificCells(grid, caller, cellTypeToStimulate);
-		
-		if (cellList.count() != 0) {
-			cellList.filter(element -> grid.getDistance(grid.getLocation(caller), grid.getLocation(element)) <= distance);
-			if (cellList.count() != 0) {
-				cellList.forEach(element -> element.setActive(true));
-			}
-		}
+		cellList.filter(element -> grid.getDistance(grid.getLocation(caller), grid.getLocation(element)) <= distance).forEach(element -> element.setActive(true));
 	}
 	
 	/**
