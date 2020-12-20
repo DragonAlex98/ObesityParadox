@@ -30,7 +30,7 @@ public class MastCell extends Immune {
 	private boolean proTumor;
 
 	// percentage of become pro tumor
-	private double proTumorPercentage = 0.5;
+	private float proTumorPercentage = 0.5f;
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
@@ -47,6 +47,7 @@ public class MastCell extends Immune {
 	public void actIfActive() {
 		if (!proTumor) {
 			CellUtils.releaseMediators(this.grid, this, 5.0);
+			this.setActive(false);
 		}
 	}
 
@@ -60,7 +61,8 @@ public class MastCell extends Immune {
 		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
 		if (!rccList.isEmpty() && rccList.stream().filter(rcc -> !rcc.isSelf()).findAny().isPresent()) {
 			this.setActive(true);
-			double randomProTumor = random.nextDouble();
+			// TODO is it correct?? or it must be moved into the constructor??
+			float randomProTumor = random.nextFloat();
 			if (randomProTumor < proTumorPercentage) {
 				this.proTumor = true;
 			}

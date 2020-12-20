@@ -20,7 +20,7 @@ public class RenalCellCarcinoma extends NotImmune {
 	private int reproFactor = 0;
 	
 	// percentage of mutation, to simulate the fact that I can hide from the immune system
-	private double mutationPercentage = 0.20;
+	private float mutationPercentage = 0.20f;
 	
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
@@ -58,7 +58,7 @@ public class RenalCellCarcinoma extends NotImmune {
 			for (int i = 0; i < count; i++) {
 				RenalCellCarcinoma rcc = new RenalCellCarcinoma(this.getLifespan(), this.getGrid(), this.reproTime,
 						this.reproFactor);
-				double mutation = random.nextDouble();
+				float mutation = random.nextFloat();
 				if(mutation < mutationPercentage) {
 					rcc.setSelf(true);
 				}
