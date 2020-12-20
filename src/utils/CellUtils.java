@@ -8,8 +8,10 @@ import java.util.stream.Stream;
 import cell.Cell;
 import cell.EmptyCell;
 import cell.immune.CD8;
+import cell.immune.Dendritic;
 import cell.immune.Immune;
 import cell.immune.M1;
+import cell.immune.TCell;
 import repast.simphony.context.Context;
 import repast.simphony.query.space.grid.MooreQuery;
 import repast.simphony.space.grid.Grid;
@@ -166,4 +168,29 @@ public class CellUtils {
 	public static <T extends Cell> void releaseTNFBeta(Grid<Cell> grid, T caller, Double distance) {
 		releaseSubstanceWithinDistance(grid, caller, CD8.class, distance);
 	}
+	
+	/**
+	 * Simulate the release of TNF-aplha, stimulating Dendritic Cells living within the specified distance.
+	 * 
+	 * @param <T> Type of object calling this method.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param distance The distance within which the CD8+ T Cells are activated.
+	 */
+	public static <T extends Cell> void releaseTNFAlpha(Grid<Cell> grid, T caller, Double distance) {
+		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, distance);
+	}
+	
+	/**
+	 * Simulate the release of Mast Cell mediators, stimulating T Cells living within the specified distance.
+	 * 
+	 * @param <T> Type of object calling this method.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param distance The distance within which the CD8+ T Cells are activated.
+	 */
+	public static <T extends Cell> void releaseMediators(Grid<Cell> grid, T caller, Double distance) {
+		releaseSubstanceWithinDistance(grid, caller, TCell.class, distance);
+	}
+
 }
