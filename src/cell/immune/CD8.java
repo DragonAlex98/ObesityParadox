@@ -27,9 +27,9 @@ public class CD8 extends TCell {
 	
 	private double killProb;
 	
-	public CD8(int lifespan, Grid<Cell> grid, double kill_prob) {
+	public CD8(int lifespan, Grid<Cell> grid, double killProb) {
 		super(lifespan, grid);
-		this.killProb = kill_prob;
+		this.killProb = killProb;
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class CD8 extends TCell {
 		if (nearestRcc.get() != null)
 			CellUtils.moveTowards(this.grid, this, nearestRcc.get());
 	}
-	
+
 	/**
 	 * Kills a RCC near to this cell.
 	 */
@@ -70,8 +70,11 @@ public class CD8 extends TCell {
 		
 		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
 		
+		rccList.removeIf(r -> r.isSelf());
 		if (!rccList.isEmpty()) {
-			CellUtils.replaceCell(this.grid, rccList.get(random.nextInt(rccList.size())), new DeadCell(this.grid));
+			if (random.nextFloat() < killProb) {
+				CellUtils.replaceCell(this.grid, rccList.get(random.nextInt(rccList.size())), new DeadCell(this.grid));				
+			}
 		}
 	}
 

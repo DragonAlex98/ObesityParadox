@@ -6,6 +6,7 @@ import java.util.Random;
 import cell.Cell;
 import cell.EmptyCell;
 import cell.immune.MastCell;
+import cell.immune.TCell;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.grid.Grid;
@@ -31,11 +32,25 @@ public class RenalCellCarcinoma extends NotImmune {
 		// I'm foreign by default
 		this.setSelf(false);
 	}
-	
-	// TODO how to disable Immune Cell
+
+	// method to disable TCells with a 50/50 probability
+	@ScheduledMethod(start = 1, interval = 1, priority = 3)
+	public void disableTCells() {
+		if (this.isSelf()) {
+			return;
+		}
+		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
+		List<TCell> immuneList = CellUtils.filterNeighbors(neighbors, TCell.class);
+		immuneList.stream().filter(i -> i.isActive()).forEach(i -> {
+			int r = random.nextInt(2);
+			if (r == 0) {
+				i.setActive(false);				
+			}
+		});
+	}
 
 	// grow method to check the time to reproduce or the presence of a pro Tumor Mast Cell
-	@ScheduledMethod(start = 1, interval = 1)
+	@ScheduledMethod(start = 1, interval = 1, priority = 4)
 	public void grow() {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
 		if (this.getAge() % reproTime == 0) {
@@ -59,7 +74,7 @@ public class RenalCellCarcinoma extends NotImmune {
 				RenalCellCarcinoma rcc = new RenalCellCarcinoma(this.getLifespan(), this.getGrid(), this.reproTime,
 						this.reproFactor);
 				float mutation = random.nextFloat();
-				if(mutation < mutationPercentage) {
+				if (mutation < mutationPercentage) {
 					rcc.setSelf(true);
 				}
 				CellUtils.replaceCell(this.getGrid(), list.get(i), rcc);
