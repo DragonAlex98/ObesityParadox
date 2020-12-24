@@ -38,9 +38,6 @@ public class CD4 extends TCell {
 		if (r == 0) {
 			CellUtils.replaceCell(grid, this, new Th1(1000, grid));
 		}
-		if (r == 1) {
-			CellUtils.replaceCell(grid, this, new Th2(1000, grid));
-		}
 		if (r == 2) {
 			CellUtils.replaceCell(grid, this, new Treg(1000, grid));
 		}

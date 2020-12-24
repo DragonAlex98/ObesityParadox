@@ -8,8 +8,12 @@ import java.util.stream.Stream;
 import cell.Cell;
 import cell.EmptyCell;
 import cell.immune.CD8;
+import cell.immune.Dendritic;
 import cell.immune.Immune;
 import cell.immune.M1;
+import cell.immune.PlasmacitoidDendritic;
+import cell.immune.TCell;
+import cell.immune.Th1;
 import repast.simphony.context.Context;
 import repast.simphony.query.space.grid.MooreQuery;
 import repast.simphony.space.grid.Grid;
@@ -145,7 +149,7 @@ public class CellUtils {
 		Stream<S> cellList = CellUtils.getSpecificCells(grid, caller, cellTypeToStimulate);
 		
 		if (cellList.count() != 0) {
-			cellList.filter(element -> grid.getDistance(grid.getLocation(caller), grid.getLocation(element)) <= distance);
+			cellList = cellList.filter(element -> grid.getDistance(grid.getLocation(caller), grid.getLocation(element)) <= distance);
 			if (cellList.count() != 0) {
 				cellList.forEach(element -> element.setActive(true));
 			}
@@ -174,5 +178,39 @@ public class CellUtils {
 	 */
 	public static <T extends Cell> void releaseTNFBeta(Grid<Cell> grid, T caller, Double distance) {
 		releaseSubstanceWithinDistance(grid, caller, CD8.class, distance);
+	}
+	
+	/**
+	 * Simulate the release of TGF-beta, suppressing T Cells proliferation and activation (and differentiation).
+	 * 
+	 * @param <T> Type of object calling this method.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param distance The distance within which the T Cells are suppressed.
+	 */
+	public static <T extends Cell> void releaseTGFbeta(Grid<Cell> grid, T caller, Double distance) {
+		// inibisce l'attivazione delle t cells
+		releaseSubstanceWithinDistance(grid, caller, TCell.class, distance);
+		
+		// sopprime la proliferazione delle cellule
+		// TODO gestire questa cosa quando verrà implementata la proliferazione
+	}
+	
+	/**
+	 * Simulate the release of IL-10, suppressing macrophages, dendritic cells and Th1 cells.
+	 * 
+	 * @param <T> Type of object calling this method.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param distance The distance within which the macrophages, dendritic cells and Th1 cells are suppressed.
+	 */
+	public static <T extends Cell> void releaseIL10(Grid<Cell> grid, T caller, Double distance) {
+		// TODO aggiungere M2 quando saranno presenti
+		releaseSubstanceWithinDistance(grid, caller, M1.class, distance);
+		releaseSubstanceWithinDistance(grid, caller, Th1.class, distance);
+		
+		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, distance);
+		releaseSubstanceWithinDistance(grid, caller, PlasmacitoidDendritic.class, distance);
+		
 	}
 }
