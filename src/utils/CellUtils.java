@@ -2,6 +2,7 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
@@ -14,6 +15,7 @@ import cell.immune.M1;
 import cell.immune.PlasmacitoidDendritic;
 import cell.immune.TCell;
 import cell.immune.Th1;
+import cell.notImmune.RenalCellCarcinoma;
 import repast.simphony.context.Context;
 import repast.simphony.query.space.grid.MooreQuery;
 import repast.simphony.space.grid.Grid;
@@ -27,6 +29,38 @@ public class CellUtils {
 		MooreQuery<Cell> query = new MooreQuery<Cell>(grid, cell);
 		Iterable<Cell> neighbors = query.query();
 		return neighbors;
+	}
+	
+	/**
+	 * Returns true if the caller has some cell of the specified type in its neighbor.
+	 * 
+	 * @param <T> Type of the caller.
+	 * @param <S> Type of the cell to find.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param cls
+	 * @return True if there are neighbor of type S near T.
+	 */
+	public static <T extends Cell, S extends Cell> boolean hasSpecificCellsNearby(Grid<Cell> grid, T caller, Class<S> cls) {
+		Iterable<Cell> neighbors = CellUtils.getNeighbors(grid, caller);
+		List<S> rccList = CellUtils.filterNeighbors(neighbors, cls);
+		
+		return !rccList.isEmpty();
+	}
+	
+	/**
+	 * Returns the list of neighbor of the caller cell that are of the specific type.
+	 * 
+	 * @param <T> Type of the caller.
+	 * @param <S> Type of the cell to find.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param cls The cell type to look for.
+	 * @return The {@code List} of S that are neighbor of T.
+	 */
+	public static <T extends Cell, S extends Cell> List<S> getSpecificCellsNearby(Grid<Cell> grid, T caller, Class<S> cls) {
+		Iterable<Cell> neighbors = CellUtils.getNeighbors(grid, caller);
+		return CellUtils.filterNeighbors(neighbors, cls);
 	}
 
 	// list neighbors of a certain Class

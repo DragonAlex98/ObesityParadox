@@ -85,4 +85,11 @@ public class CD8 extends TCell {
 	public void setKillProb(double killProb) {
 		this.killProb = killProb;
 	}
+	
+	@Override
+	protected CD8 clone() throws CloneNotSupportedException {
+		CD8 cell = (CD8) super.clone();
+		cell.setKillProb(0);
+		return cell;
+	}
 }

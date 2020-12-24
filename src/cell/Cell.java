@@ -91,4 +91,11 @@ public abstract class Cell {
 		this.age = age;
 	}
 
+	@Override
+	public String toString() {
+		return "Cell [lifeSpan=" + lifeSpan + ", age=" + age + ", self=" + self + "]";
+	}
+	
+	
+
 }

@@ -1,6 +1,8 @@
 package cell.immune;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import cell.Cell;
@@ -11,21 +13,44 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.grid.Grid;
 import utils.CellUtils;
 
-public abstract class Immune extends Cell {
+public abstract class Immune extends Cell implements Cloneable {
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
 	// by default I am not active, If true I can act
 	private boolean active = false;
+	
+	private int cellGrowth = (int) (0.66 * this.getLifespan());
 
 	public Immune(int lifespan, Grid<Cell> grid) {
 		super(lifespan, grid);
+	}
+	
+	private boolean checkProliferation() {
+		if (this.getAge() % this.cellGrowth == 0)
+			return true;
+		
+		return false;
+	}
+	
+	//@ScheduledMethod(start = 1, interval = 1, priority = 1)
+	public void proliferate() {
+		if (this.checkProliferation()) {
+			List<EmptyCell> eCells = CellUtils.getSpecificCellsNearby(grid, this, EmptyCell.class);
+			if (!eCells.isEmpty()) {
+				try {
+					CellUtils.replaceCell(grid, eCells.get(0), this.clone());
+				} catch (CloneNotSupportedException e) {
+					System.out.println("Impossibile clonare la cellula");
+				}
+			}
+		}
 	}
 
 	/**
 	 * Move randomly to a near empty position
 	 */
-	@ScheduledMethod(start = 1, interval = 1, priority = 1)
+	@ScheduledMethod(start = 1, interval = 1, priority = 2)
 	public void move() {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
 		List<EmptyCell> emptyCells = CellUtils.filterNeighbors(neighbors, EmptyCell.class);
@@ -39,7 +64,7 @@ public abstract class Immune extends Cell {
 	/**
 	 * Triggers the effect of the cell.
 	 */
-	@ScheduledMethod(start = 1, interval = 1, priority = 2)
+	@ScheduledMethod(start = 1, interval = 1, priority = 3)
 	public void act() {
 		if (!this.active) {
 			actIfNotActive();
@@ -73,4 +98,14 @@ public abstract class Immune extends Cell {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	
+	@Override
+	protected Immune clone() throws CloneNotSupportedException {
+		Immune cell = (Immune) super.clone();
+		cell.setActive(false);
+		cell.setAge(0);
+		cell.setSelf(true);
+		return cell;
+	}
+	
 }
