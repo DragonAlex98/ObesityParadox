@@ -2,7 +2,6 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
@@ -15,7 +14,6 @@ import cell.immune.M1;
 import cell.immune.PlasmacitoidDendritic;
 import cell.immune.TCell;
 import cell.immune.Th1;
-import cell.notImmune.RenalCellCarcinoma;
 import repast.simphony.context.Context;
 import repast.simphony.query.space.grid.MooreQuery;
 import repast.simphony.space.grid.Grid;
@@ -78,7 +76,7 @@ public class CellUtils {
 	@SuppressWarnings("unchecked")
 	public static <T extends Cell> void moveCell(Grid<Cell> grid, T cellToMove, EmptyCell emptyCellToMoveTo) {
 		GridPoint oldPoint = grid.getLocation(cellToMove);
-		GridPoint newPoint = grid.getLocation(emptyCellToMoveTo);
+		//GridPoint newPoint = grid.getLocation(emptyCellToMoveTo);
 		Context<Cell> context = ContextUtils.getContext(cellToMove);
 		replaceCell(grid, emptyCellToMoveTo, cellToMove);
 		

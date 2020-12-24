@@ -1,8 +1,6 @@
 package cell.immune;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 import cell.Cell;
