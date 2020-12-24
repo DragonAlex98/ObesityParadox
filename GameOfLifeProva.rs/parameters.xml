@@ -40,6 +40,11 @@
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
+				<parameter name="th1Percentage" displayName="Percentage of Th1 Cells" type="float" 
+						defaultValue="0.1" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
 				<parameter name="bloodVesselOrientation" displayName="Orientation of blood vessel" type="java.lang.String" 
 						defaultValue="SOUTH" 
 						isReadOnly="false" 

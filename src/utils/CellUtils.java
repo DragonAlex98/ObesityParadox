@@ -147,13 +147,7 @@ public class CellUtils {
 	private static <T extends Cell, S extends Immune> void releaseSubstanceWithinDistance(Grid<Cell> grid, T caller, Class<S> cellTypeToStimulate, Double distance) {
 		// Questo metodo è privato perché per ora non ha utilità al di fuori di qui.
 		Stream<S> cellList = CellUtils.getSpecificCells(grid, caller, cellTypeToStimulate);
-		
-		if (cellList.count() != 0) {
-			cellList = cellList.filter(element -> grid.getDistance(grid.getLocation(caller), grid.getLocation(element)) <= distance);
-			if (cellList.count() != 0) {
-				cellList.forEach(element -> element.setActive(true));
-			}
-		}
+		cellList.filter(element -> grid.getDistance(grid.getLocation(caller), grid.getLocation(element)) <= distance).forEach(element -> element.setActive(true));
 	}
 	
 	/**
@@ -179,7 +173,31 @@ public class CellUtils {
 	public static <T extends Cell> void releaseTNFBeta(Grid<Cell> grid, T caller, Double distance) {
 		releaseSubstanceWithinDistance(grid, caller, CD8.class, distance);
 	}
+
+	/**
+	 * Simulate the release of TNF-aplha, stimulating Dendritic Cells living within the specified distance.
+	 * 
+	 * @param <T> Type of object calling this method.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param distance The distance within which the CD8+ T Cells are activated.
+	 */
+	public static <T extends Cell> void releaseTNFAlpha(Grid<Cell> grid, T caller, Double distance) {
+		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, distance);
+	}
 	
+	/**
+	 * Simulate the release of Mast Cell mediators, stimulating T Cells living within the specified distance.
+	 * 
+	 * @param <T> Type of object calling this method.
+	 * @param grid The grid where the cells are living.
+	 * @param caller The caller of the method.
+	 * @param distance The distance within which the CD8+ T Cells are activated.
+	 */
+	public static <T extends Cell> void releaseMediators(Grid<Cell> grid, T caller, Double distance) {
+		releaseSubstanceWithinDistance(grid, caller, TCell.class, distance);
+	}
+
 	/**
 	 * Simulate the release of TGF-beta, suppressing T Cells proliferation and activation (and differentiation).
 	 * 

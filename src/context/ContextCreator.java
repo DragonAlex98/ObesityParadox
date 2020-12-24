@@ -9,6 +9,7 @@ import cell.immune.CD4;
 import cell.immune.CD8;
 import cell.immune.Dendritic;
 import cell.immune.MastCell;
+import cell.immune.Th1;
 import cell.notImmune.Adipocyte;
 import cell.notImmune.RenalCellCarcinoma;
 import repast.simphony.context.Context;
@@ -125,8 +126,13 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		System.out.println("Percentuale cellule Dendritic: " + dendriticPercentage*100 + "%");
 		int dendriticCellsToCreate = (int)(size * dendriticPercentage);
 		System.out.println("Numero cellule Dendritic da creare: " + dendriticCellsToCreate);
-		
-		int left = size - cd8CellsToCreate - mastCellsToCreate - adipocyteCellsToCreate - rccCellsToCreate - cd4CellsToCreate - dendriticCellsToCreate - bloodCellsToCreate;
+
+		float th1Percentage = params.getFloat("th1Percentage");
+		System.out.println("Percentuale cellule Th1: " + th1Percentage*100 + "%");
+		int th1CellsToCreate = (int)(size * th1Percentage);
+		System.out.println("Numero cellule Th1 da creare: " + th1CellsToCreate);
+
+		int left = size - cd8CellsToCreate - mastCellsToCreate - adipocyteCellsToCreate - rccCellsToCreate - cd4CellsToCreate - dendriticCellsToCreate - bloodCellsToCreate - th1CellsToCreate;
 		
 		if (left < 0) {
 			System.out.println("Numero di cellule da creare maggiore del numero di celle della griglia!");
@@ -209,7 +215,19 @@ public class ContextCreator implements ContextBuilder<Cell> {
 			} while (!grid.moveTo(dendritic, x, y));
 			context.add(dendritic);
 		}
-		
+
+		for (int i = 0; i < th1CellsToCreate; i++) {
+			Th1 th1 = new Th1(10, grid);
+			context.add(th1);
+			int x;
+			int y;
+			do {
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(th1, x, y));
+			context.add(th1);
+		}
+
 		int emptyCellsToCreate = 0;
 		if (left > 0) {
 			for (int y = 0; y < grid.getDimensions().getHeight(); y++) {
