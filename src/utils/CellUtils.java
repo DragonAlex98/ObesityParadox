@@ -10,7 +10,7 @@ import cell.EmptyCell;
 import cell.immune.CD8;
 import cell.immune.Dendritic;
 import cell.immune.Immune;
-import cell.immune.M1;
+import cell.immune.Macrophage;
 import cell.immune.PlasmacitoidDendritic;
 import cell.immune.TCell;
 import cell.immune.Th1;
@@ -177,7 +177,7 @@ public class CellUtils {
 	 * @param distance The distance within which the immune cells specified are activated.
 	 */
 	private static <T extends Cell, S extends Immune> void releaseSubstanceWithinDistance(Grid<Cell> grid, T caller, Class<S> cellTypeToStimulate, Double distance) {
-		// Questo metodo è privato perché per ora non ha utilità al di fuori di qui.
+		// Questo metodo ï¿½ privato perchï¿½ per ora non ha utilitï¿½ al di fuori di qui.
 		Stream<S> cellList = CellUtils.getSpecificCells(grid, caller, cellTypeToStimulate);
 		cellList.filter(element -> grid.getDistance(grid.getLocation(caller), grid.getLocation(element)) <= distance).forEach(element -> element.setActive(true));
 	}
@@ -241,9 +241,10 @@ public class CellUtils {
 	public static <T extends Cell> void releaseTGFbeta(Grid<Cell> grid, T caller, Double distance) {
 		// inibisce l'attivazione delle t cells
 		releaseSubstanceWithinDistance(grid, caller, TCell.class, distance);
-		
+		releaseSubstanceWithinDistance(grid, caller, M2.class, distance);
+				
 		// sopprime la proliferazione delle cellule
-		// TODO gestire questa cosa quando verrà implementata la proliferazione
+		// TODO gestire questa cosa quando verrï¿½ implementata la proliferazione
 	}
 	
 	/**
@@ -257,8 +258,9 @@ public class CellUtils {
 	public static <T extends Cell> void releaseIL10(Grid<Cell> grid, T caller, Double distance) {
 		// TODO aggiungere M2 quando saranno presenti
 		releaseSubstanceWithinDistance(grid, caller, M1.class, distance);
+		releaseSubstanceWithinDistance(grid, caller, M2.class, distance);
 		releaseSubstanceWithinDistance(grid, caller, Th1.class, distance);
-		
+
 		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, distance);
 		releaseSubstanceWithinDistance(grid, caller, PlasmacitoidDendritic.class, distance);
 		
