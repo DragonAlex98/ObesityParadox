@@ -5,6 +5,7 @@ import java.util.Random;
 
 import cell.Cell;
 import cell.DeadCell;
+import cell.EmptyCell;
 import cell.notImmune.RenalCellCarcinoma;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.space.grid.Grid;
@@ -22,8 +23,8 @@ public class M2 extends Immune {
 		super(lifespan, grid);
 	}
 
-	public void ingestCell() {
-		
+	public void ingestCell(Cell cell) {
+		CellUtils.replaceCell(this.grid, cell, new EmptyCell(this.grid));
 	}
 
 	@Override
@@ -31,7 +32,9 @@ public class M2 extends Immune {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.grid, this);
 		
 		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
-		
+		List<DeadCell> deadList = CellUtils.filterNeighbors(neighbors, DeadCell.class);
+
+		deadList.forEach(deadCell -> ingestCell(deadCell));
 		CellUtils.releaseTNFAlpha(grid, this, 5.0);
 		CellUtils.releaseIL10(grid, this, 3.0);
 		CellUtils.releaseTGFbeta(grid, this, 3.0);
