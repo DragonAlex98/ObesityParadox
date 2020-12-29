@@ -12,7 +12,7 @@ import cell.immune.Dendritic;
 import cell.immune.Immune;
 import cell.immune.M1;
 import cell.immune.M2;
-import cell.immune.PlasmacitoidDendritic;
+import cell.immune.PlasmacytoidDendritic;
 import cell.immune.TCell;
 import cell.immune.Th1;
 import repast.simphony.context.Context;
@@ -263,7 +263,7 @@ public class CellUtils {
 		releaseSubstanceWithinDistance(grid, caller, Th1.class, distance);
 
 		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, distance);
-		releaseSubstanceWithinDistance(grid, caller, PlasmacitoidDendritic.class, distance);
+		releaseSubstanceWithinDistance(grid, caller, PlasmacytoidDendritic.class, distance);
 		
 	}
 }

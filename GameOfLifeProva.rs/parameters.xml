@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
 					<parameter name="cd8Percentage" displayName="Percentage of CD8 Cells" type="float" 
-						defaultValue="0.05" 
+						defaultValue="0.02" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
@@ -11,7 +11,7 @@
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
 				<parameter name="cd4Percentage" displayName="Percentage of CD4 Cells" type="float" 
-						defaultValue="0.05" 
+						defaultValue="0.02" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
@@ -21,7 +21,7 @@
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
 				<parameter name="mastPercentage" displayName="Percentage of Mast Cells" type="float" 
-						defaultValue="0.1" 
+						defaultValue="0.02" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
@@ -31,17 +31,17 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
 				<parameter name="rccPercentage" displayName="Percentage of RCC Cells" type="float" 
-						defaultValue="0.2" 
+						defaultValue="0.02" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
 				<parameter name="adipocytePercentage" displayName="Percentage of Adipocyte Cells" type="float" 
-						defaultValue="0.1" 
+						defaultValue="0.02" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
 				<parameter name="th1Percentage" displayName="Percentage of Th1 Cells" type="float" 
-						defaultValue="0.1" 
+						defaultValue="0.02" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
@@ -63,7 +63,7 @@
 												values="NORTH SOUTH WEST EAST "
 											/>
 				<parameter name="dendriticPercentage" displayName="Percentage of Dendritic Cells" type="float" 
-						defaultValue="0.15" 
+						defaultValue="0.02" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
@@ -87,6 +87,36 @@
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
+				<parameter name="m1Percentage" displayName="Percentage of M1 Cells" type="float" 
+						defaultValue="0.02" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="m2Percentage" displayName="Percentage of M2 Cells" type="float" 
+						defaultValue="0.02" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="nkPercentage" displayName="Percentage of Nataral Killer Cells" type="float" 
+						defaultValue="0.02" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="tregPercentage" displayName="Percentage of Regulatory T Cells" type="float" 
+						defaultValue="0.02" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="plasmacytoidPercentage" displayName="Percentage of Plasmacytoid Dendritic Cells" type="float" 
+						defaultValue="0.02" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="obesityMacrophagePhenotypeProbability" displayName="Obesity Macrophage Phenotype Probability" type="float" 
+						defaultValue="0.5" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>			
 		</parameters>
 
 

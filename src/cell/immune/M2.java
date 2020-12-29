@@ -17,7 +17,7 @@ public class M2 extends Immune {
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
 	private double proTumourProbability = RunEnvironment.getInstance().getParameters()
-			.getInteger("obesityMacrophagePhenotypeProbability");
+			.getFloat("obesityMacrophagePhenotypeProbability");
 
 	public M2(int lifespan, Grid<Cell> grid) {
 		super(lifespan, grid);

@@ -25,9 +25,9 @@ public class CD8 extends TCell {
 	
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 	
-	private double killProb;
+	private float killProb;
 	
-	public CD8(int lifespan, Grid<Cell> grid, double killProb) {
+	public CD8(int lifespan, Grid<Cell> grid, float killProb) {
 		super(lifespan, grid);
 		this.killProb = killProb;
 	}
@@ -78,11 +78,11 @@ public class CD8 extends TCell {
 		}
 	}
 
-	public double getKillProb() {
+	public float getKillProb() {
 		return killProb;
 	}
 
-	public void setKillProb(double killProb) {
+	public void setKillProb(float killProb) {
 		this.killProb = killProb;
 	}
 	

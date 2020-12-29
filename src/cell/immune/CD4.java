@@ -36,10 +36,10 @@ public class CD4 extends TCell {
 	public void actIfActive() {
 		int r = random.nextInt(2);
 		if (r == 0) {
-			CellUtils.replaceCell(grid, this, new Th1(1000, grid));
+			CellUtils.replaceCell(grid, this, new Th1(10, grid));
 		}
 		if (r == 1) {
-			CellUtils.replaceCell(grid, this, new Treg(1000, grid));
+			CellUtils.replaceCell(grid, this, new Treg(10, grid));
 		}
 	}
 }

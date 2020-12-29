@@ -39,8 +39,8 @@
   	  <string>styles.DeadStyle</string>
   	</entry>
   	<entry>
-  	  <string>cell.immune.PlasmacitoidDendritic</string>
-  	  <string>styles.PlasmacitoidDendriticStyle</string>
+  	  <string>cell.immune.PlasmacytoidDendritic</string>
+  	  <string>styles.PlasmacytoidDendriticStyle</string>
   	</entry>
   	<entry>
   	  <string>cell.immune.Treg</string>
@@ -101,7 +101,7 @@
       <null/>
     </entry>
     <entry>
-      <string>cell.immune.PlasmacitoidDendritic</string>
+      <string>cell.immune.PlasmacytoidDendritic</string>
       <null/>
     </entry>
     <entry>
@@ -177,7 +177,7 @@
       <int>8</int>
     </entry>
     <entry>
-      <string>cell.immune.PlasmacitoidDendritic</string>
+      <string>cell.immune.PlasmacytoidDendritic</string>
       <int>9</int>
     </entry>
     <entry>

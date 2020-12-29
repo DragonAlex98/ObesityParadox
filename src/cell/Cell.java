@@ -93,7 +93,7 @@ public abstract class Cell {
 
 	@Override
 	public String toString() {
-		return "Cell [lifeSpan=" + lifeSpan + ", age=" + age + ", self=" + self + "]";
+		return this.getClass().toString()+" [lifeSpan=" + lifeSpan + ", age=" + age + ", self=" + self + "]";
 	}
 	
 	

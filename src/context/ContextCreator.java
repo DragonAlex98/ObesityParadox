@@ -8,8 +8,13 @@ import cell.EmptyCell;
 import cell.immune.CD4;
 import cell.immune.CD8;
 import cell.immune.Dendritic;
+import cell.immune.M1;
+import cell.immune.M2;
 import cell.immune.MastCell;
+import cell.immune.NKCell;
+import cell.immune.PlasmacytoidDendritic;
 import cell.immune.Th1;
+import cell.immune.Treg;
 import cell.notImmune.Adipocyte;
 import cell.notImmune.RenalCellCarcinoma;
 import repast.simphony.context.Context;
@@ -131,8 +136,33 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		System.out.println("Percentuale cellule Th1: " + th1Percentage*100 + "%");
 		int th1CellsToCreate = (int)(size * th1Percentage);
 		System.out.println("Numero cellule Th1 da creare: " + th1CellsToCreate);
+		
+		float m1Percentage = params.getFloat("m1Percentage");
+		System.out.println("Percentuale cellule M1: " + m1Percentage*100 + "%");
+		int m1CellsToCreate = (int)(size * m1Percentage);
+		System.out.println("Numero cellule M1 da creare: " + m1CellsToCreate);
+		
+		float m2Percentage = params.getFloat("m2Percentage");
+		System.out.println("Percentuale cellule M2: " + m2Percentage*100 + "%");
+		int m2CellsToCreate = (int)(size * m2Percentage);
+		System.out.println("Numero cellule M2 da creare: " + m2CellsToCreate);
+		
+		float nkPercentage = params.getFloat("nkPercentage");
+		System.out.println("Percentuale cellule NK: " + nkPercentage*100 + "%");
+		int nkCellsToCreate = (int)(size * nkPercentage);
+		System.out.println("Numero cellule NK da creare: " + nkCellsToCreate);
+		
+		float tregPercentage = params.getFloat("tregPercentage");
+		System.out.println("Percentuale cellule Treg: " + tregPercentage*100 + "%");
+		int tregCellsToCreate = (int)(size * tregPercentage);
+		System.out.println("Numero cellule Treg da creare: " + tregCellsToCreate);
+		
+		float plasmacytoidPercentage = params.getFloat("plasmacytoidPercentage");
+		System.out.println("Percentuale cellule Plasmacitoid: " + plasmacytoidPercentage*100 + "%");
+		int plasmacytoidCellsToCreate = (int)(size * plasmacytoidPercentage);
+		System.out.println("Numero cellule Plasmacitoid da creare: " + plasmacytoidCellsToCreate);
 
-		int left = size - cd8CellsToCreate - mastCellsToCreate - adipocyteCellsToCreate - rccCellsToCreate - cd4CellsToCreate - dendriticCellsToCreate - bloodCellsToCreate - th1CellsToCreate;
+		int left = size - cd8CellsToCreate - mastCellsToCreate - adipocyteCellsToCreate - rccCellsToCreate - cd4CellsToCreate - dendriticCellsToCreate - bloodCellsToCreate - th1CellsToCreate - m1CellsToCreate - m2CellsToCreate - nkCellsToCreate - tregCellsToCreate - plasmacytoidCellsToCreate;
 		
 		if (left < 0) {
 			System.out.println("Numero di cellule da creare maggiore del numero di celle della griglia!");
@@ -145,7 +175,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		Random random = new Random(seed);
 		
 		for (int i = 0; i < cd8CellsToCreate; i++) {
-			CD8 cd8 = new CD8(10, grid, 1.0);
+			CD8 cd8 = new CD8(10, grid, 0.8f);
 			context.add(cd8);
 			int x;
 			int y;
@@ -226,6 +256,66 @@ public class ContextCreator implements ContextBuilder<Cell> {
 				y = random.nextInt(grid.getDimensions().getHeight());
 			} while (!grid.moveTo(th1, x, y));
 			context.add(th1);
+		}
+		
+		for (int i = 0; i < m1CellsToCreate; i++) {
+			M1 m1 = new M1(10, grid);
+			context.add(m1);
+			int x;
+			int y;
+			do {
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(m1, x, y));
+			context.add(m1);
+		}
+		
+		for (int i = 0; i < m2CellsToCreate; i++) {
+			M2 m2 = new M2(10, grid);
+			context.add(m2);
+			int x;
+			int y;
+			do {
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(m2, x, y));
+			context.add(m2);
+		}
+		
+		for (int i = 0; i < nkCellsToCreate; i++) {
+			NKCell nk = new NKCell(10, grid, 0.5f);
+			context.add(nk);
+			int x;
+			int y;
+			do {
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(nk, x, y));
+			context.add(nk);
+		}
+		
+		for (int i = 0; i < tregCellsToCreate; i++) {
+			Treg treg = new Treg(10, grid);
+			context.add(treg);
+			int x;
+			int y;
+			do {
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(treg, x, y));
+			context.add(treg);
+		}
+		
+		for (int i = 0; i < plasmacytoidCellsToCreate; i++) {
+			PlasmacytoidDendritic plasma = new PlasmacytoidDendritic(10, grid);
+			context.add(plasma);
+			int x;
+			int y;
+			do {
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(plasma, x, y));
+			context.add(plasma);
 		}
 
 		int emptyCellsToCreate = 0;
