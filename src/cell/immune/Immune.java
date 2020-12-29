@@ -15,23 +15,20 @@ public abstract class Immune extends Cell implements Cloneable {
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
+	private static float cellGrowth = RunEnvironment.getInstance().getParameters().getFloat("immuneCellGrowth");
+
 	// by default I am not active, If true I can act
 	private boolean active = false;
-	
-	private int cellGrowth = (int) (0.66 * this.getLifespan());
 
 	public Immune(int lifespan, Grid<Cell> grid) {
 		super(lifespan, grid);
 	}
 	
 	private boolean checkProliferation() {
-		if (this.getAge() % this.cellGrowth == 0)
-			return true;
-		
-		return false;
+		return this.getAge() % (int) (cellGrowth * this.getLifespan()) == 0;
 	}
 	
-	//@ScheduledMethod(start = 1, interval = 1, priority = 1)
+	@ScheduledMethod(start = 1, interval = 1, priority = 1)
 	public void proliferate() {
 		if (this.checkProliferation()) {
 			List<EmptyCell> eCells = CellUtils.getSpecificCellsNearby(grid, this, EmptyCell.class);

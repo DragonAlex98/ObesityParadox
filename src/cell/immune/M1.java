@@ -28,18 +28,14 @@ public class M1 extends Immune {
 
 	@Override
 	public void actIfActive() {
-		if(!isActive()) move()
-		else {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.grid, this);
 		
 		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
 		
 		CellUtils.releaseIFNGamma(grid, this, 3.0);
 		CellUtils.releaseTNFAlpha(grid, this, 5.0);
-			// KILL => ANTIGEN PRESENTATION => T CELL PROLIFERATION
-			// NOT SELF?
-			// PROBABILITY
-
-		}
+		// KILL => ANTIGEN PRESENTATION => T CELL PROLIFERATION
+		// NOT SELF?
+		// PROBABILITY
 	}
 }

@@ -20,7 +20,7 @@
   	</entry>
     <entry>
       <string>cell.immune.MastCell</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+      <string>styles.MastStyle</string>
     </entry>
     <entry>
   	  <string>cell.notImmune.Adipocyte</string>
@@ -37,6 +37,30 @@
   	<entry>
   	  <string>cell.DeadCell</string>
   	  <string>styles.DeadStyle</string>
+  	</entry>
+  	<entry>
+  	  <string>cell.immune.PlasmacitoidDendritic</string>
+  	  <string>styles.PlasmacitoidDendriticStyle</string>
+  	</entry>
+  	<entry>
+  	  <string>cell.immune.Treg</string>
+  	  <string>styles.TregStyle</string>
+  	</entry>
+  	<entry>
+  	  <string>cell.immune.M1</string>
+  	  <string>styles.M1Style</string>
+  	</entry>
+  	<entry>
+  	  <string>cell.immune.M2</string>
+  	  <string>styles.M2Style</string>
+  	</entry>
+  	<entry>
+  	  <string>cell.immune.NKCell</string>
+  	  <string>styles.NKStyle</string>
+  	</entry>
+  	<entry>
+  	  <string>cell.BloodCell</string>
+  	  <string>styles.BloodStyle</string>
   	</entry>
   </styles>
   <editedStyles>
@@ -58,7 +82,7 @@
   	</entry>
     <entry>
       <string>cell.immune.MastCell</string>
-      <string>GameOfLifeProva.Dead.style_0.xml</string>
+      <null/>
     </entry>
     <entry>
       <string>cell.notImmune.Adipocyte</string>
@@ -74,6 +98,30 @@
     </entry>
     <entry>
       <string>cell.DeadCell</string>
+      <null/>
+    </entry>
+    <entry>
+      <string>cell.immune.PlasmacitoidDendritic</string>
+      <null/>
+    </entry>
+    <entry>
+      <string>cell.immune.Treg</string>
+      <null/>
+    </entry>
+    <entry>
+      <string>cell.immune.M1</string>
+      <null/>
+    </entry>
+    <entry>
+      <string>cell.immune.M2</string>
+      <null/>
+    </entry>
+    <entry>
+      <string>cell.immune.NK</string>
+      <null/>
+    </entry>
+    <entry>
+      <string>cell.BloodCell</string>
       <null/>
     </entry>
   </editedStyles>
@@ -127,6 +175,30 @@
     <entry>
       <string>cell.immune.Th1</string>
       <int>8</int>
+    </entry>
+    <entry>
+      <string>cell.immune.PlasmacitoidDendritic</string>
+      <int>9</int>
+    </entry>
+    <entry>
+      <string>cell.immune.Treg</string>
+      <int>10</int>
+    </entry>
+    <entry>
+      <string>cell.immune.M1</string>
+      <int>11</int>
+    </entry>
+    <entry>
+      <string>cell.immune.M2</string>
+      <int>12</int>
+    </entry>
+    <entry>
+      <string>cell.immune.NKCell</string>
+      <int>13</int>
+    </entry>
+    <entry>
+      <string>cell.BloodCell</string>
+      <int>14</int>
     </entry>
   </layerOrder>
   <projections>

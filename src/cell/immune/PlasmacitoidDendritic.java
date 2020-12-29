@@ -28,7 +28,7 @@ public class PlasmacitoidDendritic extends Dendritic {
 				CellUtils.replaceCell(grid, this, new CD8(1000, grid, 0.3));
 			}
 			if (r == 2) {
-				CellUtils.replaceCell(grid, this, new NKCell(1000, grid, 0.3));
+				CellUtils.replaceCell(grid, this, new NKCell(1000, grid, 0.3f));
 			}
 		}
 	}

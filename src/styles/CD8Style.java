@@ -1,18 +1,8 @@
 package styles;
 
-import java.awt.Color;
-
-import repast.simphony.visualizationOGL2D.DefaultStyleOGL2D;
-
-public class CD8Style extends DefaultStyleOGL2D {
-
-	@Override
-	public float getScale(Object object) {
-		return 2f;
-	}
+public class CD8Style extends CommonStyle {
 	
-	@Override
-	public Color getColor(Object o) {
-		return Color.BLUE;
+	public CD8Style() {
+		this.setCellType("cd8");
 	}
 }

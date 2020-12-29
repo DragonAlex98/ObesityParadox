@@ -82,6 +82,11 @@
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
+				<parameter name="immuneCellGrowth" displayName="Growth of immune cell after percentage of life span" type="float" 
+						defaultValue="0.66" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
 		</parameters>
 
 

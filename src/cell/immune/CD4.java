@@ -30,15 +30,15 @@ public class CD4 extends TCell {
 	}
 
 	/**
-	 * When active differentiate into Th1, Th2 or Treg.
+	 * When active differentiate into Th1 or Treg.
 	 */
 	@Override
 	public void actIfActive() {
-		int r = random.nextInt(3);
+		int r = random.nextInt(2);
 		if (r == 0) {
 			CellUtils.replaceCell(grid, this, new Th1(1000, grid));
 		}
-		if (r == 2) {
+		if (r == 1) {
 			CellUtils.replaceCell(grid, this, new Treg(1000, grid));
 		}
 	}
