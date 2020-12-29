@@ -3,6 +3,7 @@ package cell.notImmune;
 import java.util.List;
 import java.util.Random;
 
+import cell.BloodCell;
 import cell.Cell;
 import cell.EmptyCell;
 import cell.immune.MastCell;
@@ -53,7 +54,9 @@ public class RenalCellCarcinoma extends NotImmune {
 	@ScheduledMethod(start = 1, interval = 1, priority = 4)
 	public void grow() {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
-		if (this.getAge() % reproTime == 0) {
+		List<BloodCell> bloodList = CellUtils.filterNeighbors(neighbors, BloodCell.class);
+		int newReprotime = (this.reproTime == 1 || bloodList.isEmpty()) ? this.reproTime : this.reproTime - 1;
+		if (this.getAge() % newReprotime == 0) {
 			reproduce(neighbors);
 		} else {
 			List<MastCell> mastList = CellUtils.filterNeighbors(neighbors, MastCell.class);
