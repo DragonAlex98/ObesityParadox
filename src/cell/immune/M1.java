@@ -32,13 +32,20 @@ public class M1 extends Immune {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.grid, this);
 		
 		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
-		List<DeadCell> deadList = CellUtils.filterNeighbors(neighbors, DeadCell.class);
 
-		deadList.forEach(deadCell -> ingestCell(deadCell));
 		CellUtils.releaseIFNGamma(grid, this, 3.0);
 		CellUtils.releaseTNFAlpha(grid, this, 5.0);
 		// KILL => ANTIGEN PRESENTATION => T CELL PROLIFERATION
 		// NOT SELF?
 		// PROBABILITY
+	}
+	
+	@Override
+	public void act() {
+		super.act();
+		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.grid, this);
+		List<DeadCell> deadList = CellUtils.filterNeighbors(neighbors, DeadCell.class);
+
+		deadList.forEach(deadCell -> ingestCell(deadCell));
 	}
 }
