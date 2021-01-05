@@ -5,8 +5,8 @@ import repast.simphony.space.grid.Grid;
 
 public class Adipocyte extends NotImmune {
 
-	public Adipocyte(int lifespan, Grid<Cell> grid) {
-		super(lifespan, grid);
+	public Adipocyte(Grid<Cell> grid) {
+		super(-1, grid);
 	}
 
 }

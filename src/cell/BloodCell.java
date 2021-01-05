@@ -13,8 +13,8 @@ public class BloodCell extends Cell {
 	
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
-	public BloodCell(int lifespan, Grid<Cell> grid) {
-		super(lifespan, grid);
+	public BloodCell(Grid<Cell> grid) {
+		super(-1, grid);
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1)
@@ -23,7 +23,7 @@ public class BloodCell extends Cell {
 		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
 		if (rccList.size() >= 3) {
 			RenalCellCarcinoma rccToReplaceWithBlood = rccList.get(random.nextInt(rccList.size()));
-			CellUtils.replaceCell(grid, rccToReplaceWithBlood, new BloodCell(this.getLifespan(), grid));
+			CellUtils.replaceCell(grid, rccToReplaceWithBlood, new BloodCell(this.grid));
 		}
 	}
 }

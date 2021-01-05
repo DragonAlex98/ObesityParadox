@@ -51,7 +51,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		case NORTH:
 			bloodCellsToCreate = grid.getDimensions().getWidth();
 			for (int i = 0; i < bloodCellsToCreate; i++) {
-				BloodCell bloodCell = new BloodCell(-1, grid);
+				BloodCell bloodCell = new BloodCell(grid);
 				context.add(bloodCell);
 				grid.moveTo(bloodCell, i, grid.getDimensions().getHeight()-1);
 				context.add(bloodCell);
@@ -60,7 +60,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		case SOUTH:
 			bloodCellsToCreate = grid.getDimensions().getWidth();
 			for (int i = 0; i < bloodCellsToCreate; i++) {
-				BloodCell bloodCell = new BloodCell(-1, grid);
+				BloodCell bloodCell = new BloodCell(grid);
 				context.add(bloodCell);
 				grid.moveTo(bloodCell, i, 0);
 				context.add(bloodCell);
@@ -69,7 +69,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		case WEST:
 			bloodCellsToCreate = grid.getDimensions().getHeight();
 			for (int i = 0; i < bloodCellsToCreate; i++) {
-				BloodCell bloodCell = new BloodCell(-1, grid);
+				BloodCell bloodCell = new BloodCell(grid);
 				context.add(bloodCell);
 				grid.moveTo(bloodCell, 0, i);
 				context.add(bloodCell);
@@ -78,7 +78,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		case EAST:
 			bloodCellsToCreate = grid.getDimensions().getHeight();
 			for (int i = 0; i < bloodCellsToCreate; i++) {
-				BloodCell bloodCell = new BloodCell(-1, grid);
+				BloodCell bloodCell = new BloodCell(grid);
 				context.add(bloodCell);
 				grid.moveTo(bloodCell, grid.getDimensions().getWidth()-1, i);
 				context.add(bloodCell);
@@ -175,7 +175,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		Random random = new Random(seed);
 		
 		for (int i = 0; i < cd8CellsToCreate; i++) {
-			CD8 cd8 = new CD8(10, grid, 0.8f);
+			CD8 cd8 = new CD8(10, grid, params.getFloat("cd8KillProb"));
 			context.add(cd8);
 			int x;
 			int y;
@@ -199,7 +199,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		}
 		
 		for (int i = 0; i < adipocyteCellsToCreate; i++) {
-			Adipocyte adipocyte = new Adipocyte(10, grid);
+			Adipocyte adipocyte = new Adipocyte(grid);
 			context.add(adipocyte);
 			int x;
 			int y;
@@ -211,7 +211,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		}
 		
 		for (int i = 0; i < rccCellsToCreate; i++) {
-			RenalCellCarcinoma rcc = new RenalCellCarcinoma(10, grid, reproTime, reproFactor);
+			RenalCellCarcinoma rcc = new RenalCellCarcinoma(10, grid, reproTime, reproFactor, params.getFloat("mutationPercentage"), params.getFloat("disableTCellPercentage"));
 			context.add(rcc);
 			int x;
 			int y;
@@ -283,7 +283,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		}
 		
 		for (int i = 0; i < nkCellsToCreate; i++) {
-			NKCell nk = new NKCell(10, grid, 0.5f);
+			NKCell nk = new NKCell(10, grid, params.getFloat("nkKillProb"));
 			context.add(nk);
 			int x;
 			int y;

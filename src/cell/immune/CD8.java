@@ -89,7 +89,7 @@ public class CD8 extends TCell {
 	@Override
 	protected CD8 clone() throws CloneNotSupportedException {
 		CD8 cell = (CD8) super.clone();
-		cell.setKillProb(0);
+		cell.setKillProb(RunEnvironment.getInstance().getParameters().getFloat("cd8KillProb"));
 		return cell;
 	}
 }
