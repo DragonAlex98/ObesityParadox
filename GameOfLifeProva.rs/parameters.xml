@@ -145,7 +145,7 @@
 				<parameter name="bmi" displayName="Body Mass Index (15-40)" type="int" 
 						defaultValue="25" 
 						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
 		</parameters>
 
