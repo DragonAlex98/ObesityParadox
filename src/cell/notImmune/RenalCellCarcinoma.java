@@ -16,20 +16,24 @@ import utils.CellUtils;
 public class RenalCellCarcinoma extends NotImmune {
 
 	// number of ticks to wait for the next tumor expansion
-	private int reproTime = 0;
+	private int reproTime;
 
 	// how much it expands
-	private int reproFactor = 0;
+	private int reproFactor;
 	
 	// percentage of mutation, to simulate the fact that I can hide from the immune system
-	private float mutationPercentage = 0.20f;
+	private float mutationPercentage;
+	
+	private float disableTCellPercetage;
 	
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
-	public RenalCellCarcinoma(int lifespan, Grid<Cell> grid, int reproTime, int reproFactor) {
+	public RenalCellCarcinoma(int lifespan, Grid<Cell> grid, int reproTime, int reproFactor, float mutationPercentage, float disableTCellPercetage) {
 		super(lifespan, grid);
 		this.reproTime = reproTime;
 		this.reproFactor = reproFactor;
+		this.mutationPercentage = mutationPercentage;
+		this.disableTCellPercetage = disableTCellPercetage;
 		// I'm foreign by default
 		this.setSelf(false);
 	}
@@ -43,8 +47,8 @@ public class RenalCellCarcinoma extends NotImmune {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
 		List<TCell> immuneList = CellUtils.filterNeighbors(neighbors, TCell.class);
 		immuneList.stream().filter(i -> i.isActive()).forEach(i -> {
-			int r = random.nextInt(2);
-			if (r == 0) {
+			float disable = random.nextFloat();
+			if (disable < this.disableTCellPercetage) {
 				i.setActive(false);				
 			}
 		});
@@ -56,26 +60,27 @@ public class RenalCellCarcinoma extends NotImmune {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
 		List<BloodCell> bloodList = CellUtils.filterNeighbors(neighbors, BloodCell.class);
 		int newReprotime = (this.reproTime == 1 || bloodList.isEmpty()) ? this.reproTime : this.reproTime - 1;
-		if (this.getAge() % newReprotime == 0) {
-			reproduce(neighbors);
+		if (this.getAge() > 0 && this.getAge() % newReprotime == 0) {
+			reproduce();
 		} else {
 			List<MastCell> mastList = CellUtils.filterNeighbors(neighbors, MastCell.class);
 			if (!mastList.isEmpty() && mastList.stream().filter(mast -> mast.isProTumor()).findAny().isPresent()) {      
-				reproduce(neighbors);
+				reproduce();
 			}
 		}
 	}
 
 	// creates new RenalCellCarcinoma, to simulate reproduction of the tumor
-	private void reproduce(Iterable<Cell> neighbors) {
+	private void reproduce() {
+		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
 		List<EmptyCell> list = CellUtils.filterNeighbors(neighbors, EmptyCell.class);
 		// if there is at least one emptyCell in my neighbors I grow up
 		if (!list.isEmpty()) {
 			// check how many times I can actually reproduce
 			int count = this.reproFactor < list.size() ? this.reproFactor : list.size();
 			for (int i = 0; i < count; i++) {
-				RenalCellCarcinoma rcc = new RenalCellCarcinoma(this.getLifespan(), this.getGrid(), this.reproTime,
-						this.reproFactor);
+				RenalCellCarcinoma rcc = new RenalCellCarcinoma(10, this.getGrid(), this.reproTime,
+						this.reproFactor, this.mutationPercentage, this.disableTCellPercetage);
 				float mutation = random.nextFloat();
 				if (mutation < mutationPercentage) {
 					rcc.setSelf(true);

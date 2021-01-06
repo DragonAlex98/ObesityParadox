@@ -43,5 +43,12 @@ public class NKCell extends Immune {
 	public void setKillProb(float killProb) {
 		this.killProb = killProb;
 	}
+	
+	@Override
+	protected NKCell clone() throws CloneNotSupportedException {
+		NKCell cell = (NKCell) super.clone();
+		cell.setKillProb(RunEnvironment.getInstance().getParameters().getFloat("nkKillProb"));
+		return cell;
+	}
 
 }

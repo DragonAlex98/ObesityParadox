@@ -1,5 +1,8 @@
 package cell;
 
+import java.util.Random;
+
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.grid.Grid;
 import utils.CellUtils;
@@ -7,7 +10,7 @@ import utils.CellUtils;
 public abstract class Cell {
 
 	// lifeSpan of a cell
-	private int lifeSpan = 0;
+	private int lifeSpan = -1;
 
 	// age of the cell
 	private int age = 0;
@@ -17,9 +20,13 @@ public abstract class Cell {
 
 	// the grid where the cell lives
 	protected Grid<Cell> grid = null;
+	
+	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
 	public Cell(int lifespan, Grid<Cell> grid) {
-		this.lifeSpan = lifespan;
+		if (lifespan != -1) {
+			this.lifeSpan = 20 + random.nextInt(lifespan);
+		}
 		this.grid = grid;
 	}
 

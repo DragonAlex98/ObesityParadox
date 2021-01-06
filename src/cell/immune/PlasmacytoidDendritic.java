@@ -25,10 +25,10 @@ public class PlasmacytoidDendritic extends Dendritic {
 				CellUtils.replaceCell(grid, this, new CD4(10, grid));
 			}
 			if (r == 1) {
-				CellUtils.replaceCell(grid, this, new CD8(10, grid, 0.8f));
+				CellUtils.replaceCell(grid, this, new CD8(10, grid, RunEnvironment.getInstance().getParameters().getFloat("cd8KillProb")));
 			}
 			if (r == 2) {
-				CellUtils.replaceCell(grid, this, new NKCell(10, grid, 0.5f));
+				CellUtils.replaceCell(grid, this, new NKCell(10, grid, RunEnvironment.getInstance().getParameters().getFloat("nkKillProb")));
 			}
 		}
 	}

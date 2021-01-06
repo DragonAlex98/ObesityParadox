@@ -30,7 +30,7 @@ public class MastCell extends Immune {
 	private boolean proTumor;
 
 	// percentage of become pro tumor
-	private float proTumorPercentage = 0.5f;
+	private static float proTumorPercentage = RunEnvironment.getInstance().getParameters().getFloat("mastCellProTumorPercentage");
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
@@ -75,6 +75,13 @@ public class MastCell extends Immune {
 
 	public void setProTumor(boolean proTumor) {
 		this.proTumor = proTumor;
+	}
+	
+	@Override
+	protected MastCell clone() throws CloneNotSupportedException {
+		MastCell cell = (MastCell) super.clone();
+		cell.setProTumor(this.proTumor);;
+		return cell;
 	}
 
 }

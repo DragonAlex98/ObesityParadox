@@ -85,12 +85,12 @@ public class Dendritic extends Immune {
 		int numberOfCD8ToSpawn = (int) (tCellToSpawn / (1 + cd4cd8ratio));
 		Collections.shuffle(emptyCellsList);
 		for (int i = 0; i < numberOfCD8ToSpawn; i++) {
-			TCell newCD8 = new CD8(1000, this.grid, 3);
+			TCell newCD8 = new CD8(10, this.grid, RunEnvironment.getInstance().getParameters().getFloat("cd8KillProb"));
 			newCD8.setActive(true);
 			CellUtils.replaceCell(this.grid, emptyCellsList.get(i), newCD8);
 		}
 		for (int i = numberOfCD8ToSpawn; i < tCellToSpawn; i++) {
-			TCell newCD4 = new CD4(1000, this.grid);
+			TCell newCD4 = new CD4(10, this.grid);
 			newCD4.setActive(true);
 			CellUtils.replaceCell(this.grid, emptyCellsList.get(i), newCD4);
 		}
