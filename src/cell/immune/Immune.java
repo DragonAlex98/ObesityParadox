@@ -15,7 +15,7 @@ public abstract class Immune extends Cell implements Cloneable {
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
-	private static float cellGrowth = RunEnvironment.getInstance().getParameters().getFloat("immuneCellGrowth");
+	private float cellGrowth = RunEnvironment.getInstance().getParameters().getFloat("immuneCellGrowth");
 
 	// by default I am not active, If true I can act
 	private boolean active = false;
@@ -94,12 +94,29 @@ public abstract class Immune extends Cell implements Cloneable {
 		this.active = active;
 	}
 	
+	public float getCellGrowth() {
+		return cellGrowth;
+	}
+
+	public void increaseCellGrowth(float cellGrowth) {
+		this.cellGrowth -= cellGrowth;
+	}
+	
+	public void decreaseCellGrowth(float cellGrowth) {
+		this.cellGrowth += cellGrowth;
+	}
+
+	public void setCellGrowth(float cellGrowth) {
+		this.cellGrowth = cellGrowth;
+	}
+
 	@Override
 	protected Immune clone() throws CloneNotSupportedException {
 		Immune cell = (Immune) super.clone();
 		cell.setActive(false);
 		cell.setAge(0);
 		cell.setSelf(true);
+		cell.setCellGrowth(RunEnvironment.getInstance().getParameters().getFloat("immuneCellGrowth"));
 		return cell;
 	}
 	
