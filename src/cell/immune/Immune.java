@@ -34,7 +34,7 @@ public abstract class Immune extends Cell implements Cloneable {
 			List<EmptyCell> eCells = CellUtils.getSpecificCellsNearby(grid, this, EmptyCell.class);
 			if (!eCells.isEmpty()) {
 				try {
-					CellUtils.replaceCell(grid, eCells.get(0), this.clone());
+					CellUtils.replaceCell(grid, eCells.get(random.nextInt(eCells.size())), this.clone());
 				} catch (CloneNotSupportedException e) {
 					System.out.println("Impossibile clonare la cellula");
 				}

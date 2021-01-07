@@ -23,7 +23,7 @@ public class PlasmacytoidDendritic extends Dendritic {
 		if(tCellToSpawn == 0) {
 			return;
 		}
-		Collections.shuffle(emptyCellsList);
+		Collections.shuffle(emptyCellsList, random);
 		for (int i = 0; i < tCellToSpawn; i++) {
 			int r = random.nextInt(3);
 			if (r == 0) {

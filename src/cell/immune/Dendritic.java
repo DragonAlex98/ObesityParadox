@@ -84,7 +84,7 @@ public class Dendritic extends Immune {
 	public void spawnTCell(List<EmptyCell> emptyCellsList, int tCellToSpawn) {
 		int numberOfCD8ToSpawn = (int) (tCellToSpawn / (1 + cd4cd8ratio));
 		System.out.println("cd8 to spawn" + numberOfCD8ToSpawn);
-		Collections.shuffle(emptyCellsList);
+		Collections.shuffle(emptyCellsList, random);
 		for (int i = 0; i < numberOfCD8ToSpawn; i++) {
 			TCell newCD8 = new CD8(10, this.grid, RunEnvironment.getInstance().getParameters().getFloat("cd8KillProb"));
 			newCD8.setActive(true);
