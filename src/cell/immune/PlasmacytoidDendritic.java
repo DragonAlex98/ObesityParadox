@@ -1,5 +1,6 @@
 package cell.immune;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -19,16 +20,26 @@ public class PlasmacytoidDendritic extends Dendritic {
 
 	@Override
 	public void spawnTCell(List<EmptyCell> emptyCellsList, int tCellToSpawn) {
+		if(tCellToSpawn == 0) {
+			return;
+		}
+		Collections.shuffle(emptyCellsList);
 		for (int i = 0; i < tCellToSpawn; i++) {
 			int r = random.nextInt(3);
 			if (r == 0) {
-				CellUtils.replaceCell(grid, emptyCellsList.get(i), new CD4(10, grid));
+				CD4 newCD4 = new CD4(10, grid);
+				newCD4.setActive(true);
+				CellUtils.replaceCell(grid, emptyCellsList.get(i), newCD4);
 			}
 			if (r == 1) {
-				CellUtils.replaceCell(grid, emptyCellsList.get(i), new CD8(10, grid, RunEnvironment.getInstance().getParameters().getFloat("cd8KillProb")));
+				CD8 newCD8 = new CD8(10, grid, RunEnvironment.getInstance().getParameters().getFloat("cd8KillProb"));
+				newCD8.setActive(true);
+				CellUtils.replaceCell(grid, emptyCellsList.get(i), newCD8);
 			}
 			if (r == 2) {
-				CellUtils.replaceCell(grid, emptyCellsList.get(i), new NKCell(10, grid, RunEnvironment.getInstance().getParameters().getFloat("nkKillProb")));
+				NKCell newNk = new NKCell(10, grid, RunEnvironment.getInstance().getParameters().getFloat("nkKillProb"));
+				newNk.setActive(true);
+				CellUtils.replaceCell(grid, emptyCellsList.get(i), newNk);
 			}
 		}
 	}

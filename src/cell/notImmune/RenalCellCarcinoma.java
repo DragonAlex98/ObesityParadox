@@ -59,7 +59,7 @@ public class RenalCellCarcinoma extends NotImmune implements Cloneable{
 	public void grow() {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
 		List<BloodCell> bloodList = CellUtils.filterNeighbors(neighbors, BloodCell.class);
-		int newReprotime = (this.reproTime == 1 || bloodList.isEmpty()) ? this.reproTime : this.reproTime - 1;
+		int newReprotime = (bloodList.isEmpty()) ? this.reproTime : Math.max(this.reproTime - bloodList.size(), 1);
 		if (this.getAge() > 0 && this.getAge() % newReprotime == 0) {
 			reproduce();
 		} else {

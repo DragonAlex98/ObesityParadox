@@ -13,6 +13,7 @@ import cell.immune.Dendritic;
 import cell.immune.Immune;
 import cell.immune.M1;
 import cell.immune.M2;
+import cell.immune.NKCell;
 import cell.immune.PlasmacytoidDendritic;
 import cell.immune.TCell;
 import cell.immune.Th1;
@@ -223,6 +224,8 @@ public class CellUtils {
 	 */
 	public static <T extends Cell> void releaseIFNGamma(Grid<Cell> grid, T caller, Double distance) {
 		releaseSubstanceWithinDistance(grid, caller, M1.class, distance, element -> element.setActive(true));
+		releaseSubstanceWithinDistance(grid, caller, NKCell.class, distance, element -> element.setActive(true));
+		// releaseSubstanceWithinDistance(grid, caller, M2.class, distance, element -> element.setActive(true));
 	}
 	
 	/**
@@ -234,7 +237,7 @@ public class CellUtils {
 	 * @param distance The distance within which the CD8+ T Cells are activated.
 	 */
 	public static <T extends Cell> void releaseTNFBeta(Grid<Cell> grid, T caller, Double distance) {
-		releaseSubstanceWithinDistance(grid, caller, CD8.class, distance, element -> element.setActive(true));
+		releaseSubstanceWithinDistance(grid, caller, CD8.class, distance, element -> element.increaseCellGrowth(0.2f));
 	}
 
 	/**
@@ -270,15 +273,11 @@ public class CellUtils {
 	 * @param distance The distance within which the T Cells are suppressed.
 	 */
 	public static <T extends Cell> void releaseTGFbeta(Grid<Cell> grid, T caller, Double distance) {
-		// inibisce l'attivazione delle t cells
 		releaseSubstanceWithinDistance(grid, caller, TCell.class, distance, element -> {
 			element.setActive(false);
 			element.decreaseCellGrowth(0.2f);
 		});
 		releaseSubstanceWithinDistance(grid, caller, M2.class, distance, element -> element.setActive(false));
-				
-		// sopprime la proliferazione delle cellule
-		// TODO gestire questa cosa quando verr� implementata la proliferazione
 	}
 	
 	/**
@@ -290,7 +289,6 @@ public class CellUtils {
 	 * @param distance The distance within which the macrophages, dendritic cells and Th1 cells are suppressed.
 	 */
 	public static <T extends Cell> void releaseIL10(Grid<Cell> grid, T caller, Double distance) {
-		// TODO aggiungere M2 quando saranno presenti
 		releaseSubstanceWithinDistance(grid, caller, M1.class, distance, element -> element.setActive(false));
 		releaseSubstanceWithinDistance(grid, caller, M2.class, distance, element -> element.setActive(false));
 		releaseSubstanceWithinDistance(grid, caller, Th1.class, distance, element -> element.setActive(false));

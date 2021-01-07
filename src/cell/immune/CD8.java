@@ -87,6 +87,20 @@ public class CD8 extends TCell {
 		this.killProb = killProb;
 	}
 	
+	public void increaseKillProb(float killProb) {
+		this.killProb += killProb;
+		if(this.killProb > 1f) {
+			this.killProb = 1f;
+		}
+	}
+	
+	public void decreaseKillProb(float killProb) {
+		this.killProb -= killProb;
+		if(this.killProb < 0f) {
+			this.killProb = 0f;
+		}
+	}
+	
 	@Override
 	protected CD8 clone() throws CloneNotSupportedException {
 		CD8 cell = (CD8) super.clone();
