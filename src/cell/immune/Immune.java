@@ -100,10 +100,16 @@ public abstract class Immune extends Cell implements Cloneable {
 
 	public void increaseCellGrowth(float cellGrowth) {
 		this.cellGrowth -= cellGrowth;
+		if(this.cellGrowth < 0.1f) {
+			this.cellGrowth = 0.1f;
+		}
 	}
 	
 	public void decreaseCellGrowth(float cellGrowth) {
 		this.cellGrowth += cellGrowth;
+		if(this.cellGrowth > 0.9f) {
+			this.cellGrowth = 0.9f;
+		}
 	}
 
 	public void setCellGrowth(float cellGrowth) {
