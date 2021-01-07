@@ -43,7 +43,8 @@ public class CD8 extends TCell {
 			return;
 		}
 	
-		Stream<RenalCellCarcinoma> rccInGrid = CellUtils.getSpecificCells(this.grid, this, RenalCellCarcinoma.class);
+		Stream<RenalCellCarcinoma> rccInGrid = CellUtils.getSpecificCells(this.grid, this, RenalCellCarcinoma.class).filter(rcc -> !rcc.isSelf());
+		
 		
 		AtomicReference<RenalCellCarcinoma> nearestRcc = new AtomicReference<>();
 		AtomicReference<Double> distanceToNearest = new AtomicReference<Double>(Double.POSITIVE_INFINITY);

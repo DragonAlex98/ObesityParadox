@@ -22,13 +22,13 @@ public class PlasmacytoidDendritic extends Dendritic {
 		for (int i = 0; i < tCellToSpawn; i++) {
 			int r = random.nextInt(3);
 			if (r == 0) {
-				CellUtils.replaceCell(grid, this, new CD4(10, grid));
+				CellUtils.replaceCell(grid, emptyCellsList.get(i), new CD4(10, grid));
 			}
 			if (r == 1) {
-				CellUtils.replaceCell(grid, this, new CD8(10, grid, RunEnvironment.getInstance().getParameters().getFloat("cd8KillProb")));
+				CellUtils.replaceCell(grid, emptyCellsList.get(i), new CD8(10, grid, RunEnvironment.getInstance().getParameters().getFloat("cd8KillProb")));
 			}
 			if (r == 2) {
-				CellUtils.replaceCell(grid, this, new NKCell(10, grid, RunEnvironment.getInstance().getParameters().getFloat("nkKillProb")));
+				CellUtils.replaceCell(grid, emptyCellsList.get(i), new NKCell(10, grid, RunEnvironment.getInstance().getParameters().getFloat("nkKillProb")));
 			}
 		}
 	}
