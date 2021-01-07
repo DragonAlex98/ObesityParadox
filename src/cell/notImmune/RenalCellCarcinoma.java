@@ -13,7 +13,7 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.grid.Grid;
 import utils.CellUtils;
 
-public class RenalCellCarcinoma extends NotImmune {
+public class RenalCellCarcinoma extends NotImmune implements Cloneable{
 
 	// number of ticks to wait for the next tumor expansion
 	private int reproTime;
@@ -79,15 +79,26 @@ public class RenalCellCarcinoma extends NotImmune {
 			// check how many times I can actually reproduce
 			int count = this.reproFactor < list.size() ? this.reproFactor : list.size();
 			for (int i = 0; i < count; i++) {
-				RenalCellCarcinoma rcc = new RenalCellCarcinoma(10, this.getGrid(), this.reproTime,
-						this.reproFactor, this.mutationPercentage, this.disableTCellPercetage);
+				RenalCellCarcinoma rcc = null;
+				try {
+					rcc = this.clone();
+				} catch (CloneNotSupportedException e) {
+					System.out.println("Impossibile clonare rcc");
+				}
 				float mutation = random.nextFloat();
-				if (mutation < mutationPercentage) {
+				if (!rcc.isSelf() && mutation < mutationPercentage) {
 					rcc.setSelf(true);
 				}
 				CellUtils.replaceCell(this.getGrid(), list.get(i), rcc);
 			}
 		}
+	}
+	
+	@Override
+	protected RenalCellCarcinoma clone() throws CloneNotSupportedException {
+		RenalCellCarcinoma cell = (RenalCellCarcinoma) super.clone();
+		cell.setAge(0);
+		return cell;
 	}
 
 	public int getReproTime() {

@@ -24,7 +24,13 @@ import repast.simphony.util.ContextUtils;
 
 public class CellUtils {
 
-	// find my neighbors
+	/**
+	 * To retrieve the neighbors of a specific cell
+	 * 
+	 * @param grid The grid where the cells are living.
+	 * @param cell Cell used to find its neighbors
+	 * @return An Iterable in which there are all the neighbors of the input cell
+	 */
 	public static Iterable<Cell> getNeighbors(Grid<Cell> grid, Cell cell) {
 		MooreQuery<Cell> query = new MooreQuery<Cell>(grid, cell);
 		Iterable<Cell> neighbors = query.query();
@@ -63,7 +69,15 @@ public class CellUtils {
 		return CellUtils.filterNeighbors(neighbors, cls);
 	}
 
-	// list neighbors of a certain Class
+	
+	/**
+	 * To retrieve a list of neighbors of a certain Class
+	 * 
+	 * @param <T> Type of the Class used to filter the list of neighbors
+	 * @param neighbors List of neighbors to filter.
+	 * @param cls The cell type to look for.
+	 * @return The list of neighbors containing only the cell of type T
+	 */
 	public static <T extends Cell> List<T> filterNeighbors(Iterable<Cell> neighbors, Class<T> cls) {
 		List<T> list = new ArrayList<T>();
 		for (Cell c : neighbors) {
@@ -74,7 +88,14 @@ public class CellUtils {
 		return list;
 	}
 
-	// method to move a cell in an empty cell location
+	/**
+	 * Method to move a cell in an empty cell location
+	 * 
+	 * @param <T> Cell to move
+	 * @param grid The grid where the cell is living.
+	 * @param cellToMove Cell to move towards the emptyCellToMoveTo
+	 * @param emptyCellToMoveTo Empty cell to replace with the cellToMove
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Cell> void moveCell(Grid<Cell> grid, T cellToMove, EmptyCell emptyCellToMoveTo) {
 		GridPoint oldPoint = grid.getLocation(cellToMove);
@@ -90,8 +111,16 @@ public class CellUtils {
 		//System.out.println("Spostata cellula da: (" + oldPoint.getX() + ", " + oldPoint.getY() + ") a (" + newPoint.getX() + ", " + newPoint.getY() + ")");
 	}
 
-	// method to replace a cell with another
-	// can also be used to spawn new cell
+	/**
+	 * Method to replace a cell with another cell
+	 * Can also be used to spawn new cell
+	 * 
+	 * @param <T> Type of the Cell to be replaced
+	 * @param <S> Type of the Cell that must replace the old one
+	 * @param grid The grid where the cell is living.
+	 * @param cellToReplace Cell to be replaced
+	 * @param cellToCreate Cell that must replace the old one
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Cell, S extends Cell> void replaceCell(Grid<Cell> grid, T cellToReplace, S cellToCreate) {
 		GridPoint gpt = grid.getLocation(cellToReplace);
