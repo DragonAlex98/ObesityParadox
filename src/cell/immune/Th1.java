@@ -30,10 +30,8 @@ public class Th1 extends TCell {
 	 */
 	@Override
 	public void actIfActive() {
-		// TODO valutare distanza di attivazione come parametro variabile in base alla grandezza della griglia
-		
-		CellUtils.releaseIFNGamma(grid, this, 5.0);
-		CellUtils.releaseTNFBeta(grid, this, 5.0);
+		CellUtils.releaseIFNGamma(grid, this);
+		CellUtils.releaseTNFBeta(grid, this);
 		
 		this.setActive(false);
 	}

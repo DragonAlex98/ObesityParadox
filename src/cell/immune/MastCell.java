@@ -46,7 +46,7 @@ public class MastCell extends Immune {
 	@Override
 	public void actIfActive() {
 		if (!proTumor) {
-			CellUtils.releaseMediators(this.grid, this, 5.0);
+			CellUtils.releaseMediators(this.grid, this);
 			this.setActive(false);
 		}
 	}

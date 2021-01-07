@@ -198,6 +198,16 @@ public class CellUtils {
 	}
 	
 	/**
+	 * Returns the distance within which substances are released.
+	 * 
+	 * @param grid The grid where the cells are living.
+	 * @return the distance within which the substances are released.
+	 */
+	public static double getDistanceToReleaseSubstances(Grid<Cell> grid) {
+		return Math.max(2, Math.min(grid.getDimensions().getWidth(), grid.getDimensions().getHeight()) / 5);
+	}
+	
+	/**
 	 * Simulate the release of a general substance within a specified distance and the activation of
 	 * an immune cell as a consequence of this release.
 	 * 
@@ -208,10 +218,10 @@ public class CellUtils {
 	 * @param cellTypeToStimulate The cell type to stimulate.
 	 * @param distance The distance within which the immune cells specified are activated.
 	 */
-	private static <T extends Cell, S extends Immune> void releaseSubstanceWithinDistance(Grid<Cell> grid, T caller, Class<S> cellTypeToStimulate, Double distance, Consumer<S> action) {
+	private static <T extends Cell, S extends Immune> void releaseSubstanceWithinDistance(Grid<Cell> grid, T caller, Class<S> cellTypeToStimulate, Consumer<S> action) {
 		// Questo metodo � privato perch� per ora non ha utilit� al di fuori di qui.
 		Stream<S> cellList = CellUtils.getSpecificCells(grid, caller, cellTypeToStimulate);
-		cellList.filter(element -> grid.getDistance(grid.getLocation(caller), grid.getLocation(element)) <= distance).forEach(action);
+		cellList.filter(element -> grid.getLocation(caller) != grid.getLocation(element) && grid.getDistance(grid.getLocation(caller), grid.getLocation(element)) <= getDistanceToReleaseSubstances(grid)).forEach(action);
 	}
 	
 	/**
@@ -222,9 +232,9 @@ public class CellUtils {
 	 * @param caller The caller of the method.
 	 * @param distance The distance within which the macrophages cells are activated.
 	 */
-	public static <T extends Cell> void releaseIFNGamma(Grid<Cell> grid, T caller, Double distance) {
-		releaseSubstanceWithinDistance(grid, caller, M1.class, distance, element -> element.setActive(true));
-		releaseSubstanceWithinDistance(grid, caller, NKCell.class, distance, element -> element.setActive(true));
+	public static <T extends Cell> void releaseIFNGamma(Grid<Cell> grid, T caller) {
+		releaseSubstanceWithinDistance(grid, caller, M1.class, element -> element.setActive(true));
+		releaseSubstanceWithinDistance(grid, caller, NKCell.class, element -> element.setActive(true));
 		// releaseSubstanceWithinDistance(grid, caller, M2.class, distance, element -> element.setActive(true));
 	}
 	
@@ -236,8 +246,8 @@ public class CellUtils {
 	 * @param caller The caller of the method.
 	 * @param distance The distance within which the CD8+ T Cells are activated.
 	 */
-	public static <T extends Cell> void releaseTNFBeta(Grid<Cell> grid, T caller, Double distance) {
-		releaseSubstanceWithinDistance(grid, caller, CD8.class, distance, element -> element.increaseCellGrowth(0.2f));
+	public static <T extends Cell> void releaseTNFBeta(Grid<Cell> grid, T caller) {
+		releaseSubstanceWithinDistance(grid, caller, CD8.class, element -> element.increaseCellGrowth(0.2f));
 	}
 
 	/**
@@ -248,8 +258,8 @@ public class CellUtils {
 	 * @param caller The caller of the method.
 	 * @param distance The distance within which the CD8+ T Cells are activated.
 	 */
-	public static <T extends Cell> void releaseTNFAlpha(Grid<Cell> grid, T caller, Double distance) {
-		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, distance, element -> element.setActive(true));
+	public static <T extends Cell> void releaseTNFAlpha(Grid<Cell> grid, T caller) {
+		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, element -> element.setActive(true));
 	}
 	
 	/**
@@ -260,8 +270,8 @@ public class CellUtils {
 	 * @param caller The caller of the method.
 	 * @param distance The distance within which the CD8+ T Cells are activated.
 	 */
-	public static <T extends Cell> void releaseMediators(Grid<Cell> grid, T caller, Double distance) {
-		releaseSubstanceWithinDistance(grid, caller, TCell.class, distance, element -> element.setActive(true));
+	public static <T extends Cell> void releaseMediators(Grid<Cell> grid, T caller) {
+		releaseSubstanceWithinDistance(grid, caller, TCell.class, element -> element.setActive(true));
 	}
 
 	/**
@@ -272,12 +282,12 @@ public class CellUtils {
 	 * @param caller The caller of the method.
 	 * @param distance The distance within which the T Cells are suppressed.
 	 */
-	public static <T extends Cell> void releaseTGFbeta(Grid<Cell> grid, T caller, Double distance) {
-		releaseSubstanceWithinDistance(grid, caller, TCell.class, distance, element -> {
+	public static <T extends Cell> void releaseTGFbeta(Grid<Cell> grid, T caller) {
+		releaseSubstanceWithinDistance(grid, caller, TCell.class, element -> {
 			element.setActive(false);
 			element.decreaseCellGrowth(0.2f);
 		});
-		releaseSubstanceWithinDistance(grid, caller, M2.class, distance, element -> element.setActive(false));
+		releaseSubstanceWithinDistance(grid, caller, M2.class, element -> element.setActive(false));
 	}
 	
 	/**
@@ -288,13 +298,13 @@ public class CellUtils {
 	 * @param caller The caller of the method.
 	 * @param distance The distance within which the macrophages, dendritic cells and Th1 cells are suppressed.
 	 */
-	public static <T extends Cell> void releaseIL10(Grid<Cell> grid, T caller, Double distance) {
-		releaseSubstanceWithinDistance(grid, caller, M1.class, distance, element -> element.setActive(false));
-		releaseSubstanceWithinDistance(grid, caller, M2.class, distance, element -> element.setActive(false));
-		releaseSubstanceWithinDistance(grid, caller, Th1.class, distance, element -> element.setActive(false));
+	public static <T extends Cell> void releaseIL10(Grid<Cell> grid, T caller) {
+		releaseSubstanceWithinDistance(grid, caller, M1.class, element -> element.setActive(false));
+		releaseSubstanceWithinDistance(grid, caller, M2.class, element -> element.setActive(false));
+		releaseSubstanceWithinDistance(grid, caller, Th1.class, element -> element.setActive(false));
 
-		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, distance, element -> element.setActive(false));
-		releaseSubstanceWithinDistance(grid, caller, PlasmacytoidDendritic.class, distance, element -> element.setActive(false));
+		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, element -> element.setActive(false));
+		releaseSubstanceWithinDistance(grid, caller, PlasmacytoidDendritic.class, element -> element.setActive(false));
 		
 	}
 }

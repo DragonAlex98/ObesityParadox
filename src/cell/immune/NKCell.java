@@ -30,8 +30,8 @@ public class NKCell extends Immune {
 			if (kill < killProb) {
 				CellUtils.replaceCell(this.grid, rccList.get(random.nextInt(rccList.size())), new DeadCell(this.grid));
 			}
-			CellUtils.releaseIFNGamma(grid, this, 5.0);
-			CellUtils.releaseTNFAlpha(grid, this, 5.0);
+			CellUtils.releaseIFNGamma(grid, this);
+			CellUtils.releaseTNFAlpha(grid, this);
 			this.setActive(false);
 		}
 	}

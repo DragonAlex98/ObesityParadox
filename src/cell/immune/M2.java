@@ -16,7 +16,7 @@ public class M2 extends Immune {
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
-	private double proTumourProbability = RunEnvironment.getInstance().getParameters()
+	private double obesityMacrophagePhenotypeProbability = RunEnvironment.getInstance().getParameters()
 			.getFloat("obesityMacrophagePhenotypeProbability");
 
 	public M2(int lifespan, Grid<Cell> grid) {
@@ -33,10 +33,11 @@ public class M2 extends Immune {
 		
 		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
 
-		CellUtils.releaseTNFAlpha(grid, this, 5.0);
-		CellUtils.releaseIL10(grid, this, 3.0);
-		CellUtils.releaseTGFbeta(grid, this, 3.0);
+		CellUtils.releaseTNFAlpha(grid, this);
+		CellUtils.releaseIL10(grid, this);
+		CellUtils.releaseTGFbeta(grid, this);
 		
+		this.setActive(false);
 		// KILL => ANTIGEN PRESENTATION => T CELL PROLIFERATION
 		// NOT SELF?
 		// PROBABILITY

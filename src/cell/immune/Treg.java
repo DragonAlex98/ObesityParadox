@@ -27,8 +27,10 @@ public class Treg extends TCell {
 	 */
 	@Override
 	public void actIfActive() {
-		CellUtils.releaseTGFbeta(grid, this, 5.0);
-		CellUtils.releaseIL10(grid, this, 3.0);
+		CellUtils.releaseTGFbeta(grid, this);
+		CellUtils.releaseIL10(grid, this);
+		
+		this.setActive(false);
 	}
 
 }

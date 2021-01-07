@@ -1,5 +1,6 @@
 package cell.notImmune;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -78,6 +79,7 @@ public class RenalCellCarcinoma extends NotImmune implements Cloneable{
 		if (!list.isEmpty()) {
 			// check how many times I can actually reproduce
 			int count = this.reproFactor < list.size() ? this.reproFactor : list.size();
+			Collections.shuffle(list);
 			for (int i = 0; i < count; i++) {
 				RenalCellCarcinoma rcc = null;
 				try {
