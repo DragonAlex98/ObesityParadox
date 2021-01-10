@@ -287,7 +287,7 @@ public class CellUtils {
 			element.setActive(false);
 			element.decreaseCellGrowth(0.2f);
 		});
-		releaseSubstanceWithinDistance(grid, caller, M2.class, element -> element.setActive(false));
+		releaseSubstanceWithinDistance(grid, caller, M2.class, element -> element.setActive(true));
 	}
 	
 	/**
@@ -300,7 +300,7 @@ public class CellUtils {
 	 */
 	public static <T extends Cell> void releaseIL10(Grid<Cell> grid, T caller) {
 		releaseSubstanceWithinDistance(grid, caller, M1.class, element -> element.setActive(false));
-		releaseSubstanceWithinDistance(grid, caller, M2.class, element -> element.setActive(false));
+		releaseSubstanceWithinDistance(grid, caller, M2.class, element -> element.setActive(true));
 		releaseSubstanceWithinDistance(grid, caller, Th1.class, element -> element.setActive(false));
 
 		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, element -> element.setActive(false));
