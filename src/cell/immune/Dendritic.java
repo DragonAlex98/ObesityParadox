@@ -21,7 +21,7 @@ import utils.CellUtils;
 public class Dendritic extends Immune {
 	
 	// ratio CD4/CD8
-	private static float cd4cd8ratio = RunEnvironment.getInstance().getParameters().getFloat("cd4cd8Ratio");
+	private float cd4cd8ratio;
 	
 	// the lymph node orientation
 	private static Orientation lymphNodeOrientation = Orientation
@@ -30,11 +30,11 @@ public class Dendritic extends Immune {
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 	
 	// max number of Tcell on the grid
-	private static float tCellSpawnPercentage = RunEnvironment.getInstance().getParameters()
-			.getFloat("tCellSpawnPercentage");
+	private static float tCellSpawnPercentage = 0.10f;
 
-	public Dendritic(int lifespan, Grid<Cell> grid) {
+	public Dendritic(int lifespan, Grid<Cell> grid, float cd4cd8ratio) {
 		super(lifespan, grid);
+		this.cd4cd8ratio = cd4cd8ratio;
 	}
 
 	/**
@@ -82,18 +82,29 @@ public class Dendritic extends Immune {
 	 * @param tCellToSpawn   Number of Tcell to spawn
 	 */
 	public void spawnTCell(List<EmptyCell> emptyCellsList, int tCellToSpawn) {
-		int numberOfCD8ToSpawn = (int) (tCellToSpawn / (1 + cd4cd8ratio));
-		System.out.println("cd8 to spawn" + numberOfCD8ToSpawn);
+		float newRatio = cd4cd8ratio;
+		if (cd4cd8ratio < 1) {
+			newRatio = 1 / cd4cd8ratio;
+		}
+		int numberOfCD8ToSpawn = (int) (tCellToSpawn / (1 + newRatio));
+		int numberOfCD4ToSpawn = tCellToSpawn - numberOfCD8ToSpawn;
+		if (cd4cd8ratio < 1) {
+			int temp = numberOfCD4ToSpawn;
+			numberOfCD4ToSpawn = numberOfCD8ToSpawn;
+			numberOfCD8ToSpawn = temp;
+		}
+		System.out.println("Dendritic: CD4: " + numberOfCD4ToSpawn + ", CD8:" + numberOfCD8ToSpawn);
+		
 		Collections.shuffle(emptyCellsList, random);
 		for (int i = 0; i < numberOfCD8ToSpawn; i++) {
-			TCell newCD8 = new CD8(10, this.grid, RunEnvironment.getInstance().getParameters().getFloat("cd8KillProb"));
+			TCell newCD8 = new CD8(10, this.grid);
 			newCD8.setActive(true);
 			CellUtils.replaceCell(this.grid, emptyCellsList.get(i), newCD8);
 		}
-		for (int i = numberOfCD8ToSpawn; i < tCellToSpawn; i++) {
+		for (int i = 0; i < numberOfCD4ToSpawn; i++) {
 			TCell newCD4 = new CD4(10, this.grid);
 			newCD4.setActive(true);
-			CellUtils.replaceCell(this.grid, emptyCellsList.get(i), newCD4);
+			CellUtils.replaceCell(this.grid, emptyCellsList.get(i+numberOfCD8ToSpawn), newCD4);
 		}
 	}
 
@@ -147,12 +158,16 @@ public class Dendritic extends Immune {
 			if (numberOfTCellToSpawn <= 0) {
 				return;
 			} // random value of Tcell to spwan, from 0 to "numberOfTCellToSpawn"
-			int maxTCellToSpawn = random.nextInt(numberOfTCellToSpawn);
+			int maxTCellToSpawn = Math.max(1, random.nextInt(numberOfTCellToSpawn));
 			System.out.println("random max number of tcell to spawn: " + maxTCellToSpawn);
 
 			int tCellToSpawn = maxTCellToSpawn <= emptyCellsList.size() ? maxTCellToSpawn : emptyCellsList.size();
 			System.out.println("tcell to spawn: " + tCellToSpawn);
 			spawnTCell(emptyCellsList, tCellToSpawn);
 		}
+	}
+	
+	public float getCD4CD8Ratio() {
+		return this.cd4cd8ratio;
 	}
 }

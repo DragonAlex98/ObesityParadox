@@ -33,7 +33,7 @@ public abstract class Cell {
 	// check age and eventually die
 	@ScheduledMethod(start = 1, interval = 1, priority = 2)
 	public boolean checkAge() {
-		if (this.age == this.lifeSpan) {
+		if (this.age == this.lifeSpan && !(this instanceof DeadCell)) {
 			this.die();
 		}
 		return false;
@@ -48,14 +48,7 @@ public abstract class Cell {
 	// if I am alive, my age will be incremented
 	@ScheduledMethod(start = 1, interval = 1, priority = 1)
 	public void increaseAge() {
-		if (this.isAlive()) {
-			this.age++;
-		}
-	}
-
-	// check if I am alive
-	public boolean isAlive() {
-		return !(this instanceof DeadCell);
+		this.age++;
 	}
 
 	public int getLifespan() {

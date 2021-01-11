@@ -100,7 +100,6 @@ public class CellUtils {
 	@SuppressWarnings("unchecked")
 	public static <T extends Cell> void moveCell(Grid<Cell> grid, T cellToMove, EmptyCell emptyCellToMoveTo) {
 		GridPoint oldPoint = grid.getLocation(cellToMove);
-		//GridPoint newPoint = grid.getLocation(emptyCellToMoveTo);
 		Context<Cell> context = ContextUtils.getContext(cellToMove);
 		replaceCell(grid, emptyCellToMoveTo, cellToMove);
 		
@@ -108,8 +107,6 @@ public class CellUtils {
 		context.add(emptyCell);
 		grid.moveTo(emptyCell, oldPoint.getX(), oldPoint.getY());
 		context.add(emptyCell);
-		
-		//System.out.println("Spostata cellula da: (" + oldPoint.getX() + ", " + oldPoint.getY() + ") a (" + newPoint.getX() + ", " + newPoint.getY() + ")");
 	}
 
 	/**
@@ -247,7 +244,7 @@ public class CellUtils {
 	 * @param distance The distance within which the CD8+ T Cells are activated.
 	 */
 	public static <T extends Cell> void releaseTNFBeta(Grid<Cell> grid, T caller) {
-		releaseSubstanceWithinDistance(grid, caller, CD8.class, element -> element.increaseCellGrowth(0.2f));
+		releaseSubstanceWithinDistance(grid, caller, CD8.class, element -> element.increaseCellGrowth(0.05f));
 	}
 
 	/**
@@ -285,7 +282,7 @@ public class CellUtils {
 	public static <T extends Cell> void releaseTGFbeta(Grid<Cell> grid, T caller) {
 		releaseSubstanceWithinDistance(grid, caller, TCell.class, element -> {
 			element.setActive(false);
-			element.decreaseCellGrowth(0.2f);
+			element.decreaseCellGrowth(0.05f);
 		});
 		releaseSubstanceWithinDistance(grid, caller, M2.class, element -> element.setActive(true));
 	}
@@ -306,5 +303,75 @@ public class CellUtils {
 		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, element -> element.setActive(false));
 		releaseSubstanceWithinDistance(grid, caller, PlasmacytoidDendritic.class, element -> element.setActive(false));
 		
+	}
+	
+	/**
+	 * Return a variable that is within the range [minPerc, maxPerc] that is directly related with the BMI value.
+	 * An example: BMI that ranges between 15 and 40 and the percentage of adipocyte that ranges between 0.02 and 0.08.
+	 * <ul>
+	 * <h1>
+	 * BMI: 15
+	 * </h1>
+	 * limitVariableToBMI(15, 0.02, 0.08) => 0.02
+	 * </ul>
+	 * 
+	 * <ul>
+	 * <h1>
+	 * BMI: 27
+	 * </h1>
+	 * limitVariableToBMI(15, 0.02, 0.08) => 0.049
+	 * </ul>
+	 * 
+	 * <ul>
+	 * <h1>
+	 * BMI: 40
+	 * </h1>
+	 * limitVariableToBMI(15, 0.02, 0.08) => 0.08
+	 * </ul>
+	 * 
+	 * @param bmi the bmi value
+	 * @param minPerc the minimum percentage of the variable
+	 * @param maxPerc the maximum percentage of the variable
+	 * @return the percentage 
+	 */
+	public static double limitVariableToBMI(int bmi, double minPerc, double maxPerc) {
+		int maxBMI = 40;
+		int minBMI = 15;
+		return Math.round((maxPerc - ((double)(maxBMI - bmi) / (maxBMI - minBMI)) * (maxPerc - minPerc)) * 100.0) / 100.0;
+	}
+	
+	/**
+	 * Return a variable that is within the range [minPerc, maxPerc] that is inversely related with the BMI value.
+	 * An example: BMI that ranges between 15 and 40 and the percentage of natural killer that ranges between 0.02 and 0.08.
+	 * <ul>
+	 * <h1>
+	 * BMI: 15
+	 * </h1>
+	 * limitVariableToBMI(15, 0.02, 0.08) => 0.08
+	 * </ul>
+	 * 
+	 * <ul>
+	 * <h1>
+	 * BMI: 27
+	 * </h1>
+	 * limitVariableToBMI(15, 0.02, 0.08) => 0.051
+	 * </ul>
+	 * 
+	 * <ul>
+	 * <h1>
+	 * BMI: 40
+	 * </h1>
+	 * limitVariableToBMI(15, 0.02, 0.08) => 0.02
+	 * </ul>
+	 * 
+	 * @param bmi the bmi value
+	 * @param minPerc the minimum percentage of the variable
+	 * @param maxPerc the maximum percentage of the variable
+	 * @return the percentage 
+	 */
+	public static double inverseLimitVariableToBMI(int bmi, double minPerc, double maxPerc) {
+		int maxBMI = 40;
+		int minBMI = 15;
+		return Math.round((maxPerc + minPerc - (maxPerc - ((double)(maxBMI - bmi) / (maxBMI - minBMI)) * (maxPerc - minPerc))) * 100.0) / 100.0;
 	}
 }

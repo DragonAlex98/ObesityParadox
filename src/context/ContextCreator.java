@@ -39,6 +39,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
 		Grid<Cell> grid = gridFactory.createGrid("grid", context, new GridBuilderParameters<Cell>(new StickyBorders(), new SimpleGridAdder<Cell>(), false, params.getInteger("width"), params.getInteger("height")));
 		
+		float percentageOfImmuneCellsToCreate = 0.10f;
 		int size = grid.getDimensions().getWidth() * grid.getDimensions().getHeight();
 
 		System.out.println("Altezza: " + grid.getDimensions().getHeight() + ", Larghezza: " + grid.getDimensions().getWidth());
@@ -91,76 +92,85 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		Orientation lymphNodeOrientation = Orientation.valueOf(params.getString("lymphNodeOrientation"));
 		System.out.println("Orientamento linfonodo: " + lymphNodeOrientation);
 		
+		if (bloodVesselOrientation == lymphNodeOrientation) {
+			System.out.println("Il vaso sanguigno non si può trovare nella stessa direzione del linfonodo!");
+			return null;
+		}
+		
+		int bmi = params.getInteger("bmi");
+		System.out.println("BMI: " + bmi);
+		
 		int reproTime = params.getInteger("reproTime");
 		System.out.println("Tempo riproduzione tumore: " + reproTime);
 		
 		int reproFactor = params.getInteger("reproFactor");
 		System.out.println("Fattore riproduzione tumore: " + reproFactor);
 		
-		if (bloodVesselOrientation == lymphNodeOrientation) {
-			System.out.println("Il vaso sanguigno non si può trovare nella stessa direzione del linfonodo!");
-			return null;
-		}
+		float mutationPercentage = params.getFloat("mutationPercentage");
+		System.out.println("Percentuale mutazione tumore: " + mutationPercentage);
 		
-		float cd8Percentage = params.getFloat("cd8Percentage");
+		float disableTCellPercentage = params.getFloat("disableTCellPercentage");
+		System.out.println("Percentuale disabilitazione TCell: " + disableTCellPercentage);
+		
+		float rccPercentage = 0.02f;//params.getFloat("rccPercentage");
+		System.out.println("Percentuale cellule RCC: " + rccPercentage*100 + "%");
+		int rccCellsToCreate = Math.max(2, (int)(size * rccPercentage));
+		System.out.println("Numero cellule RCC da creare: " + rccCellsToCreate);
+		
+		float cd4Percentage = 0.25f;//params.getFloat("cd4Percentage");
+		System.out.println("Percentuale cellule CD4: " + cd4Percentage*100 + "%");
+		int cd4CellsToCreate = Math.max(1, (int)(size * cd4Percentage * percentageOfImmuneCellsToCreate));
+		System.out.println("Numero cellule CD4 da creare: " + cd4CellsToCreate);
+		
+		float cd8Percentage = 0.125f;//params.getFloat("cd8Percentage");
 		System.out.println("Percentuale cellule CD8: " + cd8Percentage*100 + "%");
-		int cd8CellsToCreate = (int)(size * cd8Percentage);
+		int cd8CellsToCreate = Math.max(1, (int)(size * cd8Percentage * percentageOfImmuneCellsToCreate));
 		System.out.println("Numero cellule CD8 da creare: " + cd8CellsToCreate);
 		
-		float mastPercentage = params.getFloat("mastPercentage");
+		float mastPercentage = 0.05f;//params.getFloat("mastPercentage");
 		System.out.println("Percentuale cellule Mast: " + mastPercentage*100 + "%");
-		int mastCellsToCreate = (int)(size * mastPercentage);
+		int mastCellsToCreate = Math.max(1, (int)(size * mastPercentage * percentageOfImmuneCellsToCreate));
 		System.out.println("Numero cellule Mast da creare: " + mastCellsToCreate);
-		
-		float adipocytePercentage = params.getFloat("adipocytePercentage");
-		System.out.println("Percentuale cellule Adipocyte: " + adipocytePercentage*100 + "%");
-		int adipocyteCellsToCreate = (int)(size * adipocytePercentage);
-		System.out.println("Numero cellule Adipocyte da creare: " + adipocyteCellsToCreate);
-		
-		float rccPercentage = params.getFloat("rccPercentage");
-		System.out.println("Percentuale cellule RCC: " + rccPercentage*100 + "%");
-		int rccCellsToCreate = (int)(size * rccPercentage);
-		System.out.println("Numero cellule RCC da creare: " + rccCellsToCreate);
 
-		float cd4Percentage = params.getFloat("cd4Percentage");
-		System.out.println("Percentuale cellule CD4: " + cd4Percentage*100 + "%");
-		int cd4CellsToCreate = (int)(size * cd4Percentage);
-		System.out.println("Numero cellule CD4 da creare: " + cd4CellsToCreate);
-
-		float dendriticPercentage = params.getFloat("dendriticPercentage");
+		float dendriticPercentage = 0.03f;//params.getFloat("dendriticPercentage");
 		System.out.println("Percentuale cellule Dendritic: " + dendriticPercentage*100 + "%");
-		int dendriticCellsToCreate = (int)(size * dendriticPercentage);
+		int dendriticCellsToCreate = Math.max(1, (int)(size * dendriticPercentage * percentageOfImmuneCellsToCreate));
 		System.out.println("Numero cellule Dendritic da creare: " + dendriticCellsToCreate);
+		
+		float plasmacytoidPercentage = 0.03f;//params.getFloat("plasmacytoidPercentage");
+		System.out.println("Percentuale cellule Plasmacytoid: " + plasmacytoidPercentage*100 + "%");
+		int plasmacytoidCellsToCreate = Math.max(1, (int)(size * plasmacytoidPercentage * percentageOfImmuneCellsToCreate));
+		System.out.println("Numero cellule Plasmacytoid da creare: " + plasmacytoidCellsToCreate);
 
-		float th1Percentage = params.getFloat("th1Percentage");
+		float nkPercentage = 0.1f;//params.getFloat("nkPercentage");
+		System.out.println("Percentuale cellule NK: " + nkPercentage*100 + "%");
+		int nkCellsToCreate = Math.max(1, (int)(size * nkPercentage * percentageOfImmuneCellsToCreate));
+		System.out.println("Numero cellule NK da creare: " + nkCellsToCreate);
+
+		float m1Percentage = 0.075f;//params.getFloat("m1Percentage");
+		System.out.println("Percentuale cellule M1: " + m1Percentage*100 + "%");
+		int m1CellsToCreate = Math.max(1, (int)(size * m1Percentage * percentageOfImmuneCellsToCreate));
+		System.out.println("Numero cellule M1 da creare: " + m1CellsToCreate);
+		
+		float m2Percentage = 0.075f;//params.getFloat("m2Percentage");
+		System.out.println("Percentuale cellule M2: " + m2Percentage*100 + "%");
+		int m2CellsToCreate = Math.max(1, (int)(size * m2Percentage * percentageOfImmuneCellsToCreate));
+		System.out.println("Numero cellule M2 da creare: " + m2CellsToCreate);
+
+		float th1Percentage = 0f;//params.getFloat("th1Percentage");
 		System.out.println("Percentuale cellule Th1: " + th1Percentage*100 + "%");
 		int th1CellsToCreate = (int)(size * th1Percentage);
 		System.out.println("Numero cellule Th1 da creare: " + th1CellsToCreate);
 		
-		float m1Percentage = params.getFloat("m1Percentage");
-		System.out.println("Percentuale cellule M1: " + m1Percentage*100 + "%");
-		int m1CellsToCreate = (int)(size * m1Percentage);
-		System.out.println("Numero cellule M1 da creare: " + m1CellsToCreate);
-		
-		float m2Percentage = params.getFloat("m2Percentage");
-		System.out.println("Percentuale cellule M2: " + m2Percentage*100 + "%");
-		int m2CellsToCreate = (int)(size * m2Percentage);
-		System.out.println("Numero cellule M2 da creare: " + m2CellsToCreate);
-		
-		float nkPercentage = params.getFloat("nkPercentage");
-		System.out.println("Percentuale cellule NK: " + nkPercentage*100 + "%");
-		int nkCellsToCreate = (int)(size * nkPercentage);
-		System.out.println("Numero cellule NK da creare: " + nkCellsToCreate);
-		
-		float tregPercentage = params.getFloat("tregPercentage");
+		float tregPercentage = 0f;//params.getFloat("tregPercentage");
 		System.out.println("Percentuale cellule Treg: " + tregPercentage*100 + "%");
 		int tregCellsToCreate = (int)(size * tregPercentage);
 		System.out.println("Numero cellule Treg da creare: " + tregCellsToCreate);
 		
-		float plasmacytoidPercentage = params.getFloat("plasmacytoidPercentage");
-		System.out.println("Percentuale cellule Plasmacitoid: " + plasmacytoidPercentage*100 + "%");
-		int plasmacytoidCellsToCreate = (int)(size * plasmacytoidPercentage);
-		System.out.println("Numero cellule Plasmacitoid da creare: " + plasmacytoidCellsToCreate);
+		float adipocytePercentage = 0.05f;//params.getFloat("adipocytePercentage");
+		System.out.println("Percentuale cellule Adipocyte: " + adipocytePercentage*100 + "%");
+		int adipocyteCellsToCreate = Math.max(1, (int)(size * adipocytePercentage));
+		System.out.println("Numero cellule Adipocyte da creare: " + adipocyteCellsToCreate);
 
 		int left = size - cd8CellsToCreate - mastCellsToCreate - adipocyteCellsToCreate - rccCellsToCreate - cd4CellsToCreate - dendriticCellsToCreate - bloodCellsToCreate - th1CellsToCreate - m1CellsToCreate - m2CellsToCreate - nkCellsToCreate - tregCellsToCreate - plasmacytoidCellsToCreate;
 		
@@ -173,9 +183,21 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		
 		int seed = params.getInteger("randomSeed");
 		Random random = new Random(seed);
-		
+
+		for (int i = 0; i < rccCellsToCreate; i++) {
+			RenalCellCarcinoma rcc = new RenalCellCarcinoma(10, grid, reproTime, reproFactor, mutationPercentage, disableTCellPercentage);
+			context.add(rcc);
+			int x;
+			int y;
+			do {
+				x = random.nextInt(grid.getDimensions().getWidth());
+				y = random.nextInt(grid.getDimensions().getHeight());
+			} while (!grid.moveTo(rcc, x, y));
+			context.add(rcc);
+		}
+
 		for (int i = 0; i < cd8CellsToCreate; i++) {
-			CD8 cd8 = new CD8(10, grid, params.getFloat("cd8KillProb"));
+			CD8 cd8 = new CD8(10, grid);//params.getFloat("cd8KillProb"));
 			context.add(cd8);
 			int x;
 			int y;
@@ -210,18 +232,6 @@ public class ContextCreator implements ContextBuilder<Cell> {
 			context.add(adipocyte);
 		}
 		
-		for (int i = 0; i < rccCellsToCreate; i++) {
-			RenalCellCarcinoma rcc = new RenalCellCarcinoma(10, grid, reproTime, reproFactor, params.getFloat("mutationPercentage"), params.getFloat("disableTCellPercentage"));
-			context.add(rcc);
-			int x;
-			int y;
-			do {
-				x = random.nextInt(grid.getDimensions().getWidth());
-				y = random.nextInt(grid.getDimensions().getHeight());
-			} while (!grid.moveTo(rcc, x, y));
-			context.add(rcc);
-		}
-		
 		for (int i = 0; i < cd4CellsToCreate; i++) {
 			CD4 cd4 = new CD4(10, grid);
 			context.add(cd4);
@@ -235,7 +245,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		}
 		
 		for (int i = 0; i < dendriticCellsToCreate; i++) {
-			Dendritic dendritic = new Dendritic(10, grid);
+			Dendritic dendritic = new Dendritic(10, grid, 2.0f);
 			context.add(dendritic);
 			int x;
 			int y;
@@ -283,7 +293,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		}
 		
 		for (int i = 0; i < nkCellsToCreate; i++) {
-			NKCell nk = new NKCell(10, grid, params.getFloat("nkKillProb"));
+			NKCell nk = new NKCell(10, grid);//params.getFloat("nkKillProb"));
 			context.add(nk);
 			int x;
 			int y;

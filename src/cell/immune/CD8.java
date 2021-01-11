@@ -25,11 +25,10 @@ public class CD8 extends TCell {
 	
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 	
-	private float killProb;
+	private float killProb = 0.8f;
 	
-	public CD8(int lifespan, Grid<Cell> grid, float killProb) {
+	public CD8(int lifespan, Grid<Cell> grid) {
 		super(lifespan, grid);
-		this.killProb = killProb;
 	}
 	
 	/**
@@ -77,34 +76,5 @@ public class CD8 extends TCell {
 				CellUtils.replaceCell(this.grid, rccList.get(random.nextInt(rccList.size())), new DeadCell(this.grid));				
 			}
 		}
-	}
-
-	public float getKillProb() {
-		return killProb;
-	}
-
-	public void setKillProb(float killProb) {
-		this.killProb = killProb;
-	}
-	
-	public void increaseKillProb(float killProb) {
-		this.killProb += killProb;
-		if(this.killProb > 1f) {
-			this.killProb = 1f;
-		}
-	}
-	
-	public void decreaseKillProb(float killProb) {
-		this.killProb -= killProb;
-		if(this.killProb < 0f) {
-			this.killProb = 0f;
-		}
-	}
-	
-	@Override
-	protected CD8 clone() throws CloneNotSupportedException {
-		CD8 cell = (CD8) super.clone();
-		cell.setKillProb(RunEnvironment.getInstance().getParameters().getFloat("cd8KillProb"));
-		return cell;
 	}
 }

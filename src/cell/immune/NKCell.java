@@ -12,13 +12,12 @@ import utils.CellUtils;
 
 public class NKCell extends Immune {
 
-	private float killProb;
+	private float killProb = 0.5f;
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
-	public NKCell(int lifespan, Grid<Cell> grid, float killProb) {
+	public NKCell(int lifespan, Grid<Cell> grid) {
 		super(lifespan, grid);
-		this.killProb = killProb;
 	}
 
 	@Override
@@ -35,20 +34,4 @@ public class NKCell extends Immune {
 			this.setActive(false);
 		}
 	}
-
-	public double getKillProb() {
-		return killProb;
-	}
-
-	public void setKillProb(float killProb) {
-		this.killProb = killProb;
-	}
-	
-	@Override
-	protected NKCell clone() throws CloneNotSupportedException {
-		NKCell cell = (NKCell) super.clone();
-		cell.setKillProb(RunEnvironment.getInstance().getParameters().getFloat("nkKillProb"));
-		return cell;
-	}
-
 }

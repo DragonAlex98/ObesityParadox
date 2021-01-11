@@ -25,9 +25,33 @@
       <SeriesData>
         <label>RCC Count</label>
         <color>
-          <red>255</red>
+          <red>128</red>
           <green>0</green>
-          <blue>0</blue>
+          <blue>128</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>CD4 Count</string>
+      <SeriesData>
+        <label>CD4 Count</label>
+        <color>
+          <red>0</red>
+          <green>255</green>
+          <blue>255</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>CD8 Count</string>
+      <SeriesData>
+        <label>CD8 Count</label>
+        <color>
+          <red>128</red>
+          <green>128</green>
+          <blue>128</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
@@ -37,6 +61,78 @@
       <SeriesData>
         <label>Dendritic Count</label>
         <color>
+          <red>255</red>
+          <green>0</green>
+          <blue>255</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>M1 Count</string>
+      <SeriesData>
+        <label>M1 Count</label>
+        <color>
+          <red>255</red>
+          <green>128</green>
+          <blue>0</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>M2 Count</string>
+      <SeriesData>
+        <label>M2 Count</label>
+        <color>
+          <red>128</red>
+          <green>128</green>
+          <blue>0</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Mast Count</string>
+      <SeriesData>
+        <label>Mast Count</label>
+        <color>
+          <red>0</red>
+          <green>255</green>
+          <blue>0</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>NK Count</string>
+      <SeriesData>
+        <label>NK Count</label>
+        <color>
+          <red>0</red>
+          <green>161</green>
+          <blue>225</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Plasmacytoid Count</string>
+      <SeriesData>
+        <label>Plasmacytoid Count</label>
+        <color>
+          <red>225</red>
+          <green>0</green>
+          <blue>225</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Th1 Count</string>
+      <SeriesData>
+        <label>Th1 Count</label>
+        <color>
           <red>0</red>
           <green>0</green>
           <blue>255</blue>
@@ -45,13 +141,13 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>DeadCell Count</string>
+      <string>Treg Count</string>
       <SeriesData>
-        <label>DeadCell Count</label>
+        <label>Treg Count</label>
         <color>
-          <red>0</red>
-          <green>255</green>
-          <blue>0</blue>
+          <red>113</red>
+          <green>46</green>
+          <blue>38</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>

@@ -27,16 +27,15 @@ import utils.CellUtils;
 public class MastCell extends Immune {
 
 	// if I am pro tumor or anti tumor
-	private boolean proTumor;
+	private boolean proTumor = false;
 
 	// percentage of become pro tumor
-	private static float proTumorPercentage = RunEnvironment.getInstance().getParameters().getFloat("mastCellProTumorPercentage");
+	private static float proTumorPercentage = 0.5f;
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
 	public MastCell(int lifespan, Grid<Cell> grid) {
 		super(lifespan, grid);
-		this.proTumor = false;
 	}
 
 	/**
