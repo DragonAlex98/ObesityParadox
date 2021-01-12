@@ -319,14 +319,14 @@ public class CellUtils {
 	 * <h1>
 	 * BMI: 27
 	 * </h1>
-	 * limitVariableToBMI(15, 0.02, 0.08) => 0.049
+	 * limitVariableToBMI(27, 0.02, 0.08) => 0.049
 	 * </ul>
 	 * 
 	 * <ul>
 	 * <h1>
 	 * BMI: 40
 	 * </h1>
-	 * limitVariableToBMI(15, 0.02, 0.08) => 0.08
+	 * limitVariableToBMI(40, 0.02, 0.08) => 0.08
 	 * </ul>
 	 * 
 	 * @param bmi the bmi value
@@ -347,21 +347,21 @@ public class CellUtils {
 	 * <h1>
 	 * BMI: 15
 	 * </h1>
-	 * limitVariableToBMI(15, 0.02, 0.08) => 0.08
+	 * inverseLimitVariableToBMI(15, 0.02, 0.08) => 0.08
 	 * </ul>
 	 * 
 	 * <ul>
 	 * <h1>
 	 * BMI: 27
 	 * </h1>
-	 * limitVariableToBMI(15, 0.02, 0.08) => 0.051
+	 * inverseLimitVariableToBMI(27, 0.02, 0.08) => 0.051
 	 * </ul>
 	 * 
 	 * <ul>
 	 * <h1>
 	 * BMI: 40
 	 * </h1>
-	 * limitVariableToBMI(15, 0.02, 0.08) => 0.02
+	 * inverseLimitVariableToBMI(40, 0.02, 0.08) => 0.02
 	 * </ul>
 	 * 
 	 * @param bmi the bmi value
