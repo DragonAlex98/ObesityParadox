@@ -27,6 +27,7 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
 import repast.simphony.space.grid.StickyBorders;
+import utils.CellUtils;
 
 public class ContextCreator implements ContextBuilder<Cell> {
 
@@ -117,37 +118,39 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		int rccCellsToCreate = Math.max(2, (int)(size * rccPercentage));
 		System.out.println("Numero cellule RCC da creare: " + rccCellsToCreate);
 		
+		double cd4cd8ratio = CellUtils.limitVariableToBMI(bmi, 1.5f, 2.5f);
+		
 		float cd4Percentage = 0.25f;//params.getFloat("cd4Percentage");
 		System.out.println("Percentuale cellule CD4: " + cd4Percentage*100 + "%");
 		int cd4CellsToCreate = Math.max(1, (int)(size * cd4Percentage * percentageOfImmuneCellsToCreate));
 		System.out.println("Numero cellule CD4 da creare: " + cd4CellsToCreate);
 		
-		float cd8Percentage = 0.125f;//params.getFloat("cd8Percentage");
+		double cd8Percentage = cd4Percentage / cd4cd8ratio;//params.getFloat("cd8Percentage");
 		System.out.println("Percentuale cellule CD8: " + cd8Percentage*100 + "%");
 		int cd8CellsToCreate = Math.max(1, (int)(size * cd8Percentage * percentageOfImmuneCellsToCreate));
 		System.out.println("Numero cellule CD8 da creare: " + cd8CellsToCreate);
 		
-		float mastPercentage = 0.05f;//params.getFloat("mastPercentage");
+		double mastPercentage = CellUtils.limitVariableToBMI(bmi, 0.03f, 0.08f);//params.getFloat("mastPercentage");
 		System.out.println("Percentuale cellule Mast: " + mastPercentage*100 + "%");
 		int mastCellsToCreate = Math.max(1, (int)(size * mastPercentage * percentageOfImmuneCellsToCreate));
 		System.out.println("Numero cellule Mast da creare: " + mastCellsToCreate);
 
-		float dendriticPercentage = 0.03f;//params.getFloat("dendriticPercentage");
+		double dendriticPercentage = CellUtils.limitVariableToBMI(bmi, 0.02f, 0.05f);//params.getFloat("dendriticPercentage");
 		System.out.println("Percentuale cellule Dendritic: " + dendriticPercentage*100 + "%");
 		int dendriticCellsToCreate = Math.max(1, (int)(size * dendriticPercentage * percentageOfImmuneCellsToCreate));
 		System.out.println("Numero cellule Dendritic da creare: " + dendriticCellsToCreate);
 		
-		float plasmacytoidPercentage = 0.03f;//params.getFloat("plasmacytoidPercentage");
+		double plasmacytoidPercentage = CellUtils.limitVariableToBMI(bmi, 0.02f, 0.08f);//params.getFloat("plasmacytoidPercentage");
 		System.out.println("Percentuale cellule Plasmacytoid: " + plasmacytoidPercentage*100 + "%");
 		int plasmacytoidCellsToCreate = Math.max(1, (int)(size * plasmacytoidPercentage * percentageOfImmuneCellsToCreate));
 		System.out.println("Numero cellule Plasmacytoid da creare: " + plasmacytoidCellsToCreate);
 
-		float nkPercentage = 0.1f;//params.getFloat("nkPercentage");
+		double nkPercentage = CellUtils.inverseLimitVariableToBMI(bmi, 0.07f, 0.15f);//params.getFloat("nkPercentage");
 		System.out.println("Percentuale cellule NK: " + nkPercentage*100 + "%");
 		int nkCellsToCreate = Math.max(1, (int)(size * nkPercentage * percentageOfImmuneCellsToCreate));
 		System.out.println("Numero cellule NK da creare: " + nkCellsToCreate);
 
-		float m1Percentage = 0.075f;//params.getFloat("m1Percentage");
+		double m1Percentage = CellUtils.limitVariableToBMI(bmi, 0.04f, 0.09f);//params.getFloat("m1Percentage");
 		System.out.println("Percentuale cellule M1: " + m1Percentage*100 + "%");
 		int m1CellsToCreate = Math.max(1, (int)(size * m1Percentage * percentageOfImmuneCellsToCreate));
 		System.out.println("Numero cellule M1 da creare: " + m1CellsToCreate);
@@ -167,7 +170,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		int tregCellsToCreate = (int)(size * tregPercentage);
 		System.out.println("Numero cellule Treg da creare: " + tregCellsToCreate);
 		
-		float adipocytePercentage = 0.05f;//params.getFloat("adipocytePercentage");
+		double adipocytePercentage = CellUtils.limitVariableToBMI(bmi, 0.03f, 0.07f);
 		System.out.println("Percentuale cellule Adipocyte: " + adipocytePercentage*100 + "%");
 		int adipocyteCellsToCreate = Math.max(1, (int)(size * adipocytePercentage));
 		System.out.println("Numero cellule Adipocyte da creare: " + adipocyteCellsToCreate);
@@ -245,7 +248,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		}
 		
 		for (int i = 0; i < dendriticCellsToCreate; i++) {
-			Dendritic dendritic = new Dendritic(10, grid, 2.0f);
+			Dendritic dendritic = new Dendritic(10, grid, cd4cd8ratio);
 			context.add(dendritic);
 			int x;
 			int y;
@@ -317,7 +320,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		}
 		
 		for (int i = 0; i < plasmacytoidCellsToCreate; i++) {
-			PlasmacytoidDendritic plasma = new PlasmacytoidDendritic(10, grid);
+			PlasmacytoidDendritic plasma = new PlasmacytoidDendritic(10, grid, cd4cd8ratio);
 			context.add(plasma);
 			int x;
 			int y;

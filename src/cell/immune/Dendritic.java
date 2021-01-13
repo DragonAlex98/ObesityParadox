@@ -21,7 +21,7 @@ import utils.CellUtils;
 public class Dendritic extends Immune {
 	
 	// ratio CD4/CD8
-	private float cd4cd8ratio;
+	private double cd4cd8ratio;
 	
 	// the lymph node orientation
 	private static Orientation lymphNodeOrientation = Orientation
@@ -32,7 +32,7 @@ public class Dendritic extends Immune {
 	// max number of Tcell on the grid
 	private static float tCellSpawnPercentage = 0.10f;
 
-	public Dendritic(int lifespan, Grid<Cell> grid, float cd4cd8ratio) {
+	public Dendritic(int lifespan, Grid<Cell> grid, double cd4cd8ratio) {
 		super(lifespan, grid);
 		this.cd4cd8ratio = cd4cd8ratio;
 	}
@@ -82,7 +82,7 @@ public class Dendritic extends Immune {
 	 * @param tCellToSpawn   Number of Tcell to spawn
 	 */
 	public void spawnTCell(List<EmptyCell> emptyCellsList, int tCellToSpawn) {
-		float newRatio = cd4cd8ratio;
+		double newRatio = cd4cd8ratio;
 		if (cd4cd8ratio < 1) {
 			newRatio = 1 / cd4cd8ratio;
 		}
@@ -167,7 +167,7 @@ public class Dendritic extends Immune {
 		}
 	}
 	
-	public float getCD4CD8Ratio() {
+	public double getCD4CD8Ratio() {
 		return this.cd4cd8ratio;
 	}
 }

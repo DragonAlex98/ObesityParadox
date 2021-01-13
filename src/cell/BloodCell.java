@@ -12,6 +12,8 @@ import utils.CellUtils;
 public class BloodCell extends Cell {
 	
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
+	
+	private float angiogenesisProbability = 0.5f;
 
 	public BloodCell(Grid<Cell> grid) {
 		super(-1, grid);
@@ -22,8 +24,10 @@ public class BloodCell extends Cell {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(grid, this);
 		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
 		if (rccList.size() >= 3) {
-			RenalCellCarcinoma rccToReplaceWithBlood = rccList.get(random.nextInt(rccList.size()));
-			CellUtils.replaceCell(grid, rccToReplaceWithBlood, new BloodCell(this.grid));
+			if (random.nextFloat() < angiogenesisProbability) {
+				RenalCellCarcinoma rccToReplaceWithBlood = rccList.get(random.nextInt(rccList.size()));
+				CellUtils.replaceCell(grid, rccToReplaceWithBlood, new BloodCell(this.grid));				
+			}
 		}
 	}
 }

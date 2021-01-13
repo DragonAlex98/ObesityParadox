@@ -14,8 +14,8 @@ public class PlasmacytoidDendritic extends Dendritic {
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
-	public PlasmacytoidDendritic(int lifespan, Grid<Cell> grid) {
-		super(lifespan, grid, 2.0f);
+	public PlasmacytoidDendritic(int lifespan, Grid<Cell> grid, double cd4cd8ratio) {
+		super(lifespan, grid, cd4cd8ratio);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class PlasmacytoidDendritic extends Dendritic {
 			return;
 		}
 		
-		float newRatio = this.getCD4CD8Ratio();
+		double newRatio = this.getCD4CD8Ratio();
 		if (this.getCD4CD8Ratio() < 1) {
 			newRatio = 1 / this.getCD4CD8Ratio();
 		}
