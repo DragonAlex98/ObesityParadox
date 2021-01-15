@@ -93,7 +93,6 @@ public class Dendritic extends Immune {
 			numberOfCD4ToSpawn = numberOfCD8ToSpawn;
 			numberOfCD8ToSpawn = temp;
 		}
-		System.out.println("Dendritic: CD4: " + numberOfCD4ToSpawn + ", CD8:" + numberOfCD8ToSpawn);
 		
 		Collections.shuffle(emptyCellsList, random);
 		for (int i = 0; i < numberOfCD8ToSpawn; i++) {
@@ -154,15 +153,12 @@ public class Dendritic extends Immune {
 				return;
 			}
 			int numberOfTCellToSpawn = tCellToSpawn().intValue();
-			System.out.println("max number of tcell to spawn: " + numberOfTCellToSpawn);
 			if (numberOfTCellToSpawn <= 0) {
 				return;
 			} // random value of Tcell to spwan, from 0 to "numberOfTCellToSpawn"
 			int maxTCellToSpawn = Math.max(1, random.nextInt(numberOfTCellToSpawn));
-			System.out.println("random max number of tcell to spawn: " + maxTCellToSpawn);
 
 			int tCellToSpawn = maxTCellToSpawn <= emptyCellsList.size() ? maxTCellToSpawn : emptyCellsList.size();
-			System.out.println("tcell to spawn: " + tCellToSpawn);
 			spawnTCell(emptyCellsList, tCellToSpawn);
 		}
 	}

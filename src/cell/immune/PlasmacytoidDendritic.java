@@ -45,7 +45,6 @@ public class PlasmacytoidDendritic extends Dendritic {
 			numberOfCD4ToSpawn = numberOfCD8ToSpawn;
 			numberOfCD8ToSpawn = temp;
 		}
-		System.out.println("Plasmacytoid: CD4: " + numberOfCD4ToSpawn + ", CD8:" + numberOfCD8ToSpawn);
 		
 		for (int i = 0; i < numberOfCD4ToSpawn; i++) {
 			CD4 newCD4 = new CD4(10, grid);

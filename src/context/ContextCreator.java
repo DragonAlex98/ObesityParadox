@@ -349,6 +349,10 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		
 		System.out.println("Numero cellule Empty create: " + emptyCellsToCreate);
 
+		if (RunEnvironment.getInstance().isBatch()) {
+			RunEnvironment.getInstance().endAt(100);
+		}
+
 		return context;
 	}
 }

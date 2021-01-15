@@ -95,7 +95,8 @@ public abstract class Cell {
 	public String toString() {
 		return this.getClass().toString()+" [lifeSpan=" + lifeSpan + ", age=" + age + ", self=" + self + "]";
 	}
-	
-	
 
+	public Integer getBMI() {
+		return RunEnvironment.getInstance().getParameters().getInteger("bmi");
+	}
 }

@@ -14,7 +14,17 @@
     <hashCode>0</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
-  <methodDataSources class="linked-hash-map"/>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>BMI</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>BMI</id>
+        <className>cell.Cell</className>
+        <methodName>getBMI</methodName>
+        <aggType>MEAN</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
   <countSources class="linked-hash-map">
     <entry>
       <string>RCC Count</string>
@@ -91,6 +101,13 @@
       <repast.simphony.data2.engine.CountSourceDefinition>
         <typeName>cell.immune.Treg</typeName>
         <id>Treg Count</id>
+      </repast.simphony.data2.engine.CountSourceDefinition>
+    </entry>
+    <entry>
+      <string>Blood Count</string>
+      <repast.simphony.data2.engine.CountSourceDefinition>
+        <typeName>cell.BloodCell</typeName>
+        <id>Blood Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
   </countSources>
