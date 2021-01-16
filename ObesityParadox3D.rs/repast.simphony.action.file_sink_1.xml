@@ -1,0 +1,24 @@
+<repast.simphony.data2.engine.FileSinkDescriptor simphonyVersion="2.8.0">
+  <name>Cells Counts</name>
+  <dataSet>Cells DataSet</dataSet>
+  <delimiter>,</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>tick</string>
+    <string>BMI</string>
+    <string>RCC Count</string>
+    <string>CD4 Count</string>
+    <string>CD8 Count</string>
+    <string>Dendritic Count</string>
+    <string>M1 Count</string>
+    <string>M2 Count</string>
+    <string>Mast Count</string>
+    <string>NK Count</string>
+    <string>Plasmacytoid Count</string>
+    <string>Th1 Count</string>
+    <string>Treg Count</string>
+    <string>Blood Count</string>
+  </sourceIds>
+  <fileName>output/ModelOutput.txt</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

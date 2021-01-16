@@ -26,7 +26,7 @@ public class PlasmacytoidDendritic extends Dendritic {
 
 	@Override
 	public void spawnTCell(List<EmptyCell> emptyCellsList, int tCellToSpawn) {
-		if(tCellToSpawn == 0) {
+		if (tCellToSpawn == 0) {
 			return;
 		}
 		Collections.shuffle(emptyCellsList, random);

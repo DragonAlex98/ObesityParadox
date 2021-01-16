@@ -2,4 +2,6 @@
 <Scenario>
 <repast.simphony.dataLoader.engine.ClassNameDataLoaderAction context="ObesityParadox3D" file="repast.simphony.dataLoader.engine.ClassNameDataLoaderAction.xml" />
 <repast.simphony.action.display context="ObesityParadox3D" file="repast.simphony.action.display.xml" />
+<repast.simphony.action.data_set context="ObesityParadox3D" file="repast.simphony.action.data_set_1.xml" />
+<repast.simphony.action.file_sink context="ObesityParadox3D" file="repast.simphony.action.file_sink_1.xml" />
 </Scenario>

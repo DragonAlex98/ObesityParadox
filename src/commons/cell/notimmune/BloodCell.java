@@ -22,7 +22,11 @@ public class BloodCell extends Cell {
 	@ScheduledMethod(start = 1, interval = 1)
 	public void checkForAngiogenesis() {
 		List<RenalCellCarcinoma> rccList = CellUtils.getSpecificCellsNearby(grid, this, RenalCellCarcinoma.class);
-		if (rccList.size() >= 3) {
+		int limit = 3;
+		if (!CellUtils.isGridBiDimensional(grid)) {
+			limit = 9;
+		}
+		if (rccList.size() >= limit) {
 			if (random.nextFloat() < angiogenesisProbability) {
 				RenalCellCarcinoma rccToReplaceWithBlood = rccList.get(random.nextInt(rccList.size()));
 				CellUtils.replaceCell(grid, rccToReplaceWithBlood, new BloodCell(this.grid));				

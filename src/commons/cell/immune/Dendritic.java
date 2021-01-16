@@ -106,6 +106,9 @@ public class Dendritic extends Immune {
 	 * @param tCellToSpawn   Number of Tcell to spawn
 	 */
 	public void spawnTCell(List<EmptyCell> emptyCellsList, int tCellToSpawn) {
+		if (tCellToSpawn == 0) {
+			return;
+		}
 		double newRatio = cd4cd8ratio;
 		if (cd4cd8ratio < 1) {
 			newRatio = 1 / cd4cd8ratio;
