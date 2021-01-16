@@ -1,6 +1,6 @@
-package bidimensional.cell;
+package commons.cell;
 
-import bidimensional.utils.CellUtils;
+import commons.util.CellUtils;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.grid.Grid;
 

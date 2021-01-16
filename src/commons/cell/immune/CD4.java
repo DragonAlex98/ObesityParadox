@@ -1,9 +1,9 @@
-package bidimensional.cell.immune;
+package commons.cell.immune;
 
 import java.util.Random;
 
-import bidimensional.cell.Cell;
-import bidimensional.utils.CellUtils;
+import commons.cell.Cell;
+import commons.util.CellUtils;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.space.grid.Grid;
 

@@ -1,10 +1,10 @@
-package bidimensional.cell.notimmune;
+package commons.cell.notimmune;
 
 import java.util.List;
 import java.util.Random;
 
-import bidimensional.cell.Cell;
-import bidimensional.utils.CellUtils;
+import commons.cell.Cell;
+import commons.util.CellUtils;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.grid.Grid;
@@ -21,8 +21,7 @@ public class BloodCell extends Cell {
 	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void checkForAngiogenesis() {
-		Iterable<Cell> neighbors = CellUtils.getNeighbors(grid, this);
-		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
+		List<RenalCellCarcinoma> rccList = CellUtils.getSpecificCellsNearby(grid, this, RenalCellCarcinoma.class);
 		if (rccList.size() >= 3) {
 			if (random.nextFloat() < angiogenesisProbability) {
 				RenalCellCarcinoma rccToReplaceWithBlood = rccList.get(random.nextInt(rccList.size()));

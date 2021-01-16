@@ -1,12 +1,12 @@
-package bidimensional.cell.immune;
+package commons.cell.immune;
 
 import java.util.List;
 import java.util.Random;
 
-import bidimensional.cell.Cell;
-import bidimensional.cell.EmptyCell;
-import bidimensional.cell.notimmune.RenalCellCarcinoma;
-import bidimensional.utils.CellUtils;
+import commons.cell.Cell;
+import commons.cell.EmptyCell;
+import commons.cell.notimmune.RenalCellCarcinoma;
+import commons.util.CellUtils;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.grid.Grid;
@@ -31,10 +31,10 @@ public abstract class Immune extends Cell implements Cloneable {
 	@ScheduledMethod(start = 1, interval = 1, priority = 1)
 	public void proliferate() {
 		if (this.checkProliferation()) {
-			List<EmptyCell> eCells = CellUtils.getSpecificCellsNearby(grid, this, EmptyCell.class);
-			if (!eCells.isEmpty()) {
+			List<EmptyCell> emptyCells = CellUtils.getSpecificCellsNearby(grid, this, EmptyCell.class);
+			if (!emptyCells.isEmpty()) {
 				try {
-					CellUtils.replaceCell(grid, eCells.get(random.nextInt(eCells.size())), this.clone());
+					CellUtils.replaceCell(grid, emptyCells.get(random.nextInt(emptyCells.size())), this.clone());
 				} catch (CloneNotSupportedException e) {
 					System.out.println("Impossibile clonare la cellula");
 				}
@@ -47,8 +47,7 @@ public abstract class Immune extends Cell implements Cloneable {
 	 */
 	@ScheduledMethod(start = 1, interval = 1, priority = 2)
 	public void move() {
-		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
-		List<EmptyCell> emptyCells = CellUtils.filterNeighbors(neighbors, EmptyCell.class);
+		List<EmptyCell> emptyCells = CellUtils.getSpecificCellsNearby(grid, this, EmptyCell.class);
 
 		if (!emptyCells.isEmpty()) {
 			EmptyCell emptyCellToReplace = emptyCells.get(random.nextInt(emptyCells.size()));
@@ -79,8 +78,7 @@ public abstract class Immune extends Cell implements Cloneable {
 	 * not_self RCC and I become mature is a non_self Rcc is close to me
 	 */
 	public void actIfNotActive() {
-		Iterable<Cell> neighbors = CellUtils.getNeighbors(grid, this);
-		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
+		List<RenalCellCarcinoma> rccList = CellUtils.getSpecificCellsNearby(grid, this, RenalCellCarcinoma.class);
 		if (!rccList.isEmpty() && rccList.stream().filter(rcc -> !rcc.isSelf()).findAny().isPresent()) {
 			this.active = true;
 		}

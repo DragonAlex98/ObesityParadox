@@ -19,7 +19,7 @@
       <string>BMI</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>BMI</id>
-        <className>bidimensional.cell.Cell</className>
+        <className>commons.cell.Cell</className>
         <methodName>getBMI</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
@@ -29,84 +29,84 @@
     <entry>
       <string>RCC Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.notimmune.RenalCellCarcinoma</typeName>
+        <typeName>commons.cell.notimmune.RenalCellCarcinoma</typeName>
         <id>RCC Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
     <entry>
       <string>CD4 Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.immune.CD4</typeName>
+        <typeName>commons.cell.immune.CD4</typeName>
         <id>CD4 Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
     <entry>
       <string>CD8 Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.immune.CD8</typeName>
+        <typeName>commons.cell.immune.CD8</typeName>
         <id>CD8 Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
     <entry>
       <string>Dendritic Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.immune.Dendritic</typeName>
+        <typeName>commons.cell.immune.Dendritic</typeName>
         <id>Dendritic Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
     <entry>
       <string>M1 Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.immune.M1</typeName>
+        <typeName>commons.cell.immune.M1</typeName>
         <id>M1 Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
     <entry>
       <string>M2 Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.immune.M2</typeName>
+        <typeName>commons.cell.immune.M2</typeName>
         <id>M2 Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
     <entry>
       <string>Mast Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.immune.MastCell</typeName>
+        <typeName>commons.cell.immune.MastCell</typeName>
         <id>Mast Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
     <entry>
       <string>NK Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.immune.NKCell</typeName>
+        <typeName>commons.cell.immune.NKCell</typeName>
         <id>NK Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
     <entry>
       <string>Plasmacytoid Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.immune.PlasmacytoidDendritic</typeName>
+        <typeName>commons.cell.immune.PlasmacytoidDendritic</typeName>
         <id>Plasmacytoid Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
     <entry>
       <string>Th1 Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.immune.Th1</typeName>
+        <typeName>commons.cell.immune.Th1</typeName>
         <id>Th1 Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
     <entry>
       <string>Treg Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.immune.Treg</typeName>
+        <typeName>commons.cell.immune.Treg</typeName>
         <id>Treg Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>
     <entry>
       <string>Blood Count</string>
       <repast.simphony.data2.engine.CountSourceDefinition>
-        <typeName>bidimensional.cell.notimmune.BloodCell</typeName>
+        <typeName>commons.cell.notimmune.BloodCell</typeName>
         <id>Blood Count</id>
       </repast.simphony.data2.engine.CountSourceDefinition>
     </entry>

@@ -1,14 +1,14 @@
-package bidimensional.cell.immune;
+package commons.cell.immune;
 
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
-import bidimensional.cell.Cell;
-import bidimensional.cell.DeadCell;
-import bidimensional.cell.notimmune.RenalCellCarcinoma;
-import bidimensional.utils.CellUtils;
+import commons.cell.Cell;
+import commons.cell.DeadCell;
+import commons.cell.notimmune.RenalCellCarcinoma;
+import commons.util.CellUtils;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.space.grid.Grid;
 
@@ -42,8 +42,7 @@ public class CD8 extends TCell {
 			return;
 		}
 	
-		Stream<RenalCellCarcinoma> rccInGrid = CellUtils.getSpecificCells(this.grid, this, RenalCellCarcinoma.class).filter(rcc -> !rcc.isSelf());
-		
+		Stream<RenalCellCarcinoma> rccInGrid = CellUtils.getAllSpecificCells(this.grid, this, RenalCellCarcinoma.class).filter(rcc -> !rcc.isSelf());
 		
 		AtomicReference<RenalCellCarcinoma> nearestRcc = new AtomicReference<>();
 		AtomicReference<Double> distanceToNearest = new AtomicReference<Double>(Double.POSITIVE_INFINITY);
@@ -66,9 +65,7 @@ public class CD8 extends TCell {
 	 */
 	@Override
 	public void actIfActive() {
-		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.grid, this);
-		
-		List<RenalCellCarcinoma> rccList = CellUtils.filterNeighbors(neighbors, RenalCellCarcinoma.class);
+		List<RenalCellCarcinoma> rccList = CellUtils.getSpecificCellsNearby(grid, this, RenalCellCarcinoma.class);
 		
 		rccList.removeIf(r -> r.isSelf());
 		if (!rccList.isEmpty()) {

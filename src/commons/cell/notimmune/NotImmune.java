@@ -1,6 +1,6 @@
-package bidimensional.cell.notimmune;
+package commons.cell.notimmune;
 
-import bidimensional.cell.Cell;
+import commons.cell.Cell;
 import repast.simphony.space.grid.Grid;
 
 public abstract class NotImmune extends Cell {

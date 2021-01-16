@@ -1,6 +1,6 @@
-package bidimensional.cell.immune;
+package commons.cell.immune;
 
-import bidimensional.cell.Cell;
+import commons.cell.Cell;
 import repast.simphony.space.grid.Grid;
 
 public abstract class TCell extends Immune {

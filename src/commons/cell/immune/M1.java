@@ -1,11 +1,11 @@
-package bidimensional.cell.immune;
+package commons.cell.immune;
 
 import java.util.List;
 
-import bidimensional.cell.Cell;
-import bidimensional.cell.DeadCell;
-import bidimensional.cell.EmptyCell;
-import bidimensional.utils.CellUtils;
+import commons.cell.Cell;
+import commons.cell.DeadCell;
+import commons.cell.EmptyCell;
+import commons.util.CellUtils;
 import repast.simphony.space.grid.Grid;
 
 public class M1 extends Immune {
@@ -29,9 +29,8 @@ public class M1 extends Immune {
 	@Override
 	public void act() {
 		super.act();
-		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.grid, this);
-		List<DeadCell> deadList = CellUtils.filterNeighbors(neighbors, DeadCell.class);
 
+		List<DeadCell> deadList = CellUtils.getSpecificCellsNearby(grid, this, DeadCell.class);
 		deadList.forEach(deadCell -> ingestCell(deadCell));
 	}
 }

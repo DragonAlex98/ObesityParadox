@@ -1,21 +1,27 @@
-package bidimensional.cell.immune;
+package commons.cell.immune;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import bidimensional.cell.Cell;
-import bidimensional.cell.EmptyCell;
-import bidimensional.utils.CellUtils;
+import bidimensional.context.Orientation;
+import commons.cell.Cell;
+import commons.cell.EmptyCell;
+import commons.util.CellUtils;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.space.grid.Grid;
+import threedimensional.context.Orientation3D;
 
 public class PlasmacytoidDendritic extends Dendritic {
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 
-	public PlasmacytoidDendritic(int lifespan, Grid<Cell> grid, double cd4cd8ratio) {
-		super(lifespan, grid, cd4cd8ratio);
+	public PlasmacytoidDendritic(int lifespan, Grid<Cell> grid, double cd4cd8ratio, Orientation lympOrientation) {
+		super(lifespan, grid, cd4cd8ratio, lympOrientation);
+	}
+
+	public PlasmacytoidDendritic(int lifespan, Grid<Cell> grid, double cd4cd8ratio, Orientation3D lympOrientation3d) {
+		super(lifespan, grid, cd4cd8ratio, lympOrientation3d);
 	}
 
 	@Override

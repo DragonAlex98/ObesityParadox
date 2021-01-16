@@ -3,7 +3,7 @@
   <type>3D</type>
   <styles>
     <entry>
-      <string>threedimensional.cell.Cell</string>
+      <string>commons.cell.Cell</string>
       <string>threedimensional.styles.CellStyle</string>
     </entry>
   </styles>
@@ -61,5 +61,11 @@
     </entry>
   </projectionDescriptors>
   <props/>
+  <backgroundColor>
+    <red>255</red>
+    <green>255</green>
+    <blue>255</blue>
+    <alpha>255</alpha>
+  </backgroundColor>
   <valueLayers/>
 </repast.simphony.visualization.engine.CartesianDisplayDescriptor>

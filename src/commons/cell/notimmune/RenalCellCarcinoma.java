@@ -1,14 +1,14 @@
-package bidimensional.cell.notimmune;
+package commons.cell.notimmune;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import bidimensional.cell.Cell;
-import bidimensional.cell.EmptyCell;
-import bidimensional.cell.immune.MastCell;
-import bidimensional.cell.immune.TCell;
-import bidimensional.utils.CellUtils;
+import commons.cell.Cell;
+import commons.cell.EmptyCell;
+import commons.cell.immune.MastCell;
+import commons.cell.immune.TCell;
+import commons.util.CellUtils;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.grid.Grid;
@@ -44,8 +44,7 @@ public class RenalCellCarcinoma extends NotImmune implements Cloneable{
 		if (this.isSelf()) {
 			return;
 		}
-		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
-		List<TCell> immuneList = CellUtils.filterNeighbors(neighbors, TCell.class);
+		List<TCell> immuneList = CellUtils.getSpecificCellsNearby(grid, this, TCell.class);
 		immuneList.stream().filter(i -> i.isActive()).forEach(i -> {
 			float disable = random.nextFloat();
 			if (disable < this.disableTCellPercetage) {
@@ -57,14 +56,13 @@ public class RenalCellCarcinoma extends NotImmune implements Cloneable{
 	// grow method to check the time to reproduce or the presence of a pro Tumor Mast Cell
 	@ScheduledMethod(start = 1, interval = 1, priority = 4)
 	public void grow() {
-		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
-		List<BloodCell> bloodList = CellUtils.filterNeighbors(neighbors, BloodCell.class);
+		List<BloodCell> bloodList = CellUtils.getSpecificCellsNearby(grid, this, BloodCell.class);
 		int newReprotime = (bloodList.isEmpty()) ? this.reproTime : Math.max(this.reproTime - bloodList.size(), 1);
 		if (this.getAge() > 0 && this.getAge() % newReprotime == 0) {
 			reproduce();
 		} else {
-			List<MastCell> mastList = CellUtils.filterNeighbors(neighbors, MastCell.class);
-			if (!mastList.isEmpty() && mastList.stream().filter(mast -> mast.isProTumor()).findAny().isPresent()) {      
+			List<MastCell> mastList = CellUtils.getSpecificCellsNearby(grid, this, MastCell.class);
+			if (mastList.stream().filter(mast -> mast.isProTumor()).findAny().isPresent()) {      
 				reproduce();
 			}
 		}
@@ -72,8 +70,7 @@ public class RenalCellCarcinoma extends NotImmune implements Cloneable{
 
 	// creates new RenalCellCarcinoma, to simulate reproduction of the tumor
 	private void reproduce() {
-		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
-		List<EmptyCell> list = CellUtils.filterNeighbors(neighbors, EmptyCell.class);
+		List<EmptyCell> list = CellUtils.getSpecificCellsNearby(grid, this, EmptyCell.class);
 		// if there is at least one emptyCell in my neighbors I grow up
 		if (!list.isEmpty()) {
 			// check how many times I can actually reproduce

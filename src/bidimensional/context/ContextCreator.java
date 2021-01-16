@@ -2,22 +2,22 @@ package bidimensional.context;
 
 import java.util.Random;
 
-import bidimensional.cell.Cell;
-import bidimensional.cell.EmptyCell;
-import bidimensional.cell.immune.CD4;
-import bidimensional.cell.immune.CD8;
-import bidimensional.cell.immune.Dendritic;
-import bidimensional.cell.immune.M1;
-import bidimensional.cell.immune.M2;
-import bidimensional.cell.immune.MastCell;
-import bidimensional.cell.immune.NKCell;
-import bidimensional.cell.immune.PlasmacytoidDendritic;
-import bidimensional.cell.immune.Th1;
-import bidimensional.cell.immune.Treg;
-import bidimensional.cell.notimmune.Adipocyte;
-import bidimensional.cell.notimmune.BloodCell;
-import bidimensional.cell.notimmune.RenalCellCarcinoma;
-import bidimensional.utils.CellUtils;
+import commons.cell.Cell;
+import commons.cell.EmptyCell;
+import commons.cell.immune.CD4;
+import commons.cell.immune.CD8;
+import commons.cell.immune.Dendritic;
+import commons.cell.immune.M1;
+import commons.cell.immune.M2;
+import commons.cell.immune.MastCell;
+import commons.cell.immune.NKCell;
+import commons.cell.immune.PlasmacytoidDendritic;
+import commons.cell.immune.Th1;
+import commons.cell.immune.Treg;
+import commons.cell.notimmune.Adipocyte;
+import commons.cell.notimmune.BloodCell;
+import commons.cell.notimmune.RenalCellCarcinoma;
+import commons.util.CellUtils;
 import repast.simphony.context.Context;
 import repast.simphony.context.space.grid.GridFactory;
 import repast.simphony.context.space.grid.GridFactoryFinder;
@@ -200,7 +200,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		}
 
 		for (int i = 0; i < cd8CellsToCreate; i++) {
-			CD8 cd8 = new CD8(10, grid);//params.getFloat("cd8KillProb"));
+			CD8 cd8 = new CD8(10, grid);
 			context.add(cd8);
 			int x;
 			int y;
@@ -248,7 +248,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		}
 		
 		for (int i = 0; i < dendriticCellsToCreate; i++) {
-			Dendritic dendritic = new Dendritic(10, grid, cd4cd8ratio);
+			Dendritic dendritic = new Dendritic(10, grid, cd4cd8ratio, lymphNodeOrientation);
 			context.add(dendritic);
 			int x;
 			int y;
@@ -296,7 +296,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		}
 		
 		for (int i = 0; i < nkCellsToCreate; i++) {
-			NKCell nk = new NKCell(10, grid);//params.getFloat("nkKillProb"));
+			NKCell nk = new NKCell(10, grid);
 			context.add(nk);
 			int x;
 			int y;
@@ -320,7 +320,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 		}
 		
 		for (int i = 0; i < plasmacytoidCellsToCreate; i++) {
-			PlasmacytoidDendritic plasma = new PlasmacytoidDendritic(10, grid, cd4cd8ratio);
+			PlasmacytoidDendritic plasma = new PlasmacytoidDendritic(10, grid, cd4cd8ratio, lymphNodeOrientation);
 			context.add(plasma);
 			int x;
 			int y;
@@ -333,8 +333,8 @@ public class ContextCreator implements ContextBuilder<Cell> {
 
 		int emptyCellsToCreate = 0;
 		if (left > 0) {
-			for (int y = 0; y < grid.getDimensions().getHeight(); y++) {
-				for (int x = 0; x < grid.getDimensions().getWidth(); x++) {
+			for (int x = 0; x < grid.getDimensions().getWidth(); x++) {
+				for (int y = 0; y < grid.getDimensions().getHeight(); y++) {
 					EmptyCell empty = new EmptyCell(grid);
 					context.add(empty);
 					if (grid.moveTo(empty, x, y)) {

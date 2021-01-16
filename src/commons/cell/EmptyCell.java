@@ -1,4 +1,4 @@
-package bidimensional.cell;
+package commons.cell;
 
 import repast.simphony.space.grid.Grid;
 

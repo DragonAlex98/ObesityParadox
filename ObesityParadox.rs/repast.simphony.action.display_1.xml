@@ -3,117 +3,117 @@
   <type>2D</type>
   <styles>
   	<entry>
-  	  <string>bidimensional.cell.immune.CD8</string>
+  	  <string>commons.cell.immune.CD8</string>
   	  <string>bidimensional.styles.CD8Style</string>
   	</entry>
   	<entry>
-  	  <string>bidimensional.cell.immune.CD4</string>
+  	  <string>commons.cell.immune.CD4</string>
   	  <string>bidimensional.styles.CD4Style</string>
   	</entry>
   	<entry>
-  	  <string>bidimensional.cell.immune.Dendritic</string>
+  	  <string>commons.cell.immune.Dendritic</string>
   	  <string>bidimensional.styles.DendriticStyle</string>
   	</entry>
   	<entry>
-  	  <string>bidimensional.cell.notimmune.RenalCellCarcinoma</string>
+  	  <string>commons.cell.notimmune.RenalCellCarcinoma</string>
   	  <string>bidimensional.styles.RCCStyle</string>
   	</entry>
     <entry>
-      <string>bidimensional.cell.immune.MastCell</string>
+      <string>commons.cell.immune.MastCell</string>
       <string>bidimensional.styles.MastStyle</string>
     </entry>
     <entry>
-  	  <string>bidimensional.cell.notimmune.Adipocyte</string>
+  	  <string>commons.cell.notimmune.Adipocyte</string>
   	  <string>bidimensional.styles.AdipocyteStyle</string>
   	</entry>
   	<entry>
-  	  <string>bidimensional.cell.immune.Th1</string>
+  	  <string>commons.cell.immune.Th1</string>
   	  <string>bidimensional.styles.Th1Style</string>
   	</entry>
   	<entry>
-  	  <string>bidimensional.cell.DeadCell</string>
+  	  <string>commons.cell.DeadCell</string>
   	  <string>bidimensional.styles.DeadStyle</string>
   	</entry>
   	<entry>
-  	  <string>bidimensional.cell.immune.PlasmacytoidDendritic</string>
+  	  <string>commons.cell.immune.PlasmacytoidDendritic</string>
   	  <string>bidimensional.styles.PlasmacytoidDendriticStyle</string>
   	</entry>
   	<entry>
-  	  <string>bidimensional.cell.immune.Treg</string>
+  	  <string>commons.cell.immune.Treg</string>
   	  <string>bidimensional.styles.TregStyle</string>
   	</entry>
   	<entry>
-  	  <string>bidimensional.cell.immune.M1</string>
+  	  <string>commons.cell.immune.M1</string>
   	  <string>bidimensional.styles.M1Style</string>
   	</entry>
   	<entry>
-  	  <string>bidimensional.cell.immune.M2</string>
+  	  <string>commons.cell.immune.M2</string>
   	  <string>bidimensional.styles.M2Style</string>
   	</entry>
   	<entry>
-  	  <string>bidimensional.cell.immune.NKCell</string>
+  	  <string>commons.cell.immune.NKCell</string>
   	  <string>bidimensional.styles.NKStyle</string>
   	</entry>
   	<entry>
-  	  <string>bidimensional.cell.notimmune.BloodCell</string>
+  	  <string>commons.cell.notimmune.BloodCell</string>
   	  <string>bidimensional.styles.BloodStyle</string>
   	</entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>bidimensional.cell.immune.CD8</string>
+      <string>commons.cell.immune.CD8</string>
       <null/>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.CD4</string>
+      <string>commons.cell.immune.CD4</string>
       <null/>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.Dendritic</string>
+      <string>commons.cell.immune.Dendritic</string>
       <null/>
     </entry>
     <entry>
-  	  <string>bidimensional.cell.notimmune.RenalCellCarcinoma</string>
+  	  <string>commons.cell.notimmune.RenalCellCarcinoma</string>
   	  <null/>
   	</entry>
     <entry>
-      <string>bidimensional.cell.immune.MastCell</string>
+      <string>commons.cell.immune.MastCell</string>
       <null/>
     </entry>
     <entry>
-      <string>bidimensional.cell.notimmune.Adipocyte</string>
+      <string>commons.cell.notimmune.Adipocyte</string>
       <null/>
     </entry>
     <entry>
-  	  <string>bidimensional.cell.immune.Th1</string>
+  	  <string>commons.cell.immune.Th1</string>
   	  <null/>
   	</entry>
     <entry>
-      <string>bidimensional.cell.DeadCell</string>
+      <string>commons.cell.DeadCell</string>
       <null/>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.PlasmacytoidDendritic</string>
+      <string>commons.cell.immune.PlasmacytoidDendritic</string>
       <null/>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.Treg</string>
+      <string>commons.cell.immune.Treg</string>
       <null/>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.M1</string>
+      <string>commons.cell.immune.M1</string>
       <null/>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.M2</string>
+      <string>commons.cell.immune.M2</string>
       <null/>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.NK</string>
+      <string>commons.cell.immune.NK</string>
       <null/>
     </entry>
     <entry>
-      <string>bidimensional.cell.notimmune.BloodCell</string>
+      <string>commons.cell.notimmune.BloodCell</string>
       <null/>
     </entry>
   </editedStyles>
@@ -133,59 +133,59 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
   	<entry>
-      <string>bidimensional.cell.immune.CD8</string>
+      <string>commons.cell.immune.CD8</string>
       <int>0</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.MastCell</string>
+      <string>commons.cell.immune.MastCell</string>
       <int>1</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.notimmune.Adipocyte</string>
+      <string>commons.cell.notimmune.Adipocyte</string>
       <int>2</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.notimmune.RenalCellCarcinoma</string>
+      <string>commons.cell.notimmune.RenalCellCarcinoma</string>
       <int>3</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.Dendritic</string>
+      <string>commons.cell.immune.Dendritic</string>
       <int>4</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.CD4</string>
+      <string>commons.cell.immune.CD4</string>
       <int>5</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.DeadCell</string>
+      <string>commons.cell.DeadCell</string>
       <int>6</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.Th1</string>
+      <string>commons.cell.immune.Th1</string>
       <int>7</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.PlasmacytoidDendritic</string>
+      <string>commons.cell.immune.PlasmacytoidDendritic</string>
       <int>8</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.Treg</string>
+      <string>commons.cell.immune.Treg</string>
       <int>9</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.M1</string>
+      <string>commons.cell.immune.M1</string>
       <int>10</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.M2</string>
+      <string>commons.cell.immune.M2</string>
       <int>11</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.immune.NKCell</string>
+      <string>commons.cell.immune.NKCell</string>
       <int>12</int>
     </entry>
     <entry>
-      <string>bidimensional.cell.notimmune.BloodCell</string>
+      <string>commons.cell.notimmune.BloodCell</string>
       <int>13</int>
     </entry>
   </layerOrder>

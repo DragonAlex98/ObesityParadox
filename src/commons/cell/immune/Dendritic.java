@@ -1,18 +1,19 @@
-package bidimensional.cell.immune;
+package commons.cell.immune;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import bidimensional.cell.Cell;
-import bidimensional.cell.EmptyCell;
 import bidimensional.context.Orientation;
-import bidimensional.utils.CellUtils;
+import commons.cell.Cell;
+import commons.cell.EmptyCell;
+import commons.util.CellUtils;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridDimensions;
 import repast.simphony.space.grid.GridPoint;
+import threedimensional.context.Orientation3D;
 
 /**
  * @author Marco
@@ -24,17 +25,24 @@ public class Dendritic extends Immune {
 	private double cd4cd8ratio;
 	
 	// the lymph node orientation
-	private static Orientation lymphNodeOrientation = Orientation
-			.valueOf(RunEnvironment.getInstance().getParameters().getString("lymphNodeOrientation"));
+	private Orientation lymphNodeOrientation;
+	private Orientation3D lymphNodeOrientation3d;
 
 	private static Random random = new Random(RunEnvironment.getInstance().getParameters().getInteger("randomSeed"));
 	
 	// max number of Tcell on the grid
 	private static float tCellSpawnPercentage = 0.10f;
 
-	public Dendritic(int lifespan, Grid<Cell> grid, double cd4cd8ratio) {
+	public Dendritic(int lifespan, Grid<Cell> grid, double cd4cd8ratio, Orientation lympOrientation) {
 		super(lifespan, grid);
 		this.cd4cd8ratio = cd4cd8ratio;
+		this.lymphNodeOrientation = lympOrientation;
+	}
+
+	public Dendritic(int lifespan, Grid<Cell> grid, double cd4cd8ratio, Orientation3D lympOrientation3d) {
+		super(lifespan, grid);
+		this.cd4cd8ratio = cd4cd8ratio;
+		this.lymphNodeOrientation3d = lympOrientation3d;
 	}
 
 	/**
@@ -56,22 +64,38 @@ public class Dendritic extends Immune {
 	 * @return The GridPoinf of the lymph node
 	 */
 	private GridPoint getTarget() {
-		GridPoint gpt = null;
-		switch (lymphNodeOrientation) {
-		case NORTH:
-			gpt = new GridPoint(this.grid.getLocation(this).getX(), this.grid.getDimensions().getHeight());
-			break;
-		case EAST:
-			gpt = new GridPoint(this.grid.getDimensions().getWidth(), this.grid.getLocation(this).getY());
-			break;
-		case SOUTH:
-			gpt = new GridPoint(this.grid.getLocation(this).getX(), -1);
-			break;
-		case WEST:
-			gpt = new GridPoint(-1, this.grid.getLocation(this).getY());
-			break;
+		GridPoint location = this.grid.getLocation(this);
+		if (CellUtils.isGridBiDimensional(grid)) {
+			switch (lymphNodeOrientation) {
+			case NORTH:
+				return new GridPoint(location.getX(), this.grid.getDimensions().getHeight());
+			case SOUTH:
+				return new GridPoint(location.getX(), -1);
+			case EAST:
+				return new GridPoint(this.grid.getDimensions().getWidth(), location.getY());
+			case WEST:
+				return new GridPoint(-1, location.getY());
+			default:
+				return null;
+			}
+		} else {
+			switch (lymphNodeOrientation3d) {
+			case FRONT:
+				return new GridPoint(location.getX(), location.getY(), -1);
+			case BACK:
+				return new GridPoint(location.getX(), location.getY(), this.grid.getDimensions().getDepth());
+			case UP:
+				return new GridPoint(location.getX(), this.grid.getDimensions().getHeight(), location.getZ());
+			case DOWN:
+				return new GridPoint(location.getX(), -1, location.getZ());
+			case LEFT:
+				return new GridPoint(-1, location.getY(), location.getZ());
+			case RIGHT:
+				return new GridPoint(this.grid.getDimensions().getWidth(), location.getY(), location.getZ());
+			default:
+				return null;
+			}
 		}
-		return gpt;
 	}
 
 	//
@@ -114,7 +138,7 @@ public class Dendritic extends Immune {
 	 * @return The max number of Tcell to spawn
 	 */
 	private Long tCellToSpawn() {
-		long tCellNumber = CellUtils.getSpecificCells(this.grid, this, TCell.class).count();
+		long tCellNumber = CellUtils.getAllSpecificCells(this.grid, this, TCell.class).count();
 		GridDimensions dim = this.grid.getDimensions();
 		Long tCellMaxNumber = (long) (dim.getHeight() * dim.getWidth() * tCellSpawnPercentage) - tCellNumber;
 		return tCellMaxNumber;
@@ -126,10 +150,20 @@ public class Dendritic extends Immune {
 	 * @return True is I am on edge
 	 */
 	private boolean isOnEdge() {
-		return (lymphNodeOrientation == Orientation.NORTH && this.getGrid().getLocation(this).getY() == this.getGrid().getDimensions().getHeight() - 1)
-				|| (lymphNodeOrientation == Orientation.SOUTH && this.getGrid().getLocation(this).getY() == 0)
-				|| (lymphNodeOrientation == Orientation.WEST && this.getGrid().getLocation(this).getX() == 0)
-				|| (lymphNodeOrientation == Orientation.EAST && this.getGrid().getLocation(this).getX() == this.getGrid().getDimensions().getWidth() - 1);
+		GridPoint location = this.getGrid().getLocation(this);
+		if (CellUtils.isGridBiDimensional(grid)) {
+			return (lymphNodeOrientation == Orientation.NORTH && location.getY() == this.getGrid().getDimensions().getHeight() - 1)
+					|| (lymphNodeOrientation == Orientation.SOUTH && location.getY() == 0)
+					|| (lymphNodeOrientation == Orientation.WEST && location.getX() == 0)
+					|| (lymphNodeOrientation == Orientation.EAST && location.getX() == this.getGrid().getDimensions().getWidth() - 1);
+		} else {
+			return (lymphNodeOrientation3d == Orientation3D.FRONT && location.getZ() == 0)
+					|| (lymphNodeOrientation3d == Orientation3D.BACK && location.getZ() == this.getGrid().getDimensions().getDepth() - 1)
+					|| (lymphNodeOrientation3d == Orientation3D.UP && location.getY() == this.getGrid().getDimensions().getHeight() - 1)
+					|| (lymphNodeOrientation3d == Orientation3D.DOWN && location.getY() == 0)
+					|| (lymphNodeOrientation3d == Orientation3D.LEFT && location.getX() == 0)
+					|| (lymphNodeOrientation3d == Orientation3D.RIGHT && location.getX() == this.getGrid().getDimensions().getWidth() -1);
+		}
 	}
 
 	/**
@@ -139,16 +173,14 @@ public class Dendritic extends Immune {
 	 */
 	@Override
 	public void actIfActive() {
-		Iterable<Cell> neighbors = CellUtils.getNeighbors(this.getGrid(), this);
-		List<TCell> tCellList = CellUtils.filterNeighbors(neighbors, TCell.class);
+		List<TCell> tCellList = CellUtils.getSpecificCellsNearby(grid, this, TCell.class);
 		if (!tCellList.isEmpty()) {
 			tCellList.forEach(t -> t.setActive(true));
 		}
 
 		if (isOnEdge()) {
 			this.setActive(false); // no empty cell no spawn
-			List<EmptyCell> emptyCellsList = CellUtils.getSpecificCells(this.grid, this, EmptyCell.class)
-					.collect(Collectors.toList());
+			List<EmptyCell> emptyCellsList = CellUtils.getAllSpecificCells(this.grid, this, EmptyCell.class).collect(Collectors.toList());
 			if (emptyCellsList.isEmpty()) {
 				return;
 			}

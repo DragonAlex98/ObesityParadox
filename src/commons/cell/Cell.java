@@ -1,8 +1,8 @@
-package bidimensional.cell;
+package commons.cell;
 
 import java.util.Random;
 
-import bidimensional.utils.CellUtils;
+import commons.util.CellUtils;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.grid.Grid;

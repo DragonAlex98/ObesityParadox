@@ -1,4 +1,4 @@
-package bidimensional.utils;
+package commons.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,17 +6,17 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-import bidimensional.cell.Cell;
-import bidimensional.cell.EmptyCell;
-import bidimensional.cell.immune.CD8;
-import bidimensional.cell.immune.Dendritic;
-import bidimensional.cell.immune.Immune;
-import bidimensional.cell.immune.M1;
-import bidimensional.cell.immune.M2;
-import bidimensional.cell.immune.NKCell;
-import bidimensional.cell.immune.PlasmacytoidDendritic;
-import bidimensional.cell.immune.TCell;
-import bidimensional.cell.immune.Th1;
+import commons.cell.Cell;
+import commons.cell.EmptyCell;
+import commons.cell.immune.CD8;
+import commons.cell.immune.Dendritic;
+import commons.cell.immune.Immune;
+import commons.cell.immune.M1;
+import commons.cell.immune.M2;
+import commons.cell.immune.NKCell;
+import commons.cell.immune.PlasmacytoidDendritic;
+import commons.cell.immune.TCell;
+import commons.cell.immune.Th1;
 import repast.simphony.context.Context;
 import repast.simphony.query.space.grid.MooreQuery;
 import repast.simphony.space.grid.Grid;
@@ -32,7 +32,7 @@ public class CellUtils {
 	 * @param cell Cell used to find its neighbors
 	 * @return An Iterable in which there are all the neighbors of the input cell
 	 */
-	public static Iterable<Cell> getNeighbors(Grid<Cell> grid, Cell cell) {
+	private static Iterable<Cell> getNeighbors(Grid<Cell> grid, Cell cell) {
 		MooreQuery<Cell> query = new MooreQuery<Cell>(grid, cell);
 		Iterable<Cell> neighbors = query.query();
 		return neighbors;
@@ -50,9 +50,9 @@ public class CellUtils {
 	 */
 	public static <T extends Cell, S extends Cell> boolean hasSpecificCellsNearby(Grid<Cell> grid, T caller, Class<S> cls) {
 		Iterable<Cell> neighbors = CellUtils.getNeighbors(grid, caller);
-		List<S> rccList = CellUtils.filterNeighbors(neighbors, cls);
+		List<S> specificCellsList = CellUtils.filterNeighbors(neighbors, cls);
 		
-		return !rccList.isEmpty();
+		return !specificCellsList.isEmpty();
 	}
 	
 	/**
@@ -105,7 +105,11 @@ public class CellUtils {
 		
 		EmptyCell emptyCell = new EmptyCell(grid);
 		context.add(emptyCell);
-		grid.moveTo(emptyCell, oldPoint.getX(), oldPoint.getY());
+		if (isGridBiDimensional(grid)) {
+			grid.moveTo(emptyCell, oldPoint.getX(), oldPoint.getY());
+		} else {
+			grid.moveTo(emptyCell, oldPoint.getX(), oldPoint.getY(), oldPoint.getZ());
+		}
 		context.add(emptyCell);
 	}
 
@@ -125,7 +129,11 @@ public class CellUtils {
 		Context<Cell> context = ContextUtils.getContext(cellToReplace);
 		context.remove(cellToReplace);
 		context.add(cellToCreate);
-		grid.moveTo(cellToCreate, gpt.getX(), gpt.getY());
+		if (isGridBiDimensional(grid)) {
+			grid.moveTo(cellToCreate, gpt.getX(), gpt.getY());
+		} else {
+			grid.moveTo(cellToCreate, gpt.getX(), gpt.getY(), gpt.getZ());
+		}
 		context.add(cellToCreate);
 	}
 
@@ -144,7 +152,7 @@ public class CellUtils {
 	 * @see Stream
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T extends Cell, S extends Cell> Stream<S> getSpecificCells(Grid<Cell> grid, T caller, Class<S> cellTypeToFind) {
+	public static <T extends Cell, S extends Cell> Stream<S> getAllSpecificCells(Grid<Cell> grid, T caller, Class<S> cellTypeToFind) {
 		Context<Cell> context = ContextUtils.getContext(caller);
 		return (Stream<S>) context.getObjectsAsStream(cellTypeToFind.asSubclass(Cell.class));
 	}
@@ -172,13 +180,11 @@ public class CellUtils {
 	 * @param target The point of the grid to move towards.
 	 */
 	public static <T extends Cell, S extends Cell> void moveTowards(Grid<Cell> grid, T caller, GridPoint target) {
-		Iterable<Cell> neighbors = CellUtils.getNeighbors(grid, caller);
-
-		List<EmptyCell> emptyCellList = CellUtils.filterNeighbors(neighbors, EmptyCell.class);
+		List<EmptyCell> emptyCellList = getSpecificCellsNearby(grid, caller, EmptyCell.class);
 
 		double distanceToTarget = grid.getDistance(grid.getLocation(caller), target);
 		
-		AtomicReference<EmptyCell> bestEmptyCell = new AtomicReference<>();
+		AtomicReference<EmptyCell> bestEmptyCell = new AtomicReference<EmptyCell>();
 		AtomicReference<Double> newDistance = new AtomicReference<Double>(distanceToTarget);
 		
 		emptyCellList.forEach(cell -> {
@@ -201,7 +207,11 @@ public class CellUtils {
 	 * @return the distance within which the substances are released.
 	 */
 	public static double getDistanceToReleaseSubstances(Grid<Cell> grid) {
-		return Math.max(2, Math.min(grid.getDimensions().getWidth(), grid.getDimensions().getHeight()) / 5);
+		if (isGridBiDimensional(grid)) {
+			return Math.max(2, Math.min(grid.getDimensions().getWidth(), grid.getDimensions().getHeight()) / 5);
+		} else {
+			return Math.max(2, Math.min(Math.min(grid.getDimensions().getWidth(), grid.getDimensions().getHeight()), grid.getDimensions().getDepth()) / 5);
+		}
 	}
 	
 	/**
@@ -217,7 +227,7 @@ public class CellUtils {
 	 */
 	private static <T extends Cell, S extends Immune> void releaseSubstanceWithinDistance(Grid<Cell> grid, T caller, Class<S> cellTypeToStimulate, Consumer<S> action) {
 		// Questo metodo � privato perch� per ora non ha utilit� al di fuori di qui.
-		Stream<S> cellList = CellUtils.getSpecificCells(grid, caller, cellTypeToStimulate);
+		Stream<S> cellList = CellUtils.getAllSpecificCells(grid, caller, cellTypeToStimulate);
 		cellList.filter(element -> grid.getLocation(caller) != grid.getLocation(element) && grid.getDistance(grid.getLocation(caller), grid.getLocation(element)) <= getDistanceToReleaseSubstances(grid)).forEach(action);
 	}
 	
@@ -302,7 +312,6 @@ public class CellUtils {
 
 		releaseSubstanceWithinDistance(grid, caller, Dendritic.class, element -> element.setActive(false));
 		releaseSubstanceWithinDistance(grid, caller, PlasmacytoidDendritic.class, element -> element.setActive(false));
-		
 	}
 	
 	/**
@@ -373,5 +382,9 @@ public class CellUtils {
 		int maxBMI = 40;
 		int minBMI = 15;
 		return Math.round((maxPerc + minPerc - (maxPerc - ((double)(maxBMI - bmi) / (maxBMI - minBMI)) * (maxPerc - minPerc))) * 100.0) / 100.0;
+	}
+
+	public static boolean isGridBiDimensional(Grid<Cell> grid) {
+		return grid.getDimensions().size() == 2;
 	}
 }

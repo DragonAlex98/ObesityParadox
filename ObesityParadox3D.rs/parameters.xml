@@ -5,13 +5,35 @@
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
+				<parameter name="mutationPercentage" displayName="Tumor mutation percentage" type="float" 
+						defaultValue="0.1" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="bloodVesselOrientation" displayName="Orientation of blood vessel" type="java.lang.String" 
+						defaultValue="DOWN" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+												values="FRONT BACK UP DOWN LEFT RIGHT "
+											/>
+				<parameter name="reproTime" displayName="Tumor Reproduction Time" type="int" 
+						defaultValue="10" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+											/>
 				<parameter name="depth" displayName="Grid Depth" type="int" 
 						defaultValue="10" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
-				<parameter name="percentage" displayName="Percentage of Live Cells" type="float" 
-						defaultValue="0.3" 
+				<parameter name="lymphNodeOrientation" displayName="Orientation of lymph node" type="java.lang.String" 
+						defaultValue="UP" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+												values="FRONT BACK UP DOWN LEFT RIGHT "
+											/>
+				<parameter name="immuneCellGrowth" displayName="Proliferation of immune cell after percentage of life span" type="float" 
+						defaultValue="0.66" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 											/>
@@ -20,8 +42,23 @@
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
+				<parameter name="disableTCellPercentage" displayName="Tumor Disable TCell Percentage" type="float" 
+						defaultValue="0.3" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+											/>
+				<parameter name="reproFactor" displayName="Tumor Reproduction Factor" type="int" 
+						defaultValue="1" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+											/>
 				<parameter name="height" displayName="Grid Height" type="int" 
 						defaultValue="10" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+											/>
+				<parameter name="bmi" displayName="Body Mass Index (15-40)" type="int" 
+						defaultValue="25" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 											/>
