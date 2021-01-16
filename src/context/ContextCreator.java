@@ -33,7 +33,7 @@ public class ContextCreator implements ContextBuilder<Cell> {
 
 	@Override
 	public Context<Cell> build(Context<Cell> context) {
-		context.setId("GameOfLifeProva");
+		context.setId("ObesityParadox");
 
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		

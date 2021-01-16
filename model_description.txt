@@ -1,1 +1,1 @@
-This is the GameOfLifeProva model. Please contact the developers for more information.
+This is the ObesityParadox model. Please contact the developers for more information.
