@@ -1,4 +1,4 @@
-package threedimensional;
+package threedimensional.styles;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +10,7 @@ import repast.simphony.visualization.visualization3D.ShapeFactory;
 import repast.simphony.visualization.visualization3D.style.Style3D;
 import repast.simphony.visualization.visualization3D.style.TaggedAppearance;
 import repast.simphony.visualization.visualization3D.style.TaggedBranchGroup;
+import threedimensional.cell.Cell;
 
 public class CellStyle implements Style3D<Cell> {
 

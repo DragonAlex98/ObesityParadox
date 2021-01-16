@@ -1,4 +1,4 @@
-package threedimensional;
+package threedimensional.context;
 
 import java.util.Random;
 
@@ -12,6 +12,9 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.InfiniteBorders;
 import repast.simphony.space.grid.SimpleGridAdder;
+import threedimensional.cell.Cell;
+import threedimensional.cell.DeadCell;
+import threedimensional.cell.LivingCell;
 
 public class ContextCreator implements ContextBuilder<Cell> {
 

@@ -1,4 +1,4 @@
-package threedimensional;
+package threedimensional.cell;
 
 public abstract class Cell {
 

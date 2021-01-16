@@ -3,8 +3,8 @@
   <type>3D</type>
   <styles>
     <entry>
-      <string>threedimensional.Cell</string>
-      <string>threedimensional.CellStyle</string>
+      <string>threedimensional.cell.Cell</string>
+      <string>threedimensional.styles.CellStyle</string>
     </entry>
   </styles>
   <editedStyles/>

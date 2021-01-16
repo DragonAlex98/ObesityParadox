@@ -1,4 +1,4 @@
-package threedimensional;
+package threedimensional.cell;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -7,16 +7,16 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.ContextUtils;
 
-public class DeadCell extends Cell {
+public class LivingCell extends Cell {
 
 	private Grid<Cell> grid;
 
-	public DeadCell(Grid<Cell> grid) {
+	public LivingCell(Grid<Cell> grid) {
 		this.grid = grid;
-		this.setState(0);
+		this.setState(1);
 	}
 
-	@ScheduledMethod(start = 0, interval = 1, priority = 4)
+	@ScheduledMethod(start = 0, interval = 1, priority = 3)
 	public void step1() {
 		MooreQuery<Cell> query = new MooreQuery<Cell>(grid, this, 1, 1, 1);
 		int neighbours = 0;
@@ -33,16 +33,16 @@ public class DeadCell extends Cell {
 		}
 	}
 
-	@ScheduledMethod(start = 0, interval = 1, priority = 1)
+	@ScheduledMethod(start = 0, interval = 1, priority = 2)
 	public void step2() {
-		if (this.getState() == 1) {
+		if (this.getState() == 0) {
 			GridPoint gpt = grid.getLocation(this);
 			Context<Cell> context = ContextUtils.getContext(this);
 			context.remove(this);
-			LivingCell livingCell = new LivingCell(grid);
-			context.add(livingCell);
-			grid.moveTo(livingCell, gpt.getX(), gpt.getY(), gpt.getZ());
-			context.add(livingCell);
+			DeadCell deadCell = new DeadCell(grid);
+			context.add(deadCell);
+			grid.moveTo(deadCell, gpt.getX(), gpt.getY(), gpt.getZ());
+			context.add(deadCell);
 		}
 	}
 }
